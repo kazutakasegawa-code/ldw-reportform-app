@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Eye } from "lucide-react";
+import LogoutButton from "./LogoutButton";
 import { Container, PageShell } from "@/components/ui";
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -19,6 +20,7 @@ export default async function AdminPage() {
             <p className="text-sm font-semibold text-gold-500">管理画面</p>
             <h1 className="text-3xl font-bold">診断申込み一覧</h1>
           </div>
+          <LogoutButton />
         </div>
         <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-soft">
           <div className="overflow-x-auto">
