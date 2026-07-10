@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color: #102a4f;
+  background: #f7f9fc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", system-ui, sans-serif;
+  margin: 0;
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+}
+
+.a4-report {
+  width: 297mm;
+  min-height: 210mm;
+  margin: 0 auto;
+  background: white;
+  color: #102a4f;
+}
+
+.report-landscape {
+  overflow: visible;
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 5mm;
+  }
+
+  body {
+    background: white !important;
+    line-height: 1.2;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .a4-report {
+    width: auto;
+    height: 200mm;
+    min-height: 0;
+    margin: 0;
+    padding: 0 !important;
+    overflow: hidden;
+    box-shadow: none !important;
+  }
+
+  .report-landscape header {
+    padding-bottom: 3px !important;
+    border-bottom-width: 3px !important;
+  }
+
+  .report-landscape header h1 {
+    margin-top: 0 !important;
+    font-size: 20px !important;
+    line-height: 1.05 !important;
+  }
+
+  .report-grid {
+    margin-top: 5px !important;
+    gap: 5px !important;
+    font-size: 8px !important;
+    line-height: 1.22 !important;
+  }
+
+  .report-stack {
+    gap: 3px !important;
+  }
+
+  .report-landscape h2 {
+    margin-bottom: 1px !important;
+    gap: 4px !important;
+    font-size: 9px !important;
+    line-height: 1.1 !important;
+  }
+
+  .report-landscape h2 span {
+    width: 14px !important;
+    height: 14px !important;
+    font-size: 7.5px !important;
+  }
+
+  .report-landscape section,
+  .report-landscape dl > div > div,
+  .report-landscape .rounded {
+    border-radius: 4px !important;
+  }
+
+  .report-landscape section {
+    padding: 3px !important;
+  }
+
+  .report-landscape table {
+    font-size: 7.5px !important;
+  }
+
+  .report-landscape th,
+  .report-landscape td {
+    padding: 2px 4px !important;
+    line-height: 1.2 !important;
+  }
+
+  .print-break {
+    break-before: auto;
+  }
+}
