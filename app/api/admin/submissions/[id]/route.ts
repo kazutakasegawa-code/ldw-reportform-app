@@ -21,3 +21,10 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   });
   return NextResponse.json({ ok: true });
 }
+
+export async function DELETE(_: Request, { params }: { params: Promise<{ id: string }> }) {
+  await requireAdmin();
+  const { id } = await params;
+  await prisma.submission.delete({ where: { id } });
+  return NextResponse.json({ ok: true });
+}
