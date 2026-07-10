@@ -4,6 +4,7 @@ import DeleteSubmissionButton from "./DeleteSubmissionButton";
 import LogoutButton from "./LogoutButton";
 import { Container, PageShell } from "@/components/ui";
 import { requireAdmin } from "@/lib/auth";
+import { formatDateTimeJst } from "@/lib/date";
 import { prisma } from "@/lib/prisma";
 
 export default async function AdminPage() {
@@ -41,7 +42,7 @@ export default async function AdminPage() {
                   <tr key={submission.id} className="hover:bg-slate-50">
                     <td className="px-4 py-3 font-semibold">{submission.companyName}</td>
                     <td className="px-4 py-3">{submission.contactName}</td>
-                    <td className="px-4 py-3">{submission.createdAt.toLocaleString("ja-JP")}</td>
+                    <td className="px-4 py-3">{formatDateTimeJst(submission.createdAt)}</td>
                     <td className="px-4 py-3"><span className="rounded-full bg-gold-100 px-3 py-1 text-xs font-semibold">{submission.status}</span></td>
                     <td className="px-4 py-3">
                       <Link href={`/admin/submissions/${submission.id}`} className="inline-flex items-center gap-1 font-semibold text-navy-800 underline">

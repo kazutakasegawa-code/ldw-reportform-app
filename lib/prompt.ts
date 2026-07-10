@@ -1,5 +1,6 @@
 import type { AnalysisResult, CheckAnswer, Submission } from "@prisma/client";
 import { aiCaution, diagnosticNotice } from "./constants";
+import { formatDateTimeJst } from "./date";
 import { calculateDomainScores, calculateOverallAverage, recommendPlan } from "./scoring";
 
 type SubmissionWithRelations = Submission & {
@@ -93,7 +94,7 @@ ${aiCaution}
 
 管理者入力情報:
 ステータス: ${submission.status}
-面談予定日: ${submission.meetingDate ? submission.meetingDate.toLocaleString("ja-JP") : "未設定"}
+面談予定日: ${submission.meetingDate ? formatDateTimeJst(submission.meetingDate) : "未設定"}
 面談メモ: ${submission.meetingMemo || "なし"}
 優先課題: ${submission.priorityIssue || "未設定"}
 レポート表示用 推奨プラン: ${submission.recommendedPlan || "未設定"}

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/auth";
+import { parseDateInputAsJst, parseDateTimeInputAsJst } from "@/lib/date";
 import { prisma } from "@/lib/prisma";
 import { adminUpdateSchema } from "@/lib/schema";
 
@@ -15,8 +16,8 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     where: { id },
     data: {
       ...data,
-      meetingDate: meetingDate ? new Date(meetingDate) : null,
-      reportDate: reportDate ? new Date(`${reportDate}T00:00:00`) : null
+      meetingDate: parseDateTimeInputAsJst(meetingDate),
+      reportDate: parseDateInputAsJst(reportDate)
     }
   });
   return NextResponse.json({ ok: true });

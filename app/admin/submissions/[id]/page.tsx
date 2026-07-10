@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import DetailEditor from "./DetailEditor";
 import { Container, PageShell } from "@/components/ui";
 import { requireAdmin } from "@/lib/auth";
+import { formatDateTimeJst } from "@/lib/date";
 import { prisma } from "@/lib/prisma";
 import { buildAnalysisPrompt } from "@/lib/prompt";
 import { calculateDomainScores, calculateOverallAverage, recommendPlan } from "@/lib/scoring";
@@ -32,7 +33,7 @@ export default async function SubmissionDetailPage({ params }: { params: Promise
               一覧へ戻る
             </Link>
             <h1 className="text-3xl font-bold">{submission.companyName}</h1>
-            <p className="mt-1 text-sm text-slate-600">{submission.contactName} / {submission.createdAt.toLocaleString("ja-JP")}</p>
+            <p className="mt-1 text-sm text-slate-600">{submission.contactName} / {formatDateTimeJst(submission.createdAt)}</p>
           </div>
           <Link href={`/admin/submissions/${submission.id}/report`} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-gold-500 px-5 py-2.5 text-sm font-semibold text-navy-900 hover:bg-gold-300">
             保存済みレポート表示

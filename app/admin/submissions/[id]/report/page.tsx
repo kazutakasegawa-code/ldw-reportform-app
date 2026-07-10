@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Printer } from "lucide-react";
 import PrintButton from "./PrintButton";
 import { requireAdmin } from "@/lib/auth";
+import { formatDateJst } from "@/lib/date";
 import { prisma } from "@/lib/prisma";
 import { providerName } from "@/lib/constants";
 import { calculateDomainScores, recommendPlan } from "@/lib/scoring";
@@ -23,7 +24,7 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
   const recommendedPlan = submission.recommendedPlan || analysis?.recommendedProgram || recommendation.plan;
   const primaryRecommendation = `${recommendation.plan}\n狙い：${recommendation.aim}`;
   const aiRecommendedProgram = analysis?.recommendedProgram || "AI分析結果を踏まえて、面談後に調整します。";
-  const reportDate = (submission.reportDate || new Date()).toLocaleDateString("ja-JP");
+  const reportDate = formatDateJst(submission.reportDate || new Date());
   const kpiRows = buildKpiRows(analysis?.kpis);
 
   return (

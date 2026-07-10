@@ -5,6 +5,7 @@ import type { AnalysisResult, CheckAnswer, Submission } from "@prisma/client";
 import { Clipboard, FileText, Save, Sparkles } from "lucide-react";
 import { Button, Card, FieldLabel, inputClass } from "@/components/ui";
 import { statusOptions } from "@/lib/constants";
+import { formatDateInputJst, formatDateTimeInputJst } from "@/lib/date";
 import type { DomainScore } from "@/lib/scoring";
 
 type Props = {
@@ -269,11 +270,11 @@ export default function DetailEditor({ submission, domainScores, overall, recomm
           </div>
           <div>
             <FieldLabel>面談予定日</FieldLabel>
-            <input name="meetingDate" type="datetime-local" className={inputClass} defaultValue={submission.meetingDate ? new Date(submission.meetingDate).toISOString().slice(0, 16) : ""} />
+            <input name="meetingDate" type="datetime-local" className={inputClass} defaultValue={formatDateTimeInputJst(submission.meetingDate)} />
           </div>
           <div>
             <FieldLabel>レポート作成年月日</FieldLabel>
-            <input name="reportDate" type="date" className={inputClass} defaultValue={formatDateInput(submission.reportDate)} />
+            <input name="reportDate" type="date" className={inputClass} defaultValue={formatDateInputJst(submission.reportDate)} />
           </div>
           <TextArea name="meetingMemo" label="面談メモ" defaultValue={submission.meetingMemo} />
           <TextArea name="priorityIssue" label="優先課題" defaultValue={submission.priorityIssue} />
@@ -345,16 +346,6 @@ function Info({ label, value }: { label: string; value: string }) {
       <dd className="mt-1 whitespace-pre-wrap font-medium">{value}</dd>
     </div>
   );
-}
-
-function formatDateInput(date?: Date | string | null) {
-  if (!date) return "";
-  const value = new Date(date);
-  if (Number.isNaN(value.getTime())) return "";
-  const year = value.getFullYear();
-  const month = String(value.getMonth() + 1).padStart(2, "0");
-  const day = String(value.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
 }
 
 function TextArea({ name, label, defaultValue, maxLength, reportLimit }: { name: string; label: string; defaultValue?: string | null; maxLength?: number; reportLimit?: number }) {
