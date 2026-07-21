@@ -238,7 +238,7 @@ button {
     margin: 0;
     color: #0a2344;
     font-size: 7.8pt;
-    font-weight: 800;
+    font-weight: 400;
   }
 
   .result-print-title-row h2 {
@@ -247,6 +247,7 @@ button {
     color: #0a2344;
     font-size: 15.8pt;
     line-height: 1.1;
+    font-weight: 900;
   }
 
   .result-print-title-row > p {
@@ -520,6 +521,12 @@ button {
     padding: 0.8mm 1.2mm;
     line-height: 1.15;
     text-align: left;
+  }
+
+  .result-print-table td:nth-child(1),
+  .result-print-table td:nth-child(2),
+  .result-print-table td:nth-child(3) {
+    font-weight: 900;
   }
 
   .result-print-compare-grid {
