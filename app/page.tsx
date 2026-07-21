@@ -1,6 +1,6 @@
 import { ArrowRight, ClipboardCheck, FileText, Timer } from "lucide-react";
 import { Container, LinkButton, PageShell } from "@/components/ui";
-import { diagnosticNotice, providerName } from "@/lib/constants";
+import { appName, providerName } from "@/lib/constants";
 
 export default function HomePage() {
   return (
@@ -16,17 +16,17 @@ export default function HomePage() {
           <div>
             <p className="mb-4 inline-flex rounded-full bg-gold-100 px-4 py-2 text-sm font-semibold text-navy-800">毎月5社まで / 無料診断</p>
             <h1 className="text-3xl font-bold leading-tight tracking-normal text-navy-900 sm:text-5xl">
-              人材育成・組織開発
-              <br />
-              課題診断
+              採用しても定着しない。若手がなかなか育たない。その原因、育成の仕組みにあるかもしれません。
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-8 text-slate-700">
-              事前入力情報をもとに、課題の論点整理、AI分析、分析レポート作成までを一体化した診断です。
+              15項目・約5分で、採用後に社員が定着し、成長し、チームで成果を出すための職場環境・育成課題を見える化します。
             </p>
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600">{diagnosticNotice}</p>
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600">
+              診断後、レーダーチャートで簡易結果を表示。希望企業には30分面談＋AI詳細診断でA4分析レポートを作成します。
+            </p>
             <div className="mt-8">
               <LinkButton href="/diagnosis">
-                診断フォームへ進む
+                5分診断をはじめる
                 <ArrowRight size={18} />
               </LinkButton>
             </div>
@@ -35,9 +35,9 @@ export default function HomePage() {
           <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
             <div className="grid gap-4">
               {[
-                { icon: Timer, title: "事前入力 約5分", text: "会社情報、研修条件、15項目チェックを入力します。" },
-                { icon: ClipboardCheck, title: "課題整理", text: "人材育成課題を5領域で整理し、面談の論点を明確にします。" },
-                { icon: FileText, title: "分析レポート付き", text: "30分面談時にAI分析を含めたレポートを差し上げます。" }
+                { icon: Timer, title: appName, text: "15項目を約5分で入力し、採用後の定着・育成状態を確認します。" },
+                { icon: ClipboardCheck, title: "レーダーチャート表示", text: "5領域の傾向、強み、優先確認領域をその場で確認できます。" },
+                { icon: FileText, title: "30分面談＋AI詳細診断", text: "希望企業には、AI分析を含めたA4分析レポートを作成します。" }
               ].map((item) => (
                 <div key={item.title} className="flex gap-4 rounded-md bg-slate-50 p-4">
                   <item.icon className="mt-1 shrink-0 text-gold-500" size={24} />

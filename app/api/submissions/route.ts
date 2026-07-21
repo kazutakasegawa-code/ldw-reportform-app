@@ -1,7 +1,12 @@
 import { NextResponse } from "next/server";
+import { randomBytes } from "crypto";
 import { prisma } from "@/lib/prisma";
 import { diagnosisSchema } from "@/lib/schema";
 import { calculateDomainScores, recommendPlan } from "@/lib/scoring";
+
+function createResultToken() {
+  return randomBytes(24).toString("base64url");
+}
 
 export async function POST(request: Request) {
   const json = await request.json();
@@ -17,8 +22,10 @@ export async function POST(request: Request) {
 
   const submission = await prisma.submission.create({
     data: {
+      resultToken: createResultToken(),
       ...data,
       mainIssues: normalizedMainIssues.join("、"),
+      status: "5分診断完了",
       recommendedPlan: recommendation.plan,
       checkAnswers: {
         create: checkAnswers
@@ -32,5 +39,5 @@ export async function POST(request: Request) {
     }
   });
 
-  return NextResponse.json({ id: submission.id });
+  return NextResponse.json({ id: submission.id, resultToken: submission.resultToken });
 }

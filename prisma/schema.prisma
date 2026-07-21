@@ -10,6 +10,7 @@ datasource db {
 
 model Submission {
   id                         String           @id @default(cuid())
+  resultToken                String           @unique
   companyName                String
   industry                   String
   employeeCount              String
@@ -33,13 +34,18 @@ model Submission {
   hearingQuestion            String?
   consentPrivacy             Boolean
   consentAi                  Boolean
-  status                     String           @default("未確認")
+  status                     String           @default("5分診断完了")
   meetingDate                DateTime?
   reportDate                 DateTime?
   meetingMemo                String?
   priorityIssue              String?
   recommendedPlan            String?
   reportComment              String?
+  resultViewedAt             DateTime?
+  ctaClickedAt               DateTime?
+  meetingRequestedAt         DateTime?
+  preferredMeetingDates      String?
+  meetingRequestMemo         String?
   createdAt                  DateTime         @default(now())
   updatedAt                  DateTime         @updatedAt
   checkAnswers               CheckAnswer[]

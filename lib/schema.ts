@@ -10,7 +10,7 @@ export const diagnosisSchema = z.object({
   email: z.string().email("メールアドレスの形式で入力してください"),
   phone: z.string().min(1, "電話番号を入力してください"),
   targetLayer: z.string().min(1, "研修対象階層を選択してください"),
-  targetCount: z.string().min(1, "対象人数を入力してください"),
+  targetCount: z.string().min(1, "研修対象人数を選択してください"),
   desiredTiming: z.string().min(1, "希望時期を入力してください"),
   pastTraining: z.string().min(1, "過去の研修実施を選択してください"),
   mainIssues: z.array(z.string()).min(1, "主な課題を1つ以上選択してください"),
@@ -74,4 +74,12 @@ export const analysisUpdateSchema = z.object({
   managementSupport: z.string().optional(),
   domainComments: z.string().optional(),
   additionalQuestions: z.string().optional()
+});
+
+export const meetingRequestSchema = z.object({
+  preferredDates: z.array(z.string().trim().min(1, "希望日時を入力してください")).length(3),
+  meetingMethod: z.string().min(1, "面談方法を選択してください"),
+  memo: z.string().optional(),
+  consentAi: z.literal(true, { errorMap: () => ({ message: "AI利用に同意してください" }) }),
+  consentPrivacy: z.literal(true, { errorMap: () => ({ message: "入力情報の利用に同意してください" }) })
 });

@@ -8,9 +8,9 @@ import { Button, Card, FieldLabel, MutedNotice, inputClass } from "@/components/
 import {
   checkQuestions,
   desiredTimingOptions,
-  diagnosticNotice,
   employeeCountOptions,
   expectedPeriods,
+  fiveMinuteDiagnosticNotice,
   hearingOptions,
   industryOptions,
   mainIssueOptions,
@@ -100,9 +100,10 @@ export default function DiagnosisForm() {
         messageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
         return;
       }
-      setStatusMessage("送信が完了しました。完了ページへ移動します。");
+      const result = await response.json();
+      setStatusMessage("送信が完了しました。診断結果ページへ移動します。");
       window.setTimeout(() => {
-        window.location.assign("/thanks");
+        window.location.assign(`/diagnosis/result/${result.resultToken}`);
       }, 600);
     } catch {
       setServerError("送信に失敗しました。通信状況をご確認のうえ、もう一度お試しください。");
@@ -126,7 +127,7 @@ export default function DiagnosisForm() {
       </div>
 
       <MutedNotice>
-        {diagnosticNotice}
+        {fiveMinuteDiagnosticNotice}
         <br />
         {privacyNotice}
       </MutedNotice>
