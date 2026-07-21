@@ -50,9 +50,12 @@ button {
 }
 
 .a4-report {
-  width: 297mm;
-  min-height: 210mm;
+  width: 287mm;
+  height: 200mm;
+  min-height: 0;
   margin: 0 auto;
+  padding: 0 !important;
+  overflow: hidden;
   background: white;
   color: #102a4f;
 }
@@ -63,7 +66,8 @@ button {
 
 .report-landscape .report-grid {
   align-items: stretch;
-  min-height: 172mm;
+  height: 176mm;
+  min-height: 0;
 }
 
 .report-landscape .report-middle-stack {
@@ -73,13 +77,13 @@ button {
 }
 
 .report-landscape .report-middle-stack .report-compact-section > section {
-  height: 18mm;
+  height: 13.5mm;
   overflow: hidden;
 }
 
 .report-landscape .report-middle-actions {
   flex: 1;
-  min-height: 42mm;
+  min-height: 37mm;
 }
 
 .report-landscape .report-middle-actions .report-compact-section {
@@ -102,7 +106,7 @@ button {
 
 .report-landscape .report-middle-stack .report-compact-section-8 p,
 .report-landscape .report-middle-stack .report-compact-section-9 p {
-  -webkit-line-clamp: 10;
+  -webkit-line-clamp: 9;
 }
 
 .report-footer-note {
@@ -110,6 +114,65 @@ button {
   overflow: hidden;
   text-align: left;
   white-space: nowrap;
+  font-size: 5.3px !important;
+  line-height: 1 !important;
+}
+
+.report-landscape header {
+  padding-bottom: 3px !important;
+  border-bottom-width: 3px !important;
+}
+
+.report-landscape header h1 {
+  margin-top: 0 !important;
+  font-size: 20px !important;
+  line-height: 1.05 !important;
+}
+
+.report-grid {
+  margin-top: 5px !important;
+  gap: 5px !important;
+  height: 176mm !important;
+  font-size: 8px !important;
+  align-items: stretch !important;
+  line-height: 1.22 !important;
+}
+
+.report-stack {
+  gap: 3px !important;
+}
+
+.report-landscape h2 {
+  margin-bottom: 1px !important;
+  gap: 4px !important;
+  font-size: 9px !important;
+  line-height: 1.1 !important;
+}
+
+.report-landscape h2 span {
+  width: 14px !important;
+  height: 14px !important;
+  font-size: 7.5px !important;
+}
+
+.report-landscape section,
+.report-landscape dl > div > div,
+.report-landscape .rounded {
+  border-radius: 4px !important;
+}
+
+.report-landscape section {
+  padding: 3px !important;
+}
+
+.report-landscape table {
+  font-size: 7.5px !important;
+}
+
+.report-landscape th,
+.report-landscape td {
+  padding: 2px 4px !important;
+  line-height: 1.2 !important;
 }
 
 @media print {

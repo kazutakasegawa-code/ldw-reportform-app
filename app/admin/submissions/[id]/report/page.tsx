@@ -42,7 +42,7 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
         </PrintButton>
       </div>
 
-      <article className="a4-report report-landscape p-7 shadow-soft">
+      <article className="a4-report report-landscape shadow-soft">
         <header className="relative border-b-4 border-gold-500 pb-2">
           <div>
             <div>
