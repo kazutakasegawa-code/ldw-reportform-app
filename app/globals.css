@@ -176,7 +176,7 @@ button {
   .result-print-quadrants {
     display: grid;
     grid-template-columns: 1fr 0.98fr;
-    grid-template-rows: 1.03fr 0.57fr;
+    grid-template-rows: 1.08fr 0.52fr;
     gap: 6mm 8mm;
     width: 100%;
     height: 100%;
@@ -252,8 +252,8 @@ button {
 
   .result-print-chart-card,
   .result-print-overview {
-    min-height: 70mm;
-    border-bottom: 1.4px solid #d8e0ea !important;
+    min-height: 72mm;
+    border: 1.4px solid #d8e0ea !important;
   }
 
   .result-print-card h3,
@@ -275,7 +275,7 @@ button {
   .result-print-radar-svg {
     display: block;
     width: 100%;
-    height: 58mm;
+    height: 57mm;
     margin-top: 1mm;
   }
 
@@ -495,12 +495,10 @@ button {
   }
 
   .result-print-cta-block {
-    display: grid;
-    grid-template-columns: 1fr 54mm;
-    gap: 6mm;
-    align-items: end;
+    position: relative;
+    display: block;
     border: 1px solid #d8e0ea;
-    padding: 22mm 6mm 6mm;
+    padding: 0;
   }
 
   .result-print-cta-block p {
@@ -509,6 +507,13 @@ button {
     font-size: 8pt;
     line-height: 1.45;
     font-weight: 700;
+  }
+
+  .result-print-cta-block > div:first-child {
+    position: absolute;
+    bottom: 16mm;
+    left: 6mm;
+    width: 116mm;
   }
 
   .result-print-cta-meta {
@@ -523,25 +528,28 @@ button {
   }
 
   .result-print-cta-side {
-    display: flex;
-    min-height: 45mm;
-    flex-direction: column;
-    justify-content: space-between;
+    position: static;
     text-align: left;
   }
 
   .result-print-cta-side span {
+    position: absolute;
+    right: 12mm;
+    bottom: 42mm;
     display: block;
-    margin-top: 0;
+    width: 52mm;
     background: transparent !important;
     color: #a3a3a3 !important;
     padding: 0;
-    font-size: 10pt;
+    font-size: 9.5pt;
     line-height: 1.25;
     font-weight: 800;
   }
 
   .result-print-cta-side p {
+    position: absolute;
+    right: 14mm;
+    bottom: 18mm;
     margin: 0;
     background: transparent !important;
     color: #0a2344;
