@@ -50,11 +50,11 @@ button {
 }
 
 .a4-report {
-  width: 287mm;
-  height: 200mm;
+  width: 297mm;
+  height: 210mm;
   min-height: 0;
   margin: 0 auto;
-  padding: 0 !important;
+  padding: 5mm !important;
   overflow: hidden;
   background: white;
   color: #102a4f;
@@ -77,13 +77,20 @@ button {
 }
 
 .report-landscape .report-middle-stack .report-compact-section > section {
-  height: 13.5mm;
+  height: 14mm;
   overflow: hidden;
+}
+
+.report-landscape .report-middle-stack .report-compact-section-3 > section,
+.report-landscape .report-middle-stack .report-compact-section-4 > section,
+.report-landscape .report-middle-stack .report-compact-section-5 > section,
+.report-landscape .report-middle-stack .report-compact-section-6 > section {
+  height: 17mm;
 }
 
 .report-landscape .report-middle-actions {
   flex: 1;
-  min-height: 37mm;
+  min-height: 28mm;
 }
 
 .report-landscape .report-middle-actions .report-compact-section {
@@ -348,13 +355,20 @@ button {
   }
 
   .report-landscape .report-middle-stack .report-compact-section > section {
-    height: 13.5mm !important;
+    height: 14mm !important;
     overflow: hidden !important;
+  }
+
+  .report-landscape .report-middle-stack .report-compact-section-3 > section,
+  .report-landscape .report-middle-stack .report-compact-section-4 > section,
+  .report-landscape .report-middle-stack .report-compact-section-5 > section,
+  .report-landscape .report-middle-stack .report-compact-section-6 > section {
+    height: 17mm !important;
   }
 
   .report-landscape .report-middle-actions {
     flex: 1 !important;
-    min-height: 37mm !important;
+    min-height: 28mm !important;
   }
 
   .report-landscape .report-middle-actions .report-compact-section {
