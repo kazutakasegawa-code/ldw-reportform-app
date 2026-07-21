@@ -201,7 +201,7 @@ button {
     top: 22mm;
     left: 147mm;
     width: 126mm;
-    height: 94mm;
+    height: 100mm;
   }
 
   .result-print-compare-block {
@@ -214,10 +214,10 @@ button {
 
   .result-print-cta-block {
     position: absolute;
-    top: 124mm;
+    top: 126mm;
     left: 147mm;
     width: 126mm;
-    height: 46mm;
+    height: 58mm;
   }
 
   .result-print-brand {
@@ -463,7 +463,7 @@ button {
   }
 
   .result-print-subtitle {
-    margin-top: 21mm;
+    margin-top: 31mm;
   }
 
   .result-print-table {
