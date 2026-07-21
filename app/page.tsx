@@ -8,7 +8,7 @@ export default function HomePage() {
       <Container className="py-8 sm:py-12">
         <header className="flex flex-col gap-3 border-b border-slate-200 pb-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm font-semibold text-gold-500">{providerName}</p>
+            <p className="text-sm font-semibold text-navy-900">{providerName}</p>
           </div>
         </header>
 
