@@ -65,7 +65,7 @@ export default function MeetingRequestBox({ token }: { token: string }) {
 
   return (
     <Card className="border-gold-300 bg-gold-50 p-6">
-      <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
+      <div>
         <div>
           <h2 className="text-xl font-bold text-navy-900">診断結果をもとに、30分で優先課題と次の一手を整理しませんか？</h2>
           <p className="mt-3 text-sm leading-7 text-slate-700">
@@ -74,10 +74,12 @@ export default function MeetingRequestBox({ token }: { token: string }) {
           <p className="mt-3 text-sm font-semibold text-navy-900">面談30分／A4分析レポート付き／毎月5社まで</p>
           <p className="mt-2 text-xs leading-6 text-slate-600">AI分析は補助であり、最終的な確認・判断はLife Design Worksが行います。</p>
         </div>
-        <Button type="button" onClick={handleCtaClick}>
-          <CalendarCheck size={18} />
-          30分面談＋AI詳細診断を予約する
-        </Button>
+        <div className="mt-5">
+          <Button type="button" onClick={handleCtaClick} className="w-full justify-center px-6 py-4 text-base sm:w-auto sm:min-w-[360px]">
+            <CalendarCheck size={20} />
+            30分面談＋AI詳細診断を予約する
+          </Button>
+        </div>
       </div>
 
       {message ? <p className="mt-5 rounded-md bg-white p-4 text-sm font-semibold text-navy-800">{message}</p> : null}
