@@ -5,7 +5,7 @@ import MeetingRequestBox from "./MeetingRequestBox";
 import ResultRadarChart from "./ResultRadarChart";
 import ResultPrintButton from "./ResultPrintButton";
 import { Card, Container, PageShell } from "@/components/ui";
-import { appName, fiveMinuteDiagnosticNotice, providerName } from "@/lib/constants";
+import { appName, fiveMinuteDiagnosticNotice } from "@/lib/constants";
 import { prisma } from "@/lib/prisma";
 import { calculateResultDomainScores, summarizeResultScores } from "@/lib/scoring";
 
@@ -41,8 +41,10 @@ export default async function DiagnosisResultPage({ params }: { params: Promise<
       <Container className="result-print-container py-8 sm:py-12">
         <header className="result-screen-only flex flex-col gap-2 border-b border-slate-200 pb-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-sm font-semibold text-gold-500">{providerName}</p>
-            <p className="mt-1 text-lg font-bold text-navy-900">{appName}</p>
+            <p className="text-lg font-normal text-navy-900">{appName}</p>
+            <p className="mt-2 text-sm leading-6 text-slate-600">
+              {submission.companyName} / {submission.contactName} 様
+            </p>
           </div>
           <ResultPrintButton />
         </header>
@@ -153,6 +155,8 @@ export default async function DiagnosisResultPage({ params }: { params: Promise<
         </main>
 
         <PrintableResult
+          companyName={submission.companyName}
+          contactName={submission.contactName}
           resultScores={resultScores}
           summary={summary}
           token={token}
@@ -176,10 +180,14 @@ function MiniStat({ icon, label, value }: { icon: ReactNode; label: string; valu
 }
 
 function PrintableResult({
+  companyName,
+  contactName,
   resultScores,
   summary,
   token
 }: {
+  companyName: string;
+  contactName: string;
   resultScores: ReturnType<typeof calculateResultDomainScores>;
   summary: ReturnType<typeof summarizeResultScores>;
   token: string;
@@ -194,6 +202,7 @@ function PrintableResult({
           <section className="result-print-block result-print-main">
             <header className="result-print-simple-header">
               <p>採用・定着・育成課題 5分診断</p>
+              <p className="result-print-client-name">{companyName} / {contactName} 様</p>
             </header>
             <div className="result-print-title-row">
               <h2>

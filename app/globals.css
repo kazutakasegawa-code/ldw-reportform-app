@@ -241,6 +241,13 @@ button {
     font-weight: 400;
   }
 
+  .result-print-simple-header .result-print-client-name {
+    margin-top: 1mm;
+    color: #64748b;
+    font-size: 6.8pt;
+    font-weight: 700;
+  }
+
   .result-print-title-row h2 {
     margin: 0;
     padding-top: 3.4mm;
