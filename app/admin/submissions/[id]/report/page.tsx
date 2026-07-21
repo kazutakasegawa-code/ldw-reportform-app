@@ -73,7 +73,7 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
                 <Info label="従業員数" value={submission.employeeCount} />
               </div>
               <div className="grid gap-2">
-                <Info label="主な課題" value={limitText(submission.mainIssues, 70)} compactValue />
+                <Info label="主な課題" value={formatBulletList(limitText(submission.mainIssues, 70))} compactValue />
                 <Info label="社員に望む状態" value={limitText(submission.hearingIdealState, 70)} compactValue />
               </div>
             </dl>
@@ -262,6 +262,14 @@ function limitText(text: string, maxLength: number) {
   return text.length > maxLength ? `${text.slice(0, Math.max(0, maxLength - 3))}...` : text;
 }
 
+function formatBulletList(text: string) {
+  const items = text
+    .split(/[、\r\n]+/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+  return items.length ? items.map((item) => `・${item}`).join("\n") : "未入力";
+}
+
 function buildKpiRows(kpis?: string | null) {
   const defaultMethods = ["上司観察・本人振り返り", "アンケート・面談", "手帳・チェック表", "相互フィードバック", "実施記録"];
   const defaultIndicators = [
@@ -295,7 +303,7 @@ function Info({ label, value, compactValue = false }: { label: string; value: st
   return (
     <div className="report-basic-info rounded-md border border-slate-200 bg-slate-50 p-3">
       <dt className="text-[8px] font-semibold text-slate-500">{label}</dt>
-      <dd className={`mt-1 font-semibold leading-tight ${compactValue ? "text-[9px]" : "text-[12px]"}`}>{value}</dd>
+      <dd className={`mt-1 whitespace-pre-line font-semibold leading-tight ${compactValue ? "text-[9px]" : "text-[12px]"}`}>{value}</dd>
     </div>
   );
 }
