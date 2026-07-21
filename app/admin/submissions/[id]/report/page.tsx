@@ -62,7 +62,7 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
           本レポートは事前回答等をもとにAIで情報整理した仮説を含む資料であり、社員個人の能力・適性・人事評価を判定するものではありません。
         </p>
 
-        <section className="report-grid mt-4 grid grid-cols-[0.9fr_1.15fr_1.05fr] gap-4 text-[10.5px] leading-5">
+        <section className="report-grid mt-4 grid grid-cols-3 gap-4 text-[10.5px] leading-5">
           <div className="report-stack space-y-3">
             <CompactHeading number="1" title="基本情報" />
             <dl className="grid grid-cols-2 gap-2">
