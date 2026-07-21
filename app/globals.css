@@ -238,6 +238,12 @@ button {
   -webkit-print-color-adjust: exact !important;
 }
 
+.report-landscape .report-compact-section > section p,
+.report-landscape .report-right-stack section h3,
+.report-landscape .report-right-stack section p {
+  font-size: 9px !important;
+}
+
 .report-landscape section,
 .report-landscape dl > div > div,
 .report-landscape .rounded {
@@ -249,7 +255,7 @@ button {
 }
 
 .report-landscape table {
-  font-size: 7.5px !important;
+  font-size: 9px !important;
 }
 
 .report-landscape th,
@@ -526,7 +532,7 @@ button {
   }
 
   .report-landscape table {
-    font-size: 7.5px !important;
+    font-size: 9px !important;
   }
 
   .report-landscape th,
