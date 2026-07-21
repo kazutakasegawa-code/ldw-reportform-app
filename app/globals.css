@@ -198,10 +198,10 @@ button {
 
   .result-print-priority-block {
     position: absolute;
-    top: 14mm;
+    top: 22mm;
     left: 147mm;
     width: 126mm;
-    height: 92mm;
+    height: 94mm;
   }
 
   .result-print-compare-block {
@@ -214,20 +214,18 @@ button {
 
   .result-print-cta-block {
     position: absolute;
-    top: 116mm;
+    top: 124mm;
     left: 147mm;
     width: 126mm;
-    height: 49mm;
+    height: 46mm;
   }
 
   .result-print-brand {
-    position: absolute;
-    right: 10mm;
-    bottom: 3mm;
-    margin: 0;
+    margin: 2.4mm 0 0;
     color: #0a2344;
-    font-size: 8pt;
+    font-size: 7pt;
     font-weight: 700;
+    text-align: center;
   }
 
   .result-print-simple-header {
@@ -465,7 +463,7 @@ button {
   }
 
   .result-print-subtitle {
-    margin-top: 13mm;
+    margin-top: 21mm;
   }
 
   .result-print-table {
@@ -542,31 +540,31 @@ button {
     overflow: hidden;
   }
 
-  .result-print-cta-block p {
+  .result-print-cta-block > div:first-child p {
     margin: 2mm 0 0;
     color: #102a4f;
-    font-size: 6.4pt;
-    line-height: 1.35;
+    font-size: 6.1pt;
+    line-height: 1.3;
     font-weight: 700;
   }
 
   .result-print-cta-block > div:first-child {
     position: absolute;
-    top: 11mm;
+    top: 8mm;
     left: 6mm;
-    width: 78mm;
+    width: 76mm;
   }
 
   .result-print-cta-block h3 {
-    font-size: 10.6pt;
-    line-height: 1.25;
+    font-size: 10pt;
+    line-height: 1.22;
   }
 
   .result-print-qr {
     position: absolute;
-    right: 9mm;
-    top: 8mm;
-    width: 31mm;
+    right: 8mm;
+    top: 7mm;
+    width: 32mm;
     text-align: center;
   }
 
@@ -578,13 +576,22 @@ button {
     background: white;
   }
 
-  .result-print-qr p {
+  .result-print-qr-cta {
     margin: 0;
     padding-top: 1mm;
     color: #0a2344;
-    font-size: 5.8pt;
+    font-size: 6pt;
     line-height: 1.25;
     font-weight: 800;
+  }
+
+  .result-print-qr .result-print-brand {
+    margin: 2.4mm 0 0;
+    color: #0a2344;
+    font-size: 7pt;
+    line-height: 1.2;
+    font-weight: 700;
+    text-align: center;
   }
 
 }
