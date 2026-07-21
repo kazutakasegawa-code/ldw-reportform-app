@@ -61,6 +61,28 @@ button {
   overflow: visible;
 }
 
+.report-landscape .report-middle-stack .report-compact-section > section {
+  height: 13mm;
+  overflow: hidden;
+}
+
+.report-landscape .report-middle-stack .report-compact-section-8 > section,
+.report-landscape .report-middle-stack .report-compact-section-9 > section {
+  height: 22mm;
+}
+
+.report-landscape .report-middle-stack .report-compact-section p {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.report-landscape .report-middle-stack .report-compact-section-8 p,
+.report-landscape .report-middle-stack .report-compact-section-9 p {
+  -webkit-line-clamp: 5;
+}
+
 @media print {
   @page {
     size: A4 landscape;
@@ -174,6 +196,28 @@ button {
 
   .report-stack {
     gap: 3px !important;
+  }
+
+  .report-landscape .report-middle-stack .report-compact-section > section {
+    height: 10.5mm !important;
+    overflow: hidden !important;
+  }
+
+  .report-landscape .report-middle-stack .report-compact-section-8 > section,
+  .report-landscape .report-middle-stack .report-compact-section-9 > section {
+    height: 18mm !important;
+  }
+
+  .report-landscape .report-middle-stack .report-compact-section p {
+    display: -webkit-box !important;
+    overflow: hidden !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 3 !important;
+  }
+
+  .report-landscape .report-middle-stack .report-compact-section-8 p,
+  .report-landscape .report-middle-stack .report-compact-section-9 p {
+    -webkit-line-clamp: 5 !important;
   }
 
   .report-landscape h2 {

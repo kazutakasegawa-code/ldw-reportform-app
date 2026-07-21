@@ -95,7 +95,7 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
             </div>
           </div>
 
-          <div className="report-stack space-y-2">
+          <div className="report-stack report-middle-stack space-y-2">
             <CompactSection number="3" title="総合所見" body={analysis?.overallFinding || submission.reportComment || "面談内容を踏まえて追記します。"} maxLength={180} />
             <CompactSection number="4" title="組織の強み" body={analysis?.strengths || "事前回答と面談内容を踏まえて整理します。"} maxLength={135} />
             <CompactSection number="5" title="現在の課題トップ3" body={analysis?.topIssues || "事前回答と面談内容を踏まえて整理します。"} maxLength={150} />
@@ -218,7 +218,7 @@ function CompactHeading({ number, title, note }: { number: string; title: string
 
 function CompactSection({ number, title, body, maxLength }: { number: string; title: string; body: string; maxLength: number }) {
   return (
-    <div>
+    <div className={`report-compact-section report-compact-section-${number}`}>
       <CompactHeading number={number} title={title} />
       <section className="mt-0.5 rounded-md border border-slate-200 bg-white p-2">
         <p className="whitespace-pre-wrap text-slate-800">{limitText(body, maxLength)}</p>
