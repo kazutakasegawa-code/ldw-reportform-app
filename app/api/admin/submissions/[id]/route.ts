@@ -11,12 +11,13 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
-  const { meetingDate, reportDate, ...data } = parsed.data;
+  const { meetingDate, meetingTime, meetingCompleted, reportDate, ...data } = parsed.data;
   await prisma.submission.update({
     where: { id },
     data: {
       ...data,
-      meetingDate: parseDateTimeInputAsJst(meetingDate),
+      status: meetingCompleted ? "面談実施済み" : data.status,
+      meetingDate: meetingDate ? parseDateTimeInputAsJst(`${meetingDate}T${meetingTime || "00:00"}`) : null,
       reportDate: parseDateInputAsJst(reportDate)
     }
   });

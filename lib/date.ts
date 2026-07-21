@@ -34,6 +34,12 @@ export function formatDateTimeInputJst(date?: Date | null) {
   return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
 }
 
+export function formatTimeInputJst(date?: Date | null) {
+  if (!date) return "";
+  const parts = datePartsJst(date);
+  return `${parts.hour}:${parts.minute}`;
+}
+
 export function parseDateInputAsJst(value?: string | null) {
   if (!value) return null;
   return new Date(`${value}T00:00:00+09:00`);
