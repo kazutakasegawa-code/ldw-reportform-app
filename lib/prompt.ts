@@ -1,7 +1,7 @@
 import type { AnalysisResult, CheckAnswer, Submission } from "@prisma/client";
 import { aiCaution, diagnosticNotice } from "./constants";
 import { formatDateTimeJst } from "./date";
-import { calculateDomainScores, calculateOverallAverage, recommendPlan } from "./scoring";
+import { calculateDomainScores, calculateResultDomainScores, calculateOverallResultScore, recommendPlan } from "./scoring";
 
 type SubmissionWithRelations = Submission & {
   checkAnswers: CheckAnswer[];
@@ -10,27 +10,31 @@ type SubmissionWithRelations = Submission & {
 
 export function buildAnalysisPrompt(submission: SubmissionWithRelations) {
   const domainScores = calculateDomainScores(submission.checkAnswers);
-  const overall = calculateOverallAverage(domainScores);
+  const resultScores = calculateResultDomainScores(submission.checkAnswers);
+  const overallResultScore = calculateOverallResultScore(resultScores);
   const recommendation = recommendPlan(domainScores);
   const sortedAnswers = [...submission.checkAnswers].sort((a, b) => a.questionNo - b.questionNo);
   const answerLines = sortedAnswers
     .sort((a, b) => a.questionNo - b.questionNo)
-    .map((answer) => `${answer.questionNo}. ${answer.domain}
+    .map((answer) => {
+      const resultDomain = resultScores.find((score) => score.sourceDomain === answer.domain);
+      return `${answer.questionNo}. ${resultDomain?.domain ?? answer.domain}
 質問: ${answer.question}
 確認の観点: ${answer.viewpoint}
-評点: ${answer.score}
-コメント: ${answer.comment || "なし"}`)
+評価: ${answer.score}（${answer.score * 20}点換算）
+コメント: ${answer.comment || "なし"}`;
+    })
     .join("\n");
-  const domainDetailLines = domainScores
+  const domainDetailLines = resultScores
     .map((score) => {
-      const answers = sortedAnswers.filter((answer) => answer.domain === score.domain);
-      const lowAnswers = answers.filter((answer) => answer.score <= 2).map((answer) => `${answer.questionNo}:${answer.score}`).join("、") || "なし";
-      const highAnswers = answers.filter((answer) => answer.score >= 4).map((answer) => `${answer.questionNo}:${answer.score}`).join("、") || "なし";
+      const answers = sortedAnswers.filter((answer) => answer.domain === score.sourceDomain);
+      const lowAnswers = answers.filter((answer) => answer.score <= 2).map((answer) => `${answer.questionNo}:${answer.score}（${answer.score * 20}点換算）`).join("、") || "なし";
+      const highAnswers = answers.filter((answer) => answer.score >= 4).map((answer) => `${answer.questionNo}:${answer.score}（${answer.score * 20}点換算）`).join("、") || "なし";
       const comments = answers
         .filter((answer) => answer.comment)
         .map((answer) => `Q${answer.questionNo}: ${answer.comment}`)
         .join(" / ") || "コメントなし";
-      return `${score.domain}: 平均${score.average ?? "未入力"} / 判定${score.judgement} / 意味:${score.meaning} / 対応:${score.response} / 高評価:${highAnswers} / 低評価:${lowAnswers} / コメント:${comments}`;
+      return `${score.domain}: ${score.score}点 / 判定${score.judgement} / コメント:${score.comment} / 元平均:${score.average ?? "未入力"}（1〜5評価） / 高評価:${highAnswers} / 低評価:${lowAnswers} / コメント:${comments}`;
     })
     .join("\n");
 
@@ -101,8 +105,8 @@ ${aiCaution}
 顧客レポートに表示するコメント: ${submission.reportComment || "なし"}
 
 スコア概要:
-総合平均: ${overall ?? "未入力"}
-${domainScores.map((score) => `${score.domain}: ${score.average ?? "未入力"} / ${score.judgement} / ${score.response}`).join("\n")}
+総合スコア: ${overallResultScore}点
+${resultScores.map((score) => `${score.domain}: ${score.score}点 / ${score.judgement} / ${score.comment}`).join("\n")}
 
 5領域別詳細:
 ${domainDetailLines}
