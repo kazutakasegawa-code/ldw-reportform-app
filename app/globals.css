@@ -47,7 +47,7 @@ button {
 
   @page result-diagnosis {
     size: A4 portrait;
-    margin: 8mm;
+    margin: 7mm;
   }
 
   body {
@@ -142,16 +142,12 @@ button {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 281mm;
-    max-height: 281mm;
-    break-after: page;
-    background: white !important;
-    gap: 5mm;
-    overflow: hidden;
-  }
-
-  .result-print-sheet-second {
+    height: 283mm;
+    max-height: 283mm;
     break-after: auto;
+    background: white !important;
+    gap: 3.8mm;
+    overflow: hidden;
   }
 
   .result-print-sheet-header {
@@ -159,13 +155,13 @@ button {
     align-items: flex-end;
     justify-content: space-between;
     border-bottom: 1px solid #d8e0ea;
-    padding-bottom: 3mm;
+    padding-bottom: 2.2mm;
   }
 
   .result-print-sheet-header p {
     margin: 0;
     color: #d69e00;
-    font-size: 10pt;
+    font-size: 9pt;
     font-weight: 700;
   }
 
@@ -173,14 +169,14 @@ button {
   .result-print-sheet-header h2 {
     margin: 1mm 0 0;
     color: #0a2344;
-    font-size: 17pt;
+    font-size: 14pt;
     line-height: 1.15;
   }
 
   .result-print-sheet > h2 {
     margin: 0;
     color: #0a2344;
-    font-size: 16pt;
+    font-size: 13.5pt;
     line-height: 1.2;
   }
 
@@ -188,45 +184,44 @@ button {
     margin: 0;
     border: 1px solid #d8e0ea;
     border-radius: 5px;
-    padding: 2.5mm;
-    font-size: 8.5pt;
-    line-height: 1.45;
+    padding: 2mm;
+    font-size: 7.6pt;
+    line-height: 1.38;
   }
 
-  .result-print-two-column,
-  .result-print-priorities > div,
-  .result-print-compare-grid {
+  .result-print-summary-grid,
+  .result-print-lower-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4mm;
+    gap: 3.5mm;
   }
 
   .result-print-panel,
   .result-print-priority-card,
-  .result-print-compare-grid article {
+  .result-print-next {
     break-inside: avoid;
     border: 1px solid #d8e0ea;
     border-radius: 5px;
-    padding: 3mm;
+    padding: 2.6mm;
   }
 
   .result-print-panel h3,
-  .result-print-priorities h3,
-  .result-print-compare-grid h3 {
+  .result-print-lower-grid h3,
+  .result-print-next h3 {
     margin: 0;
     color: #0a2344;
-    font-size: 12pt;
+    font-size: 10.5pt;
     line-height: 1.2;
   }
 
   .result-print-help {
     margin: 1mm 0 0;
     color: #64748b;
-    font-size: 8pt;
+    font-size: 7.2pt;
   }
 
   .result-print-panel .result-radar-chart {
-    height: 62mm !important;
+    height: 54mm !important;
   }
 
   .result-print-scorebox {
@@ -234,19 +229,19 @@ button {
     border-radius: 5px;
     background: #0a2344 !important;
     color: white !important;
-    padding: 4mm;
+    padding: 3mm;
   }
 
   .result-print-scorebox p {
     margin: 0;
-    font-size: 9pt;
-    line-height: 1.45;
+    font-size: 8pt;
+    line-height: 1.35;
   }
 
   .result-print-scorebox strong {
     display: block;
     margin-top: 1mm;
-    font-size: 32pt;
+    font-size: 28pt;
     line-height: 1;
   }
 
@@ -257,12 +252,12 @@ button {
 
   .result-print-scorebox em {
     display: inline-block;
-    margin: 3mm 0;
+    margin: 2mm 0;
     border-radius: 999px;
     background: white !important;
     color: #0a2344 !important;
     padding: 1mm 4mm;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     font-weight: 700;
   }
@@ -270,14 +265,14 @@ button {
   .result-print-minis {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 3mm;
-    margin: 4mm 0 0;
+    gap: 2mm;
+    margin: 2.5mm 0 0;
   }
 
   .result-print-minis div {
     border-radius: 4px;
     background: #f3f6fa !important;
-    padding: 3mm;
+    padding: 2mm;
   }
 
   .result-print-minis dt {
@@ -293,32 +288,34 @@ button {
     font-weight: 700;
   }
 
-  .result-print-priorities {
-    break-inside: avoid;
-  }
-
   .result-print-priority-card h4 {
     margin: 0;
-    font-size: 11pt;
+    font-size: 9.2pt;
   }
 
   .result-print-priority-card strong {
     display: block;
-    margin-top: 1mm;
+    margin-top: 0.6mm;
     color: #d69e00;
-    font-size: 10pt;
+    font-size: 8.4pt;
   }
 
   .result-print-priority-card p {
-    margin: 2mm 0 0;
-    font-size: 7.8pt;
-    line-height: 1.38;
+    margin: 1.2mm 0 0;
+    font-size: 6.8pt;
+    line-height: 1.3;
+  }
+
+  .result-print-priority-list {
+    display: grid;
+    gap: 2mm;
+    margin-top: 2mm;
   }
 
   .result-print-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 8.5pt;
+    font-size: 7.5pt;
   }
 
   .result-print-table th {
@@ -329,28 +326,28 @@ button {
   .result-print-table th,
   .result-print-table td {
     border: 1px solid #d8e0ea;
-    padding: 2mm;
-    line-height: 1.3;
+    padding: 1.6mm;
+    line-height: 1.2;
     text-align: left;
   }
 
-  .result-print-compare-grid article {
+  .result-print-next {
     background: #f8fafc !important;
+    border: 1px solid #d8e0ea;
   }
 
-  .result-print-compare-grid ul {
-    margin: 2mm 0 0;
-    padding-left: 5mm;
-    font-size: 8.5pt;
-    line-height: 1.45;
+  .result-print-next p {
+    margin: 1.5mm 0 0;
+    font-size: 7.2pt;
+    line-height: 1.35;
   }
 
   .result-print-footer {
     margin-top: auto;
     border-top: 1px solid #d8e0ea;
-    padding-top: 3mm;
+    padding-top: 2mm;
     color: #64748b;
-    font-size: 8pt;
+    font-size: 7pt;
     line-height: 1.4;
   }
 

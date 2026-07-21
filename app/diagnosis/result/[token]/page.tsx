@@ -196,7 +196,7 @@ function PrintableResult({
         <h2>診断結果｜採用後に社員が定着・成長する職場の現在地</h2>
         <p className="result-print-notice">{fiveMinuteDiagnosticNotice}</p>
 
-        <div className="result-print-two-column">
+        <div className="result-print-summary-grid">
           <section className="result-print-panel">
             <h3>5領域レーダーチャート</h3>
             <p className="result-print-help">100点満点。外側ほどスコアが高い状態を示します。</p>
@@ -224,75 +224,52 @@ function PrintableResult({
           </section>
         </div>
 
-        <section className="result-print-priorities">
-          <h3>優先して確認すべき領域トップ2</h3>
+        <section className="result-print-lower-grid">
           <div>
-            {summary.priorities.map((item) => (
-              <article key={item.domain} className="result-print-priority-card">
-                <div>
-                  <h4>{item.domain}</h4>
-                  <strong>{item.score}点 / {item.judgement}</strong>
-                </div>
-                <p>{item.priorityComment}</p>
-                <p><b>30分面談で確認したい観点：</b>{item.interviewPoint}</p>
-              </article>
-            ))}
+            <h3>優先して確認すべき領域トップ2</h3>
+            <div className="result-print-priority-list">
+              {summary.priorities.map((item) => (
+                <article key={item.domain} className="result-print-priority-card">
+                  <div>
+                    <h4>{item.domain}</h4>
+                    <strong>{item.score}点 / {item.judgement}</strong>
+                  </div>
+                  <p>{item.priorityComment}</p>
+                  <p><b>確認観点：</b>{item.interviewPoint}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3>5領域別結果一覧</h3>
+            <table className="result-print-table">
+              <thead>
+                <tr>
+                  <th>領域</th>
+                  <th>スコア</th>
+                  <th>判定</th>
+                </tr>
+              </thead>
+              <tbody>
+                {resultScores.map((item) => (
+                  <tr key={item.domain}>
+                    <td>{item.domain}</td>
+                    <td>{item.score}点</td>
+                    <td>{item.judgement}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
-      </section>
 
-      <section className="result-print-sheet result-print-sheet-second">
-        <header className="result-print-sheet-header">
-          <div>
-            <p>Life Design Works</p>
-            <h2>5領域別結果一覧</h2>
-          </div>
-        </header>
-
-        <table className="result-print-table">
-          <thead>
-            <tr>
-              <th>領域</th>
-              <th>スコア</th>
-              <th>判定</th>
-              <th>コメント</th>
-            </tr>
-          </thead>
-          <tbody>
-            {resultScores.map((item) => (
-              <tr key={item.domain}>
-                <td>{item.domain}</td>
-                <td>{item.score}点</td>
-                <td>{item.judgement}</td>
-                <td>{item.comment}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        <section className="result-print-compare-grid">
-          <article>
-            <h3>この5分診断で分かること</h3>
-            <ul>
-              <li>5領域の大まかな傾向</li>
-              <li>強みと弱い領域</li>
-              <li>採用後の定着・育成に影響しそうなポイント</li>
-              <li>30分面談で確認すべきテーマ</li>
-            </ul>
-          </article>
-          <article>
-            <h3>30分面談＋AI詳細診断で分かること</h3>
-            <ul>
-              <li>優先課題トップ3</li>
-              <li>表面的な問題と背景原因</li>
-              <li>増やす行動・減らす行動</li>
-              <li>THINGi®︎・しあわせ360°手帳・コーチングの適合度</li>
-              <li>推奨プログラム、成果確認指標、A4分析レポート</li>
-            </ul>
-          </article>
+        <section className="result-print-next">
+          <h3>次の確認ポイント</h3>
+          <p>この画面は簡易診断結果です。詳細な分析レポートでは、優先課題トップ3、背景原因、増やす行動・減らす行動、推奨プログラム、成果確認指標を30分面談＋AI詳細診断で整理します。</p>
         </section>
 
-        <p className="result-print-footer">本画面は簡易診断結果です。詳細な分析レポートは30分面談＋AI詳細診断で作成します。 / Life Design Works 代表 瀬川一貴</p>
+        <p className="result-print-footer">Life Design Works 代表 瀬川一貴</p>
       </section>
     </div>
   );
