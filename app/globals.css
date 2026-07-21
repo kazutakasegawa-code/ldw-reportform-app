@@ -55,6 +55,18 @@ button {
     line-height: 1.2;
   }
 
+  html:has(.result-print-container),
+  body:has(.result-print-container),
+  body:has(.result-print-container) main {
+    width: 287mm !important;
+    height: 200mm !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: white !important;
+  }
+
   .no-print {
     display: none !important;
   }
@@ -132,10 +144,23 @@ button {
     display: none !important;
   }
 
+  .result-print-container {
+    width: 287mm !important;
+    max-width: none !important;
+    height: 200mm !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
   .result-print-only {
     display: block !important;
     color: #102a4f !important;
     page: result-diagnosis;
+    width: 287mm !important;
+    height: 200mm !important;
+    overflow: hidden !important;
   }
 
   .result-print-sheet {
@@ -145,8 +170,8 @@ button {
     height: 200mm;
     max-height: 200mm;
     break-after: auto;
-    background: white !important;
-    gap: 3mm;
+    background: #f7f9fc !important;
+    gap: 2.4mm;
     overflow: hidden;
   }
 
@@ -154,36 +179,38 @@ button {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    border-bottom: 1px solid #d8e0ea;
-    padding-bottom: 1.8mm;
+    border-radius: 5px;
+    background: #0a2344 !important;
+    color: white !important;
+    padding: 2.4mm 3.5mm;
   }
 
   .result-print-sheet-header p {
     margin: 0;
-    color: #d69e00;
-    font-size: 8.5pt;
+    color: #f5c842;
+    font-size: 7.8pt;
     font-weight: 700;
   }
 
   .result-print-sheet-header h1,
   .result-print-sheet-header h2 {
     margin: 1mm 0 0;
-    color: #0a2344;
-    font-size: 14pt;
+    color: white;
+    font-size: 12.8pt;
     line-height: 1.15;
   }
 
   .result-print-title-row {
     display: grid;
-    grid-template-columns: 1fr 1.15fr;
-    gap: 4mm;
+    grid-template-columns: 0.95fr 1.25fr;
+    gap: 3mm;
     align-items: start;
   }
 
   .result-print-title-row h2 {
     margin: 0;
     color: #0a2344;
-    font-size: 17pt;
+    font-size: 14pt;
     line-height: 1.18;
   }
 
@@ -191,15 +218,16 @@ button {
     margin: 0;
     border: 1px solid #d8e0ea;
     border-radius: 5px;
-    padding: 2mm;
-    font-size: 7.1pt;
-    line-height: 1.32;
+    background: white !important;
+    padding: 1.6mm 2mm;
+    font-size: 6.6pt;
+    line-height: 1.28;
   }
 
   .result-print-landscape-grid {
     display: grid;
     grid-template-columns: 1.08fr 0.86fr 1fr;
-    gap: 3mm;
+    gap: 2.4mm;
   }
 
   .result-print-panel,
@@ -209,7 +237,8 @@ button {
     break-inside: avoid;
     border: 1px solid #d8e0ea;
     border-radius: 5px;
-    padding: 2.4mm;
+    background: white !important;
+    padding: 2mm;
   }
 
   .result-print-panel h3,
@@ -217,20 +246,20 @@ button {
   .result-print-next h3 {
     margin: 0;
     color: #0a2344;
-    font-size: 10pt;
+    font-size: 9pt;
     line-height: 1.2;
   }
 
   .result-print-help {
     margin: 1mm 0 0;
     color: #64748b;
-    font-size: 7.2pt;
+    font-size: 6.7pt;
   }
 
   .result-print-radar-svg {
     display: block;
     width: 100%;
-    height: 80mm;
+    height: 70mm;
     margin-top: 1mm;
   }
 
@@ -239,25 +268,25 @@ button {
     border-radius: 5px;
     background: #0a2344 !important;
     color: white !important;
-    padding: 4mm;
+    padding: 3mm;
   }
 
   .result-print-scorebox p {
     margin: 0;
-    font-size: 8pt;
+    font-size: 7.2pt;
     line-height: 1.35;
   }
 
   .result-print-scorebox strong {
     display: block;
     margin-top: 1mm;
-    font-size: 34pt;
+    font-size: 30pt;
     line-height: 1;
   }
 
   .result-print-scorebox strong span {
     margin-left: 2mm;
-    font-size: 12pt;
+    font-size: 10pt;
   }
 
   .result-print-scorebox em {
@@ -267,7 +296,7 @@ button {
     background: white !important;
     color: #0a2344 !important;
     padding: 1mm 4mm;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     font-weight: 700;
   }
@@ -275,58 +304,58 @@ button {
   .result-print-minis {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2mm;
-    margin: 3mm 0 0;
+    gap: 1.6mm;
+    margin: 2mm 0 0;
   }
 
   .result-print-minis div {
     border-radius: 4px;
     background: #f3f6fa !important;
-    padding: 2.2mm;
+    padding: 1.8mm;
   }
 
   .result-print-minis dt {
     margin: 0;
     color: #64748b;
-    font-size: 8.5pt;
+    font-size: 7.3pt;
     font-weight: 700;
   }
 
   .result-print-minis dd {
     margin: 1mm 0 0;
-    font-size: 8pt;
+    font-size: 7.2pt;
     font-weight: 700;
   }
 
   .result-print-priority-card h4 {
     margin: 0;
-    font-size: 9.4pt;
+    font-size: 8.4pt;
   }
 
   .result-print-priority-card strong {
     display: block;
     margin-top: 0.6mm;
     color: #d69e00;
-    font-size: 8.6pt;
+    font-size: 7.8pt;
   }
 
   .result-print-priority-card p {
     margin: 1.2mm 0 0;
-    font-size: 7.1pt;
-    line-height: 1.3;
+    font-size: 6.2pt;
+    line-height: 1.24;
   }
 
   .result-print-priority-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 3mm;
-    margin-top: 1.5mm;
+    gap: 2mm;
+    margin-top: 1.2mm;
   }
 
   .result-print-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 8pt;
+    font-size: 7.2pt;
   }
 
   .result-print-table th {
@@ -337,30 +366,30 @@ button {
   .result-print-table th,
   .result-print-table td {
     border: 1px solid #d8e0ea;
-    padding: 1.6mm;
-    line-height: 1.2;
+    padding: 1.2mm;
+    line-height: 1.15;
     text-align: left;
   }
 
   .result-print-next {
     background: #f8fafc !important;
     border: 1px solid #d8e0ea;
-    margin-top: 3mm;
+    margin-top: 2mm;
   }
 
   .result-print-next p {
     margin: 1mm 0 0;
-    font-size: 6.8pt;
-    line-height: 1.3;
+    font-size: 6.2pt;
+    line-height: 1.22;
   }
 
   .result-print-footer {
     margin: 0;
     border-top: 1px solid #d8e0ea;
-    padding-top: 2mm;
+    padding-top: 1.2mm;
     color: #64748b;
-    font-size: 7pt;
-    line-height: 1.4;
+    font-size: 6.4pt;
+    line-height: 1.2;
   }
 
 }

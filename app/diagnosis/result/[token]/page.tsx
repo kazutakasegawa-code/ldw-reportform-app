@@ -38,7 +38,7 @@ export default async function DiagnosisResultPage({ params }: { params: Promise<
       <style media="print">{`
         @page { size: A4 landscape; margin: 5mm; }
       `}</style>
-      <Container className="py-8 sm:py-12">
+      <Container className="result-print-container py-8 sm:py-12">
         <header className="result-screen-only flex flex-col gap-2 border-b border-slate-200 pb-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-semibold text-gold-500">{providerName}</p>
