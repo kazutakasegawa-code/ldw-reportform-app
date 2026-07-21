@@ -27,6 +27,28 @@ button {
   display: none;
 }
 
+.result-client-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.result-client-name {
+  margin: 0;
+  color: #0a2344;
+  font-size: 1.125rem;
+  line-height: 1.55;
+  font-weight: 600;
+}
+
+.result-client-app-name {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
 .a4-report {
   width: 297mm;
   min-height: 210mm;
@@ -243,15 +265,17 @@ button {
 
   .result-print-simple-header .result-print-client-name {
     color: #0a2344;
-    font-size: 7.8pt;
+    font-size: 8.2pt;
     font-weight: 700;
+    line-height: 1.25;
   }
 
   .result-print-simple-header .result-print-app-name {
-    margin-top: 1mm;
+    margin-top: 0.8mm;
     color: #64748b;
-    font-size: 6.8pt;
+    font-size: 6.4pt;
     font-weight: 400;
+    line-height: 1.25;
   }
 
   .result-print-title-row h2 {

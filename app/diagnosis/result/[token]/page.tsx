@@ -40,11 +40,11 @@ export default async function DiagnosisResultPage({ params }: { params: Promise<
       `}</style>
       <Container className="result-print-container py-8 sm:py-12">
         <header className="result-screen-only flex flex-col gap-2 border-b border-slate-200 pb-5 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-lg font-semibold leading-7 text-navy-900">
+          <div className="result-client-header">
+            <p className="result-client-name">
               {submission.companyName} / {submission.contactName} 様
             </p>
-            <p className="mt-2 text-sm font-normal leading-6 text-slate-600">{appName}</p>
+            <p className="result-client-app-name">{appName}</p>
           </div>
           <ResultPrintButton />
         </header>
