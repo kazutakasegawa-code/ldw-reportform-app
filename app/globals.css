@@ -174,10 +174,8 @@ button {
   }
 
   .result-print-quadrants {
-    display: grid;
-    grid-template-columns: 1fr 0.98fr;
-    grid-template-rows: 1.08fr 0.52fr;
-    gap: 6mm 8mm;
+    position: relative;
+    display: block;
     width: 100%;
     height: 100%;
     background: white !important;
@@ -188,6 +186,38 @@ button {
     overflow: hidden;
     background: white !important;
     padding: 0;
+  }
+
+  .result-print-main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 132mm;
+    height: 118mm;
+  }
+
+  .result-print-priority-block {
+    position: absolute;
+    top: 0;
+    left: 147mm;
+    width: 126mm;
+    height: 78mm;
+  }
+
+  .result-print-compare-block {
+    position: absolute;
+    top: 129mm;
+    left: 0;
+    width: 132mm;
+    height: 55mm;
+  }
+
+  .result-print-cta-block {
+    position: absolute;
+    top: 104mm;
+    left: 144mm;
+    width: 129mm;
+    height: 80mm;
   }
 
   .result-print-simple-header {
@@ -389,8 +419,8 @@ button {
   .result-print-priority-card p {
     margin: 1.6mm 0 0;
     color: #102a4f;
-    font-size: 5.8pt;
-    line-height: 1.24;
+    font-size: 5.5pt;
+    line-height: 1.18;
   }
 
   .result-print-priority-card em {
@@ -420,7 +450,8 @@ button {
   }
 
   .result-print-priority-card {
-    padding: 2.1mm;
+    min-height: 35mm;
+    padding: 2mm;
   }
 
   .result-print-subtitle {
@@ -433,7 +464,7 @@ button {
     margin-top: 1.6mm;
     overflow: hidden;
     border-radius: 4px;
-    font-size: 5.8pt;
+    font-size: 5.45pt;
   }
 
   .result-print-table th {
@@ -444,7 +475,7 @@ button {
   .result-print-table th,
   .result-print-table td {
     border: 1px solid #d8e0ea;
-    padding: 1mm 1.6mm;
+    padding: 0.8mm 1.2mm;
     line-height: 1.15;
     text-align: left;
   }
@@ -457,7 +488,7 @@ button {
   }
 
   .result-print-list-card {
-    min-height: 39mm;
+    min-height: 42mm;
     padding: 3.2mm;
   }
 
@@ -495,7 +526,6 @@ button {
   }
 
   .result-print-cta-block {
-    position: relative;
     display: block;
     border: 1px solid #d8e0ea;
     padding: 0;
