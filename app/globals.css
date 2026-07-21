@@ -198,7 +198,7 @@ button {
 
   .result-print-priority-block {
     position: absolute;
-    top: 0;
+    top: 7mm;
     left: 147mm;
     width: 126mm;
     height: 86mm;
@@ -214,10 +214,20 @@ button {
 
   .result-print-cta-block {
     position: absolute;
-    top: 129mm;
+    top: 103mm;
     left: 144mm;
     width: 129mm;
-    height: 55mm;
+    height: 62mm;
+  }
+
+  .result-print-brand {
+    position: absolute;
+    right: 20mm;
+    bottom: 3mm;
+    margin: 0;
+    color: #0a2344;
+    font-size: 8pt;
+    font-weight: 700;
   }
 
   .result-print-simple-header {
@@ -455,7 +465,7 @@ button {
   }
 
   .result-print-subtitle {
-    margin-top: 2mm;
+    margin-top: 5mm;
   }
 
   .result-print-table {
@@ -529,6 +539,7 @@ button {
     display: block;
     border: 1px solid #d8e0ea;
     padding: 0;
+    overflow: hidden;
   }
 
   .result-print-cta-block p {
@@ -541,9 +552,9 @@ button {
 
   .result-print-cta-block > div:first-child {
     position: absolute;
-    bottom: 8mm;
+    top: 14mm;
     left: 6mm;
-    width: 82mm;
+    width: 78mm;
   }
 
   .result-print-cta-block h3 {
@@ -552,46 +563,34 @@ button {
   }
 
   .result-print-cta-meta {
+    margin-top: 3mm !important;
     color: #0a2344 !important;
+    font-size: 7.4pt !important;
     font-weight: 800;
   }
 
-  .result-print-url {
-    color: #64748b !important;
-    font-size: 5.6pt !important;
-    word-break: break-all;
-  }
-
-  .result-print-cta-side {
-    position: static;
-    text-align: left;
-  }
-
-  .result-print-cta-side span {
+  .result-print-qr {
     position: absolute;
     right: 10mm;
-    bottom: 33mm;
-    display: block;
-    width: 52mm;
-    background: transparent !important;
-    color: #a3a3a3 !important;
-    padding: 0;
-    font-size: 8.4pt;
-    line-height: 1.25;
-    font-weight: 800;
+    top: 13mm;
+    width: 30mm;
+    text-align: center;
   }
 
-  .result-print-cta-side p {
-    position: absolute;
-    right: 14mm;
-    bottom: 9mm;
+  .result-print-qr img {
+    display: block;
+    width: 29mm;
+    height: 29mm;
+    border: 1px solid #d8e0ea;
+    background: white;
+  }
+
+  .result-print-qr p {
     margin: 0;
-    background: transparent !important;
-    color: #0a2344;
-    padding: 0;
-    text-align: right;
-    font-size: 8pt;
-    font-weight: 500;
+    padding-top: 1mm;
+    color: #64748b;
+    font-size: 5.6pt;
+    font-weight: 700;
   }
 
 }
