@@ -92,7 +92,7 @@ export default function MeetingRequestBox({ token }: { token: string }) {
             <FieldLabel required>面談方法</FieldLabel>
             <select name="meetingMethod" className={inputClass} defaultValue="" required>
               <option value="">選択してください</option>
-              <option value="オンライン">オンライン</option>
+              <option value="オンライン希望">オンライン希望</option>
               <option value="直接対面希望">直接対面希望</option>
               <option value="相談したい">相談したい</option>
             </select>
