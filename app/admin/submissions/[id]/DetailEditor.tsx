@@ -73,19 +73,12 @@ export default function DetailEditor({ submission, domainScores, recommendation,
     event.preventDefault();
     const formElement = event.currentTarget;
     const form = new FormData(formElement);
-    const payload = {
-      ...Object.fromEntries(form.entries()),
-      meetingCompleted: form.get("meetingCompleted") === "on"
-    };
+    const payload = Object.fromEntries(form.entries());
     const response = await fetch(`/api/admin/submissions/${submission.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
-    if (response.ok && payload.meetingCompleted) {
-      const statusField = formElement.elements.namedItem("status");
-      if (statusField instanceof HTMLSelectElement) statusField.value = "面談実施済み";
-    }
     setMessage(response.ok ? "管理項目を保存しました。" : "保存に失敗しました。");
     scrollToMessage();
   }
@@ -254,9 +247,7 @@ export default function DetailEditor({ submission, domainScores, recommendation,
               <FieldLabel>面談予定日</FieldLabel>
               <label className="inline-flex items-center gap-2 text-sm font-semibold text-navy-900">
                 <input
-                  name="meetingCompleted"
                   type="checkbox"
-                  defaultChecked={submission.status === "面談実施済み"}
                   className="h-4 w-4"
                 />
                 面談済み

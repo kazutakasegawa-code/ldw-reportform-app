@@ -52,7 +52,6 @@ export const adminUpdateSchema = z.object({
   status: z.string().min(1),
   meetingDate: z.string().optional(),
   meetingTime: z.string().optional(),
-  meetingCompleted: z.boolean().optional(),
   reportDate: z.string().optional(),
   meetingMemo: z.string().optional(),
   priorityIssue: z.string().optional(),
