@@ -160,7 +160,6 @@ export default async function DiagnosisResultPage({ params }: { params: Promise<
 
         <footer className="result-screen-only border-t border-slate-200 pt-5 text-sm text-slate-600">
           <p className="font-semibold text-navy-900">Life Design Works</p>
-          <p>代表 瀬川一貴</p>
         </footer>
       </Container>
     </PageShell>

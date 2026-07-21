@@ -215,9 +215,10 @@ button {
   .result-print-cta-block {
     position: absolute;
     top: 126mm;
+    bottom: 5mm;
     left: 147mm;
     width: 126mm;
-    height: 58mm;
+    height: auto;
   }
 
   .result-print-brand {
@@ -302,7 +303,7 @@ button {
     color: #0a2344;
     font-size: 9pt;
     line-height: 1.25;
-    font-weight: 900;
+    font-weight: 900 !important;
   }
 
   .result-print-help {
@@ -512,7 +513,7 @@ button {
     color: #0a2344;
     font-size: 7.4pt;
     line-height: 1.3;
-    font-weight: 900;
+    font-weight: 900 !important;
   }
 
   .result-print-list-card ul {

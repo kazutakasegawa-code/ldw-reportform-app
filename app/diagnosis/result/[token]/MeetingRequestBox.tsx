@@ -70,7 +70,7 @@ export default function MeetingRequestBox({ token }: { token: string }) {
           <p className="mt-3 text-sm leading-7 text-slate-700">
             レーダーチャートで低く出た領域には、複数の背景要因が関係している可能性があります。30分面談＋AI詳細診断では、回答内容をもとに、御社の強み・優先課題・背景にある原因仮説・次に行う育成施策をA4分析レポートとして整理します。
           </p>
-          <p className="mt-3 text-sm font-semibold text-navy-900">初回0円／面談30分／A4分析レポート付き／毎月5社まで</p>
+          <p className="mt-3 text-sm font-semibold text-navy-900">面談30分／A4分析レポート付き／毎月5社まで</p>
           <p className="mt-2 text-xs leading-6 text-slate-600">AI分析は補助であり、最終的な確認・判断はLife Design Works代表 瀬川一貴が行います。</p>
         </div>
         <Button type="button" onClick={handleCtaClick}>
