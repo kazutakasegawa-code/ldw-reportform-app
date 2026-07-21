@@ -20,12 +20,11 @@ export default async function DiagnosisResultPage({ params }: { params: Promise<
 
   if (!submission) notFound();
 
-  if (!submission.resultViewedAt || submission.status === "5分診断完了") {
+  if (!submission.resultViewedAt) {
     await prisma.submission.update({
       where: { id: submission.id },
       data: {
-        resultViewedAt: submission.resultViewedAt ?? new Date(),
-        status: submission.status === "5分診断完了" ? "結果閲覧済み" : submission.status
+        resultViewedAt: new Date()
       }
     });
   }
