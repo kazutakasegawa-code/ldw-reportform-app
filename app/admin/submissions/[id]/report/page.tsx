@@ -77,22 +77,19 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
             </dl>
 
             <CompactHeading number="2" title="5領域スコア" />
-            <div className="-mt-1 grid grid-cols-[0.95fr_1.05fr] gap-1">
+            <div className="-mt-1">
               <div className="rounded border border-gold-200 bg-gold-50 px-2 py-1">
                 <p className="text-[8.5px] font-bold leading-tight text-slate-600">総合スコア</p>
                 <p className="mt-0.5 text-[15px] font-black leading-none text-navy-900">{overallResultScore}<span className="ml-0.5 text-[8px] font-bold">点</span></p>
-              </div>
-              <div className="rounded border border-slate-200 bg-slate-50 px-2 py-1">
-                <p className="text-[8px] font-normal leading-tight text-slate-500">外側ほどスコアが高い状態を示します。</p>
               </div>
             </div>
             <RadarChart scores={resultScores} compact />
             <div className="grid grid-cols-2 gap-1">
               {resultScores.map((score) => (
                 <div key={score.domain} className="rounded border border-slate-200 bg-slate-50 px-2 py-1">
-                  <div className="flex items-center justify-between gap-2">
-                    <p className="font-semibold">{score.domain}</p>
-                    <p className="font-bold">{score.score}点 / {score.judgement}</p>
+                  <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-0.5 text-[6.5px] leading-tight">
+                    <p className="min-w-0 whitespace-nowrap font-semibold">{score.domain}</p>
+                    <p className="whitespace-nowrap font-bold">{score.score}点 / {score.judgement}</p>
                   </div>
                 </div>
               ))}
@@ -200,6 +197,12 @@ function RadarChart({ scores, compact = false }: { scores: ResultDomainScore[]; 
           const distance = radius * (score.score / 100);
           return <circle key={score.domain} cx={center + Math.cos(angle) * distance} cy={center + Math.sin(angle) * distance} r="4" fill="#102a4f" />;
         })}
+        {compact ? (
+          <text x="78" y="132" fontSize="5.5" fontWeight="400" fill="#64748b">
+            <tspan x="78" dy="0">外側ほどスコアが高い</tspan>
+            <tspan x="78" dy="7">状態を示します。</tspan>
+          </text>
+        ) : null}
         <text x={center} y={center + 5} textAnchor="middle" fontSize="11" fontWeight="700" fill="#102a4f">100</text>
       </svg>
       {compact ? null : <figcaption className="mt-2 text-center text-xs text-slate-600">外側ほどスコアが高い状態を示します。</figcaption>}
