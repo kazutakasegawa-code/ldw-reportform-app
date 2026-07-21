@@ -79,7 +79,7 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
             </dl>
 
             <CompactHeading number="2" title="5領域スコア" />
-            <div className="-mt-1 grid grid-cols-2 gap-1">
+            <div className="-mt-1 grid grid-cols-3 gap-1">
               <div className="rounded border border-gold-200 bg-gold-50 px-2 py-1">
                 <p className="text-[8.5px] font-bold leading-tight text-slate-600">総合スコア</p>
                 <p className="mt-0.5 text-[15px] font-black leading-none text-navy-900">{overallResultScore}<span className="ml-0.5 text-[8px] font-bold">点</span></p>
@@ -88,6 +88,11 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
                 <p className="text-[8.5px] font-bold leading-tight text-slate-600">最も高い領域</p>
                 <p className="mt-0.5 truncate text-[8px] font-bold leading-tight text-navy-900">{resultSummary.highest?.domain || "未入力"}</p>
                 <p className="text-[8px] font-bold leading-tight text-navy-900">{resultSummary.highest ? `${resultSummary.highest.score}点` : "-"}</p>
+              </div>
+              <div className="rounded border border-slate-200 bg-slate-50 px-2 py-1">
+                <p className="text-[8.5px] font-bold leading-tight text-slate-600">最も低い領域</p>
+                <p className="mt-0.5 truncate text-[8px] font-bold leading-tight text-navy-900">{resultSummary.lowest?.domain || "未入力"}</p>
+                <p className="text-[8px] font-bold leading-tight text-navy-900">{resultSummary.lowest ? `${resultSummary.lowest.score}点` : "-"}</p>
               </div>
             </div>
             <RadarChart scores={resultScores} compact />
