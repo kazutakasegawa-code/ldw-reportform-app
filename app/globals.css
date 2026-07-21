@@ -203,14 +203,26 @@ button {
 .report-landscape h2 {
   margin-bottom: 1px !important;
   gap: 4px !important;
-  font-size: 12px !important;
+  font-size: 11px !important;
   line-height: 1.1 !important;
 }
 
 .report-landscape h2 span {
-  width: 17px !important;
-  height: 17px !important;
-  font-size: 10px !important;
+  display: inline-flex !important;
+  width: 18px !important;
+  min-width: 18px !important;
+  height: 18px !important;
+  flex: 0 0 18px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 9999px !important;
+  background: #102a4f !important;
+  color: #ffffff !important;
+  font-size: 9px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  print-color-adjust: exact !important;
+  -webkit-print-color-adjust: exact !important;
 }
 
 .report-landscape section,
@@ -451,14 +463,26 @@ button {
   .report-landscape h2 {
     margin-bottom: 1px !important;
     gap: 4px !important;
-    font-size: 12px !important;
+    font-size: 11px !important;
     line-height: 1.1 !important;
   }
 
   .report-landscape h2 span {
-    width: 17px !important;
-    height: 17px !important;
-    font-size: 10px !important;
+    display: inline-flex !important;
+    width: 18px !important;
+    min-width: 18px !important;
+    height: 18px !important;
+    flex: 0 0 18px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 9999px !important;
+    background: #102a4f !important;
+    color: #ffffff !important;
+    font-size: 9px !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
   }
 
   .report-landscape section,
