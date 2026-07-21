@@ -235,6 +235,11 @@ button {
   line-height: 1.2 !important;
 }
 
+.report-landscape .report-basic-info {
+  border: 1px solid #d8e0ea !important;
+  background: #f8fafc !important;
+}
+
 @media print {
   @page {
     size: A4 landscape;
@@ -478,6 +483,13 @@ button {
   .report-landscape td {
     padding: 2px 4px !important;
     line-height: 1.2 !important;
+  }
+
+  .report-landscape .report-basic-info {
+    border: 1px solid #d8e0ea !important;
+    background: #f8fafc !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
   }
 
   .print-break {

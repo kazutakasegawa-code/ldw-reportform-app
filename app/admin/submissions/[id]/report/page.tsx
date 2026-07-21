@@ -280,7 +280,7 @@ function Section({ number, title, body }: { number: string; title: string; body:
 
 function Info({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md bg-slate-50 p-3">
+    <div className="report-basic-info rounded-md border border-slate-200 bg-slate-50 p-3">
       <dt className="text-xs font-semibold text-slate-500">{label}</dt>
       <dd className="mt-1 font-semibold">{value}</dd>
     </div>
