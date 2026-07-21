@@ -250,27 +250,29 @@ function PrintableResult({
               ))}
             </div>
 
-            <h3 className="result-print-subtitle">5領域別結果一覧</h3>
-            <table className="result-print-table">
-              <thead>
-                <tr>
-                  <th>領域</th>
-                  <th>スコア</th>
-                  <th>判定</th>
-                  <th>コメント</th>
-                </tr>
-              </thead>
-              <tbody>
-                {resultScores.map((item) => (
-                  <tr key={item.domain}>
-                    <td>{item.domain}</td>
-                    <td>{item.score}点</td>
-                    <td>{item.judgement}</td>
-                    <td>{item.comment}</td>
+            <div className="result-print-domain-list">
+              <h3 className="result-print-subtitle">5領域別結果一覧</h3>
+              <table className="result-print-table">
+                <thead>
+                  <tr>
+                    <th>領域</th>
+                    <th>スコア</th>
+                    <th>判定</th>
+                    <th>コメント</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {resultScores.map((item) => (
+                    <tr key={item.domain}>
+                      <td>{item.domain}</td>
+                      <td>{item.score}点</td>
+                      <td>{item.judgement}</td>
+                      <td>{item.comment}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </section>
 
           <section className="result-print-block result-print-compare-block">

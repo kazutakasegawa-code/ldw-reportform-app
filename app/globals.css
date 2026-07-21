@@ -462,8 +462,12 @@ button {
     padding: 2mm;
   }
 
+  .result-print-domain-list {
+    padding-top: 18mm;
+  }
+
   .result-print-subtitle {
-    margin-top: 31mm;
+    margin-top: 0;
   }
 
   .result-print-table {
