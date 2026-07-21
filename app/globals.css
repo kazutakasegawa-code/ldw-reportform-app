@@ -119,7 +119,7 @@ button {
 
 .report-landscape .report-right-stack {
   display: grid;
-  grid-template-rows: auto 15mm 37mm 32mm auto 24mm 18mm 1fr;
+  grid-template-rows: auto 17mm 39mm 34mm auto 27mm 21mm 18mm;
   height: 100%;
   gap: 3px !important;
 }
@@ -429,7 +429,7 @@ button {
 
   .report-landscape .report-right-stack {
     display: grid !important;
-    grid-template-rows: auto 15mm 37mm 32mm auto 24mm 18mm 1fr !important;
+    grid-template-rows: auto 17mm 39mm 34mm auto 27mm 21mm 18mm !important;
     height: 100% !important;
     gap: 3px !important;
   }
