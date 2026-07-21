@@ -184,7 +184,7 @@ button {
 }
 
 .report-landscape header h1 {
-  margin-top: 0 !important;
+  margin-top: 2mm !important;
   font-size: 20px !important;
   line-height: 1.05 !important;
 }
@@ -339,7 +339,7 @@ button {
   }
 
   .report-landscape header h1 {
-    margin-top: 0 !important;
+    margin-top: 2mm !important;
     font-size: 20px !important;
     line-height: 1.05 !important;
   }
