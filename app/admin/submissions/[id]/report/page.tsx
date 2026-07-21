@@ -93,7 +93,7 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
                   </div>
                 </div>
               ))}
-              <div className="flex items-center rounded border border-slate-200 bg-slate-50 px-2 py-1">
+              <div className="flex items-center px-2 py-1">
                 <p className="text-[6px] font-normal leading-tight text-slate-500">外側ほどスコアが高い状態を示します。</p>
               </div>
             </div>
