@@ -101,7 +101,7 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
             <CompactSection number="5" title="現在の課題トップ3" body={analysis?.topIssues || "事前回答と面談内容を踏まえて整理します。"} maxLength={150} />
             <CompactSection number="6" title="表面的に見えている問題" body={analysis?.visibleProblems || "面談で確認します。"} maxLength={120} />
             <CompactSection number="7" title="背景にある原因仮説" body={analysis?.causeHypotheses || "回答内容から考えられる仮説を面談で確認します。"} maxLength={155} />
-            <div className="grid grid-cols-2 gap-2">
+            <div className="report-middle-actions grid grid-cols-2 gap-2">
               <CompactSection number="8" title="増やす行動" body={analysis?.actionsToIncrease || "自分から相談・提案する行動、週次の振り返り、他者の強みを活かす行動。"} maxLength={95} />
               <CompactSection number="9" title="減らす行動" body={analysis?.actionsToDecrease || "判断の先送り、仕事の抱え込み、研修後の振り返り不足。"} maxLength={95} />
             </div>
