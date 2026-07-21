@@ -196,7 +196,10 @@ function PrintableResult({
               <p>採用・定着・育成課題 5分診断</p>
             </header>
             <div className="result-print-title-row">
-              <h2>診断結果｜採用後に社員が定着・成長する職場の現在地</h2>
+              <h2>
+                診断結果<br />
+                採用後に社員が定着・成長する職場の現在地
+              </h2>
               <p>{fiveMinuteDiagnosticNotice}</p>
               <p className="result-print-note">この画面は簡易診断結果です。詳細な分析レポートは30分面談＋AI詳細診断で作成します。</p>
             </div>

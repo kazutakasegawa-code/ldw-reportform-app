@@ -243,10 +243,10 @@ button {
 
   .result-print-title-row h2 {
     margin: 0;
-    padding-top: 4.5mm;
+    padding-top: 3.4mm;
     color: #0a2344;
-    font-size: 16.8pt;
-    line-height: 1.12;
+    font-size: 15.8pt;
+    line-height: 1.1;
   }
 
   .result-print-title-row > p {
@@ -321,25 +321,31 @@ button {
 
   .result-print-scorebox {
     margin-top: 5mm;
-    border-radius: 0;
-    background: white !important;
-    color: #a3a3a3 !important;
-    padding: 0;
+    border-radius: 5px;
+    background: #0a2344 !important;
+    color: white !important;
+    padding: 5mm 4.5mm;
   }
 
   .result-print-scorebox p {
     margin: 0;
-    color: #a3a3a3 !important;
+    color: #f6d36b !important;
     font-size: 8pt;
     font-weight: 800;
     line-height: 1.35;
   }
 
+  .result-print-scorebox p:last-child {
+    color: #f8fafc !important;
+    font-size: 7pt;
+    line-height: 1.45;
+  }
+
   .result-print-scorebox strong {
     display: block;
     margin-top: 1mm;
-    color: #a3a3a3 !important;
-    font-size: 36pt;
+    color: white !important;
+    font-size: 34pt;
     line-height: 1;
   }
 
@@ -350,11 +356,11 @@ button {
 
   .result-print-scorebox em {
     display: inline-block;
-    margin: 1.4mm 0;
+    margin: 1.8mm 0;
     border-radius: 999px;
-    background: transparent !important;
+    background: white !important;
     color: #0a2344 !important;
-    padding: 0;
+    padding: 0.8mm 2.8mm;
     font-size: 8.2pt;
     font-style: normal;
     font-weight: 800;
