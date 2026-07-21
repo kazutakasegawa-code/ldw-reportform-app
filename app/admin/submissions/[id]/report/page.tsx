@@ -198,9 +198,8 @@ function RadarChart({ scores, compact = false }: { scores: ResultDomainScore[]; 
           return <circle key={score.domain} cx={center + Math.cos(angle) * distance} cy={center + Math.sin(angle) * distance} r="4" fill="#102a4f" />;
         })}
         {compact ? (
-          <text x="78" y="132" fontSize="5.5" fontWeight="400" fill="#64748b">
-            <tspan x="78" dy="0">外側ほどスコアが高い</tspan>
-            <tspan x="78" dy="7">状態を示します。</tspan>
+          <text x="348" y="314" textAnchor="end" fontSize="5.5" fontWeight="400" fill="#64748b">
+            外側ほどスコアが高い状態を示します。
           </text>
         ) : null}
         <text x={center} y={center + 5} textAnchor="middle" fontSize="11" fontWeight="700" fill="#102a4f">100</text>
