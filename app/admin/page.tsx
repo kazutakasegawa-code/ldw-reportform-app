@@ -39,12 +39,11 @@ export default async function AdminPage() {
         </div>
         <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-soft">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[1230px] text-left text-sm">
+            <table className="w-full min-w-[1130px] text-left text-sm">
               <thead className="bg-navy-800 text-white">
                 <tr>
                   <th className="px-4 py-3">選択</th>
-                  <th className="px-4 py-3">会社名</th>
-                  <th className="px-4 py-3">担当者名</th>
+                  <th className="px-4 py-3">会社名／担当者名</th>
                   <th className="px-4 py-3">送信日時</th>
                   <th className="px-4 py-3">総合スコア</th>
                   <th className="px-4 py-3">最低スコア領域</th>
@@ -69,8 +68,10 @@ export default async function AdminPage() {
                           className="h-4 w-4"
                         />
                       </td>
-                      <td className="px-4 py-3 font-semibold">{submission.companyName}</td>
-                      <td className="px-4 py-3">{submission.contactName}</td>
+                      <td className="px-4 py-3">
+                        <p className="font-semibold text-navy-900">{submission.companyName}</p>
+                        <p className="mt-1 text-xs text-slate-600">{submission.contactName}</p>
+                      </td>
                       <td className="px-4 py-3">{formatDateTimeJst(submission.createdAt)}</td>
                       <td className="px-4 py-3 font-semibold">{summary.overallScore}点</td>
                       <td className="px-4 py-3">{summary.lowest.domain}（{summary.lowest.score}点）</td>
@@ -88,7 +89,7 @@ export default async function AdminPage() {
                 })}
                 {!submissions.length ? (
                   <tr>
-                    <td colSpan={10} className="px-4 py-10 text-center text-slate-500">まだ申込みはありません。</td>
+                    <td colSpan={9} className="px-4 py-10 text-center text-slate-500">まだ申込みはありません。</td>
                   </tr>
                 ) : null}
               </tbody>
