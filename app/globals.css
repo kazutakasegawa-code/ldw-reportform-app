@@ -284,6 +284,8 @@ button {
     border-radius: 5px;
     background: white !important;
     box-shadow: none;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
   }
 
   .result-print-card {
@@ -291,7 +293,7 @@ button {
   }
 
   .result-print-overview {
-    padding: 4mm;
+    padding: 4mm 3.5mm;
   }
 
   .result-print-chart-card,
@@ -338,26 +340,28 @@ button {
   }
 
   .result-print-scorebox {
-    margin-top: 5mm;
-    min-height: 35mm;
+    margin-top: 4mm;
+    min-height: 31mm;
     border-radius: 4px;
     background: #0a2344 !important;
     color: white !important;
-    padding: 5mm 5mm 4mm;
+    padding: 4mm 4mm 3.2mm;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
   }
 
   .result-print-scorebox p {
     margin: 0;
     color: white !important;
-    font-size: 7.8pt;
+    font-size: 7.2pt;
     font-weight: 800;
-    line-height: 1.35;
+    line-height: 1.25;
   }
 
   .result-print-scorebox p:last-child {
     color: #f8fafc !important;
-    font-size: 7.2pt;
-    line-height: 1.45;
+    font-size: 6.2pt;
+    line-height: 1.35;
     font-weight: 800;
   }
 
@@ -365,7 +369,7 @@ button {
     display: block;
     margin-top: 1mm;
     color: white !important;
-    font-size: 30pt;
+    font-size: 27pt;
     line-height: 1;
   }
 
@@ -376,40 +380,44 @@ button {
 
   .result-print-scorebox em {
     display: inline-block;
-    margin: 2mm 0 3.5mm;
+    margin: 1.5mm 0 2.4mm;
     border-radius: 999px;
     background: white !important;
     color: #0a2344 !important;
-    padding: 0.7mm 3mm;
-    font-size: 7.4pt;
+    padding: 0.65mm 2.8mm;
+    font-size: 6.8pt;
     font-style: normal;
     font-weight: 800;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
   }
 
   .result-print-minis {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 3mm;
-    margin: 4mm 0 0;
+    gap: 2mm;
+    margin: 3mm 0 0;
   }
 
   .result-print-minis div {
     border-radius: 4px;
     background: #f8fafc !important;
-    padding: 2.6mm 2.8mm;
+    padding: 2mm 2.2mm;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
   }
 
   .result-print-minis dt {
     margin: 0;
     color: #64748b;
-    font-size: 6.6pt;
+    font-size: 5.8pt;
     font-weight: 900;
   }
 
   .result-print-minis dd {
-    margin: 1mm 0 0;
+    margin: 0.8mm 0 0;
     color: #0a2344;
-    font-size: 7.2pt;
+    font-size: 6.2pt;
     font-weight: 900;
     line-height: 1.2;
   }
