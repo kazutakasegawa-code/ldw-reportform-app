@@ -93,6 +93,9 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
                   </div>
                 </div>
               ))}
+              <div className="flex items-center rounded border border-slate-200 bg-slate-50 px-2 py-1">
+                <p className="text-[6px] font-normal leading-tight text-slate-500">外側ほどスコアが高い状態を示します。</p>
+              </div>
             </div>
           </div>
 
@@ -197,11 +200,6 @@ function RadarChart({ scores, compact = false }: { scores: ResultDomainScore[]; 
           const distance = radius * (score.score / 100);
           return <circle key={score.domain} cx={center + Math.cos(angle) * distance} cy={center + Math.sin(angle) * distance} r="4" fill="#102a4f" />;
         })}
-        {compact ? (
-          <text x="348" y="314" textAnchor="end" fontSize="5.5" fontWeight="400" fill="#64748b">
-            外側ほどスコアが高い状態を示します。
-          </text>
-        ) : null}
         <text x={center} y={center + 5} textAnchor="middle" fontSize="11" fontWeight="700" fill="#102a4f">100</text>
       </svg>
       {compact ? null : <figcaption className="mt-2 text-center text-xs text-slate-600">外側ほどスコアが高い状態を示します。</figcaption>}
