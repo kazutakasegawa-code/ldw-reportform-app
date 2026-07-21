@@ -9,7 +9,7 @@ type ChartItem = {
 
 export default function ResultRadarChart({ data }: { data: ChartItem[] }) {
   return (
-    <div className="h-[320px] w-full">
+    <div className="result-radar-chart h-[320px] w-full">
       <ResponsiveContainer width="100%" height="100%">
         <RadarChart data={data} outerRadius="72%">
           <PolarGrid stroke="#cbd5e1" />

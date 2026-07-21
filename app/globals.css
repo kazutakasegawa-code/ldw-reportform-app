@@ -23,6 +23,10 @@ button {
   font: inherit;
 }
 
+.result-print-only {
+  display: none;
+}
+
 .a4-report {
   width: 297mm;
   min-height: 210mm;
@@ -39,6 +43,11 @@ button {
   @page {
     size: A4 landscape;
     margin: 5mm;
+  }
+
+  @page result-diagnosis {
+    size: A4 portrait;
+    margin: 8mm;
   }
 
   body {
@@ -118,4 +127,231 @@ button {
   .print-break {
     break-before: auto;
   }
+
+  .result-screen-only {
+    display: none !important;
+  }
+
+  .result-print-only {
+    display: block !important;
+    color: #102a4f !important;
+    page: result-diagnosis;
+  }
+
+  .result-print-sheet {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 281mm;
+    max-height: 281mm;
+    break-after: page;
+    background: white !important;
+    gap: 5mm;
+    overflow: hidden;
+  }
+
+  .result-print-sheet-second {
+    break-after: auto;
+  }
+
+  .result-print-sheet-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-bottom: 1px solid #d8e0ea;
+    padding-bottom: 3mm;
+  }
+
+  .result-print-sheet-header p {
+    margin: 0;
+    color: #d69e00;
+    font-size: 10pt;
+    font-weight: 700;
+  }
+
+  .result-print-sheet-header h1,
+  .result-print-sheet-header h2 {
+    margin: 1mm 0 0;
+    color: #0a2344;
+    font-size: 17pt;
+    line-height: 1.15;
+  }
+
+  .result-print-sheet > h2 {
+    margin: 0;
+    color: #0a2344;
+    font-size: 16pt;
+    line-height: 1.2;
+  }
+
+  .result-print-notice {
+    margin: 0;
+    border: 1px solid #d8e0ea;
+    border-radius: 5px;
+    padding: 2.5mm;
+    font-size: 8.5pt;
+    line-height: 1.45;
+  }
+
+  .result-print-two-column,
+  .result-print-priorities > div,
+  .result-print-compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4mm;
+  }
+
+  .result-print-panel,
+  .result-print-priority-card,
+  .result-print-compare-grid article {
+    break-inside: avoid;
+    border: 1px solid #d8e0ea;
+    border-radius: 5px;
+    padding: 3mm;
+  }
+
+  .result-print-panel h3,
+  .result-print-priorities h3,
+  .result-print-compare-grid h3 {
+    margin: 0;
+    color: #0a2344;
+    font-size: 12pt;
+    line-height: 1.2;
+  }
+
+  .result-print-help {
+    margin: 1mm 0 0;
+    color: #64748b;
+    font-size: 8pt;
+  }
+
+  .result-print-panel .result-radar-chart {
+    height: 62mm !important;
+  }
+
+  .result-print-scorebox {
+    margin-top: 3mm;
+    border-radius: 5px;
+    background: #0a2344 !important;
+    color: white !important;
+    padding: 4mm;
+  }
+
+  .result-print-scorebox p {
+    margin: 0;
+    font-size: 9pt;
+    line-height: 1.45;
+  }
+
+  .result-print-scorebox strong {
+    display: block;
+    margin-top: 1mm;
+    font-size: 32pt;
+    line-height: 1;
+  }
+
+  .result-print-scorebox strong span {
+    margin-left: 2mm;
+    font-size: 12pt;
+  }
+
+  .result-print-scorebox em {
+    display: inline-block;
+    margin: 3mm 0;
+    border-radius: 999px;
+    background: white !important;
+    color: #0a2344 !important;
+    padding: 1mm 4mm;
+    font-size: 9pt;
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  .result-print-minis {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3mm;
+    margin: 4mm 0 0;
+  }
+
+  .result-print-minis div {
+    border-radius: 4px;
+    background: #f3f6fa !important;
+    padding: 3mm;
+  }
+
+  .result-print-minis dt {
+    margin: 0;
+    color: #64748b;
+    font-size: 8pt;
+    font-weight: 700;
+  }
+
+  .result-print-minis dd {
+    margin: 1mm 0 0;
+    font-size: 9pt;
+    font-weight: 700;
+  }
+
+  .result-print-priorities {
+    break-inside: avoid;
+  }
+
+  .result-print-priority-card h4 {
+    margin: 0;
+    font-size: 11pt;
+  }
+
+  .result-print-priority-card strong {
+    display: block;
+    margin-top: 1mm;
+    color: #d69e00;
+    font-size: 10pt;
+  }
+
+  .result-print-priority-card p {
+    margin: 2mm 0 0;
+    font-size: 7.8pt;
+    line-height: 1.38;
+  }
+
+  .result-print-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5pt;
+  }
+
+  .result-print-table th {
+    background: #0a2344 !important;
+    color: white !important;
+  }
+
+  .result-print-table th,
+  .result-print-table td {
+    border: 1px solid #d8e0ea;
+    padding: 2mm;
+    line-height: 1.3;
+    text-align: left;
+  }
+
+  .result-print-compare-grid article {
+    background: #f8fafc !important;
+  }
+
+  .result-print-compare-grid ul {
+    margin: 2mm 0 0;
+    padding-left: 5mm;
+    font-size: 8.5pt;
+    line-height: 1.45;
+  }
+
+  .result-print-footer {
+    margin-top: auto;
+    border-top: 1px solid #d8e0ea;
+    padding-top: 3mm;
+    color: #64748b;
+    font-size: 8pt;
+    line-height: 1.4;
+  }
+
 }
