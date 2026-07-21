@@ -3,6 +3,7 @@ import OpenAI from "openai";
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { buildAnalysisPrompt } from "@/lib/prompt";
+import { limitAnalysisText } from "@/lib/analysis";
 
 const analysisFieldKeys = [
   "overallFinding",
@@ -104,7 +105,7 @@ function normalizeAnalysisResult(value: unknown) {
   const source = isRecord(value) ? value : {};
   return analysisFieldKeys.reduce<Record<(typeof analysisFieldKeys)[number], string>>((acc, key) => {
     const fieldValue = source[key];
-    acc[key] = typeof fieldValue === "string" ? fieldValue : "";
+    acc[key] = typeof fieldValue === "string" ? limitAnalysisText(key, fieldValue) : "";
     return acc;
   }, {} as Record<(typeof analysisFieldKeys)[number], string>);
 }

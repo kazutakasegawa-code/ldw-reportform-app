@@ -2,6 +2,7 @@ import type { AnalysisResult, CheckAnswer, Submission } from "@prisma/client";
 import { aiCaution, diagnosticNotice } from "./constants";
 import { formatDateTimeJst } from "./date";
 import { calculateDomainScores, calculateResultDomainScores, calculateOverallResultScore, recommendPlan } from "./scoring";
+import { analysisFieldDefinitions } from "./analysis";
 
 type SubmissionWithRelations = Submission & {
   checkAnswers: CheckAnswer[];
@@ -69,6 +70,10 @@ ${aiCaution}
 - 各項目はレポートに貼り付けやすいよう、短い段落または箇条書きで整理してください。
 - 成果確認指標は1行1指標で5項目以内にしてください。
 - 30分面談での追加確認事項は、面談で質問しやすい形にしてください。
+- 各項目は次のレポート表示文字数上限を必ず守ってください。
+
+レポート表示文字数上限:
+${analysisFieldDefinitions.map(({ label, limit }) => `- ${label}: ${limit}文字以内`).join("\n")}
 
 会社情報:
 会社名: ${submission.companyName}

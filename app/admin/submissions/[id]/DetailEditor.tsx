@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { AnalysisResult, CheckAnswer, Submission } from "@prisma/client";
 import { Clipboard, FileText, Save, Sparkles } from "lucide-react";
 import { Button, Card, FieldLabel, inputClass } from "@/components/ui";
+import { analysisFieldDefinitions, type AnalysisFieldName } from "@/lib/analysis";
 import { statusOptions } from "@/lib/constants";
 import { formatDateInputJst, formatDateTimeInputJst } from "@/lib/date";
 import { judgeResultScore, type DomainScore } from "@/lib/scoring";
@@ -16,42 +17,6 @@ type Props = {
   prompt: string;
 };
 
-const analysisFields = [
-  ["overallFinding", "総合所見"],
-  ["strengths", "組織の強み"],
-  ["topIssues", "現在の課題トップ3"],
-  ["visibleProblems", "表面的に見えている問題"],
-  ["causeHypotheses", "背景にある原因仮説"],
-  ["actionsToIncrease", "優先して増やす行動"],
-  ["actionsToDecrease", "優先して減らす行動"],
-  ["thingiFit", "THINGi®︎の適合度・理由"],
-  ["notebookFit", "しあわせ360°手帳の適合度・理由"],
-  ["coachingFit", "コーチングの適合度・理由"],
-  ["recommendedProgram", "AI分析による推奨プログラム"],
-  ["kpis", "成果確認指標"],
-  ["managementSupport", "経営者・管理職に求める支援"],
-  ["domainComments", "5領域コメント"],
-  ["additionalQuestions", "30分面談での追加確認事項"]
-] as const;
-
-const analysisLimits: Record<(typeof analysisFields)[number][0], number> = {
-  overallFinding: 700,
-  strengths: 500,
-  topIssues: 500,
-  visibleProblems: 500,
-  causeHypotheses: 600,
-  actionsToIncrease: 500,
-  actionsToDecrease: 500,
-  thingiFit: 350,
-  notebookFit: 350,
-  coachingFit: 350,
-  recommendedProgram: 600,
-  kpis: 500,
-  managementSupport: 500,
-  domainComments: 600,
-  additionalQuestions: 500
-};
-
 const resultDomainLabels: Record<string, string> = {
   "主体性・判断力": "主体性・判断力",
   "チーム・共創力": "報連相・チーム共創",
@@ -60,25 +25,6 @@ const resultDomainLabels: Record<string, string> = {
   "上司・育成環境": "上司・育成環境"
 };
 
-const reportDisplayLimits: Partial<Record<(typeof analysisFields)[number][0], number>> = {
-  overallFinding: 180,
-  strengths: 135,
-  topIssues: 150,
-  visibleProblems: 120,
-  causeHypotheses: 155,
-  actionsToIncrease: 95,
-  actionsToDecrease: 95,
-  thingiFit: 80,
-  notebookFit: 80,
-  coachingFit: 80,
-  recommendedProgram: 145,
-  kpis: 90,
-  managementSupport: 120,
-  domainComments: 140,
-  additionalQuestions: 110
-};
-
-type AnalysisFieldName = (typeof analysisFields)[number][0];
 type AnalysisPayload = Partial<Record<AnalysisFieldName, string>>;
 
 export default function DetailEditor({ submission, domainScores, recommendation, prompt }: Props) {
@@ -139,6 +85,12 @@ export default function DetailEditor({ submission, domainScores, recommendation,
   async function saveAnalysisPayload(formElement: HTMLFormElement) {
     const form = new FormData(formElement);
     const payload = Object.fromEntries(form.entries());
+    const overLimitFields = analysisFieldDefinitions.filter(({ name, limit }) => String(payload[name] || "").length > limit);
+    if (overLimitFields.length) {
+      setMessage(`文字数上限を超えています：${overLimitFields.map(({ label, limit }) => `${label}（${limit}文字）`).join("、")}`);
+      scrollToMessage();
+      return null;
+    }
     const response = await fetch(`/api/admin/submissions/${submission.id}/analysis`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -153,6 +105,7 @@ export default function DetailEditor({ submission, domainScores, recommendation,
   async function saveAnalysis(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const response = await saveAnalysisPayload(event.currentTarget);
+    if (!response) return;
     setMessage(response.ok ? "AI分析結果を保存しました。" : "保存に失敗しました。");
     scrollToMessage();
   }
@@ -160,6 +113,7 @@ export default function DetailEditor({ submission, domainScores, recommendation,
   async function saveAnalysisAndOpenReport() {
     if (!analysisFormRef.current) return;
     const response = await saveAnalysisPayload(analysisFormRef.current);
+    if (!response) return;
     if (!response.ok) {
       setMessage("保存に失敗しました。レポート生成前にもう一度保存してください。");
       return;
@@ -202,6 +156,7 @@ export default function DetailEditor({ submission, domainScores, recommendation,
       const field = analysisFormRef.current?.elements.namedItem(name);
       if (field instanceof HTMLTextAreaElement && typeof value === "string") {
         field.value = value;
+        field.dispatchEvent(new Event("input", { bubbles: true }));
       }
     });
   }
@@ -328,8 +283,8 @@ export default function DetailEditor({ submission, domainScores, recommendation,
         <h2 className="text-xl font-bold">AI分析結果の編集</h2>
         <p className="mt-2 text-sm leading-6 text-slate-600">各欄にはレポート表示用の文字数上限があります。入力中の内容はこのブラウザに一時保存されます。</p>
         <form ref={analysisFormRef} onInput={keepAnalysisDraft} onSubmit={saveAnalysis} className="mt-5 grid gap-4 sm:grid-cols-2">
-          {analysisFields.map(([name, label]) => (
-            <TextArea key={name} name={name} label={label} defaultValue={submission.analysisResult?.[name] || ""} maxLength={analysisLimits[name]} reportLimit={reportDisplayLimits[name]} />
+          {analysisFieldDefinitions.map(({ name, label, limit }) => (
+            <TextArea key={name} name={name} label={label} defaultValue={submission.analysisResult?.[name] || ""} reportLimit={limit} />
           ))}
           <div className="flex flex-wrap gap-2 sm:col-span-2">
             <Button type="submit"><Save size={18} />AI分析結果を保存</Button>
@@ -368,16 +323,24 @@ function Info({ label, value }: { label: string; value: string }) {
   );
 }
 
-function TextArea({ name, label, defaultValue, maxLength, reportLimit }: { name: string; label: string; defaultValue?: string | null; maxLength?: number; reportLimit?: number }) {
+function TextArea({ name, label, defaultValue, reportLimit }: { name: string; label: string; defaultValue?: string | null; reportLimit?: number }) {
+  const [length, setLength] = useState(defaultValue?.length || 0);
+  const isOverLimit = Boolean(reportLimit && length > reportLimit);
   return (
     <div className="sm:col-span-2">
       <FieldLabel>{label}</FieldLabel>
-      <textarea name={name} className={inputClass} rows={4} maxLength={maxLength} defaultValue={defaultValue || ""} />
-      <p className="mt-1 text-xs text-slate-500">
-        {reportLimit ? `レポート表示目安：${reportLimit}文字以内` : null}
-        {reportLimit && maxLength ? " / " : null}
-        {maxLength ? `入力上限：${maxLength}文字まで` : null}
+      <textarea
+        name={name}
+        className={`${inputClass} ${isOverLimit ? "border-red-500 ring-1 ring-red-500" : ""}`}
+        rows={4}
+        aria-invalid={isOverLimit}
+        defaultValue={defaultValue || ""}
+        onChange={(event) => setLength(event.currentTarget.value.length)}
+      />
+      <p className={`mt-1 text-xs ${isOverLimit ? "font-semibold text-red-600" : "text-slate-500"}`}>
+        {reportLimit ? `レポート表示上限：${reportLimit}文字 / 現在：${length}文字` : `現在：${length}文字`}
       </p>
+      {isOverLimit ? <p className="mt-1 text-xs font-semibold text-red-600">文字数を減らしてください。上限を超えた状態では保存できません。</p> : null}
     </div>
   );
 }

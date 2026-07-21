@@ -8,6 +8,7 @@ import { prisma } from "@/lib/prisma";
 import { providerName } from "@/lib/constants";
 import { calculateDomainScores, calculateOverallResultScore, calculateResultDomainScores, recommendPlan } from "@/lib/scoring";
 import type { ResultDomainScore } from "@/lib/scoring";
+import { analysisReportLimits } from "@/lib/analysis";
 
 export default async function ReportPage({ params }: { params: Promise<{ id: string }> }) {
   await requireAdmin();
@@ -100,16 +101,16 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
           </div>
 
           <div className="report-stack report-middle-stack space-y-2">
-            <CompactSection number="3" title="総合所見" body={analysis?.overallFinding || submission.reportComment || "面談内容を踏まえて追記します。"} maxLength={180} />
-            <CompactSection number="4" title="組織の強み" body={analysis?.strengths || "事前回答と面談内容を踏まえて整理します。"} maxLength={135} />
-            <CompactSection number="5" title="現在の課題トップ3" body={analysis?.topIssues || "事前回答と面談内容を踏まえて整理します。"} maxLength={150} />
-            <CompactSection number="6" title="表面的に見えている問題" body={analysis?.visibleProblems || "面談で確認します。"} maxLength={120} />
-            <CompactSection number="7" title="背景にある原因仮説" body={analysis?.causeHypotheses || "回答内容から考えられる仮説を面談で確認します。"} maxLength={155} />
+            <CompactSection number="3" title="総合所見" body={analysis?.overallFinding || submission.reportComment || "面談内容を踏まえて追記します。"} maxLength={analysisReportLimits.overallFinding} />
+            <CompactSection number="4" title="組織の強み" body={analysis?.strengths || "事前回答と面談内容を踏まえて整理します。"} maxLength={analysisReportLimits.strengths} />
+            <CompactSection number="5" title="現在の課題トップ3" body={analysis?.topIssues || "事前回答と面談内容を踏まえて整理します。"} maxLength={analysisReportLimits.topIssues} />
+            <CompactSection number="6" title="表面的に見えている問題" body={analysis?.visibleProblems || "面談で確認します。"} maxLength={analysisReportLimits.visibleProblems} />
+            <CompactSection number="7" title="背景にある原因仮説" body={analysis?.causeHypotheses || "回答内容から考えられる仮説を面談で確認します。"} maxLength={analysisReportLimits.causeHypotheses} />
             <div className="report-middle-actions grid grid-cols-2 gap-2">
-              <CompactSection number="8" title="増やす行動" body={analysis?.actionsToIncrease || "自分から相談・提案する行動、週次の振り返り、他者の強みを活かす行動。"} maxLength={95} />
-              <CompactSection number="9" title="減らす行動" body={analysis?.actionsToDecrease || "判断の先送り、仕事の抱え込み、研修後の振り返り不足。"} maxLength={95} />
+              <CompactSection number="8" title="増やす行動" body={analysis?.actionsToIncrease || "自分から相談・提案する行動、週次の振り返り、他者の強みを活かす行動。"} maxLength={analysisReportLimits.actionsToIncrease} />
+              <CompactSection number="9" title="減らす行動" body={analysis?.actionsToDecrease || "判断の先送り、仕事の抱え込み、研修後の振り返り不足。"} maxLength={analysisReportLimits.actionsToDecrease} />
             </div>
-            {analysis?.domainComments ? <MiniBlock title="5領域コメント" body={analysis.domainComments} maxLength={140} /> : null}
+            {analysis?.domainComments ? <MiniBlock title="5領域コメント" body={analysis.domainComments} maxLength={analysisReportLimits.domainComments} /> : null}
           </div>
 
           <div className="report-stack report-right-stack space-y-2">
@@ -117,12 +118,12 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
             <MiniBlock title="レポート表示用 推奨プラン" body={recommendedPlan} maxLength={90} strong className="report-right-plan" />
             <div className="report-right-recommendations grid grid-cols-2 gap-2">
               <MiniBlock title="5領域スコアからの一次推奨" body={primaryRecommendation} maxLength={145} />
-              <MiniBlock title="AI分析による推奨プログラム" body={aiRecommendedProgram} maxLength={145} />
+              <MiniBlock title="AI分析による推奨プログラム" body={aiRecommendedProgram} maxLength={analysisReportLimits.recommendedProgram} />
             </div>
             <div className="report-right-fits grid grid-cols-3 gap-2">
-              <MiniBlock title="THINGi®︎" body={analysis?.thingiFit || "判断・協力・共創を体験的に扱うテーマとして適合する可能性があります。"} maxLength={80} />
-              <MiniBlock title="しあわせ360°手帳" body={analysis?.notebookFit || "気づきを目標と日々の行動に落とし込む支援として適合する可能性があります。"} maxLength={80} />
-              <MiniBlock title="コーチング" body={analysis?.coachingFit || "対話と行動継続を支える手法として適合する可能性があります。"} maxLength={80} />
+              <MiniBlock title="THINGi®︎" body={analysis?.thingiFit || "判断・協力・共創を体験的に扱うテーマとして適合する可能性があります。"} maxLength={analysisReportLimits.thingiFit} />
+              <MiniBlock title="しあわせ360°手帳" body={analysis?.notebookFit || "気づきを目標と日々の行動に落とし込む支援として適合する可能性があります。"} maxLength={analysisReportLimits.notebookFit} />
+              <MiniBlock title="コーチング" body={analysis?.coachingFit || "対話と行動継続を支える手法として適合する可能性があります。"} maxLength={analysisReportLimits.coachingFit} />
             </div>
             <CompactHeading number="11" title="成果確認指標" />
             <table className="w-full border-collapse text-[9.5px]">
@@ -140,8 +141,8 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
                 ))}
               </tbody>
             </table>
-            <CompactSection number="12" title="経営者・管理職に求める支援" body={analysis?.managementSupport || "日常業務での声かけ、振り返り機会、実践確認の場を設計します。"} maxLength={120} className="report-right-support" />
-            <CompactSection number="13" title="30分面談での追加確認事項" body={analysis?.additionalQuestions || submission.hearingQuestion || "優先課題、対象階層、実施時期、フォロー体制を確認します。"} maxLength={110} className="report-right-questions" />
+            <CompactSection number="12" title="経営者・管理職に求める支援" body={analysis?.managementSupport || "日常業務での声かけ、振り返り機会、実践確認の場を設計します。"} maxLength={analysisReportLimits.managementSupport} className="report-right-support" />
+            <CompactSection number="13" title="30分面談での追加確認事項" body={analysis?.additionalQuestions || submission.hearingQuestion || "優先課題、対象階層、実施時期、フォロー体制を確認します。"} maxLength={analysisReportLimits.additionalQuestions} className="report-right-questions" />
           </div>
         </section>
       </article>
@@ -247,7 +248,7 @@ function RecommendationItem({ title, body, strong = false }: { title: string; bo
 }
 
 function limitText(text: string, maxLength: number) {
-  return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
+  return text.length > maxLength ? `${text.slice(0, Math.max(0, maxLength - 3))}...` : text;
 }
 
 function buildKpiRows(kpis?: string | null) {

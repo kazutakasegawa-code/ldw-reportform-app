@@ -59,21 +59,21 @@ export const adminUpdateSchema = z.object({
 });
 
 export const analysisUpdateSchema = z.object({
-  overallFinding: z.string().optional(),
-  strengths: z.string().optional(),
-  topIssues: z.string().optional(),
-  visibleProblems: z.string().optional(),
-  causeHypotheses: z.string().optional(),
-  actionsToIncrease: z.string().optional(),
-  actionsToDecrease: z.string().optional(),
-  thingiFit: z.string().optional(),
-  notebookFit: z.string().optional(),
-  coachingFit: z.string().optional(),
-  recommendedProgram: z.string().optional(),
-  kpis: z.string().optional(),
-  managementSupport: z.string().optional(),
-  domainComments: z.string().optional(),
-  additionalQuestions: z.string().optional()
+  overallFinding: z.string().max(180, "総合所見は180文字以内で入力してください").optional(),
+  strengths: z.string().max(135, "組織の強みは135文字以内で入力してください").optional(),
+  topIssues: z.string().max(150, "現在の課題トップ3は150文字以内で入力してください").optional(),
+  visibleProblems: z.string().max(120, "表面的に見えている問題は120文字以内で入力してください").optional(),
+  causeHypotheses: z.string().max(155, "背景にある原因仮説は155文字以内で入力してください").optional(),
+  actionsToIncrease: z.string().max(80, "優先して増やす行動は80文字以内で入力してください").optional(),
+  actionsToDecrease: z.string().max(80, "優先して減らす行動は80文字以内で入力してください").optional(),
+  thingiFit: z.string().max(60, "THINGi®︎の適合度・理由は60文字以内で入力してください").optional(),
+  notebookFit: z.string().max(60, "しあわせ360°手帳の適合度・理由は60文字以内で入力してください").optional(),
+  coachingFit: z.string().max(60, "コーチングの適合度・理由は60文字以内で入力してください").optional(),
+  recommendedProgram: z.string().max(120, "AI分析による推奨プログラムは120文字以内で入力してください").optional(),
+  kpis: z.string().max(90, "成果確認指標は90文字以内で入力してください").optional(),
+  managementSupport: z.string().max(120, "経営者・管理職に求める支援は120文字以内で入力してください").optional(),
+  domainComments: z.string().max(100, "5領域コメントは100文字以内で入力してください").optional(),
+  additionalQuestions: z.string().max(110, "30分面談での追加確認事項は110文字以内で入力してください").optional()
 });
 
 export const meetingRequestSchema = z.object({
