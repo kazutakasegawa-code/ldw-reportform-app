@@ -64,7 +64,7 @@ export const mainIssueOptions = [
 export const expectedPeriods = ["半日〜1日", "30日", "3か月", "6か月", "未定"];
 export const budgetRanges = ["30万円未満", "30万〜60万円", "60万〜100万円", "100万〜200万円", "200万円以上", "未定"];
 export const pastTrainingOptions = ["なし", "あり", "不明"];
-export const statusOptions = ["5分診断完了", "結果閲覧済み", "面談希望あり", "AI詳細分析中", "面談実施済み", "提案書作成予定", "成約", "失注"];
+export const statusOptions = ["5分診断完了", "結果閲覧済み", "PDF出力済み", "面談希望あり", "AI詳細分析中", "面談実施済み", "提案書作成予定", "成約", "失注"];
 
 export const hearingOptions = {
   mostImportantIssue: ["主体性が低い", "報告・相談が遅い", "チーム連携が弱い", "若手が育たない", "管理職が部下育成に悩んでいる", "研修後に行動が続かない", "その他"],

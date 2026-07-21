@@ -47,10 +47,16 @@ export default async function AdminPage() {
                     <span className="block">会社名</span>
                     <span className="block text-xs font-normal text-slate-200">担当者名</span>
                   </th>
-                  <th className="px-4 py-3">送信日時</th>
+                  <th className="px-4 py-3">診断送信日時</th>
                   <th className="px-4 py-3">詳細</th>
-                  <th className="px-4 py-3">総合スコア</th>
-                  <th className="px-4 py-3">最低スコア領域</th>
+                  <th className="px-4 py-3">
+                    <span className="block">総合</span>
+                    <span className="block">スコア</span>
+                  </th>
+                  <th className="px-4 py-3">
+                    <span className="block">最低スコア</span>
+                    <span className="block">領域</span>
+                  </th>
                   <th className="px-4 py-3">面談希望クリック日時</th>
                   <th className="px-4 py-3">面談希望日時</th>
                   <th className="px-4 py-3">ステータス</th>

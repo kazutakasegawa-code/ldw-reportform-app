@@ -46,7 +46,7 @@ export default async function DiagnosisResultPage({ params }: { params: Promise<
             </p>
             <p className="result-client-app-name">{appName}</p>
           </div>
-          <ResultPrintButton />
+          <ResultPrintButton token={token} />
         </header>
 
         <main className="result-screen-only space-y-6 py-8">
