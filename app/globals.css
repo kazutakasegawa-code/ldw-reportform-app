@@ -302,6 +302,7 @@ button {
     color: #0a2344;
     font-size: 9pt;
     line-height: 1.25;
+    font-weight: 900;
   }
 
   .result-print-help {
@@ -390,6 +391,7 @@ button {
     color: #0a2344;
     font-size: 8pt;
     line-height: 1.2;
+    font-weight: 900;
   }
 
   .result-print-priority-head {
@@ -482,6 +484,7 @@ button {
   .result-print-table th {
     background: #0a2344 !important;
     color: white !important;
+    font-weight: 900;
   }
 
   .result-print-table th,
@@ -500,7 +503,7 @@ button {
   }
 
   .result-print-list-card {
-    min-height: 42mm;
+    min-height: 48mm;
     padding: 3.2mm;
   }
 
@@ -509,6 +512,7 @@ button {
     color: #0a2344;
     font-size: 7.4pt;
     line-height: 1.3;
+    font-weight: 900;
   }
 
   .result-print-list-card ul {
@@ -562,6 +566,7 @@ button {
   .result-print-cta-block h3 {
     font-size: 10pt;
     line-height: 1.22;
+    font-weight: 900;
   }
 
   .result-print-qr {
