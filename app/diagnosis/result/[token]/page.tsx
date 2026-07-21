@@ -155,6 +155,7 @@ export default async function DiagnosisResultPage({ params }: { params: Promise<
         <PrintableResult
           resultScores={resultScores}
           summary={summary}
+          token={token}
         />
 
         <footer className="result-screen-only border-t border-slate-200 pt-5 text-sm text-slate-600">
@@ -177,62 +178,85 @@ function MiniStat({ icon, label, value }: { icon: ReactNode; label: string; valu
 
 function PrintableResult({
   resultScores,
-  summary
+  summary,
+  token
 }: {
   resultScores: ReturnType<typeof calculateResultDomainScores>;
   summary: ReturnType<typeof summarizeResultScores>;
+  token: string;
 }) {
+  const resultUrl = `https://ldw-reportform-app.vercel.app/diagnosis/result/${token}`;
+
   return (
     <div className="result-print-only">
       <section className="result-print-sheet">
-        <header className="result-print-sheet-header">
-          <div>
-            <p>Life Design Works</p>
-            <h1>採用・定着・育成課題 5分診断 結果レポート</h1>
-          </div>
-          <p>簡易診断結果</p>
-        </header>
-
-        <div className="result-print-title-row">
-          <h2>診断結果｜採用後に社員が定着・成長する職場の現在地</h2>
-          <p>{fiveMinuteDiagnosticNotice}</p>
-        </div>
-
-        <div className="result-print-landscape-grid">
-          <section className="result-print-panel">
-            <h3>5領域レーダーチャート</h3>
-            <p className="result-print-help">100点満点。外側ほどスコアが高い状態を示します。</p>
-            <PrintableRadarSvg scores={resultScores} />
-          </section>
-
-          <section className="result-print-panel result-print-overview">
-            <h3>総合結果</h3>
-            <div className="result-print-scorebox">
-              <p>総合スコア</p>
-              <strong>{summary.overallScore}<span>点</span></strong>
-              <em>{summary.overallJudgement.judgement}</em>
-              <p>{summary.overallJudgement.comment}</p>
+        <div className="result-print-quadrants">
+          <section className="result-print-block result-print-main">
+            <header className="result-print-simple-header">
+              <p>採用・定着・育成課題 5分診断</p>
+            </header>
+            <div className="result-print-title-row">
+              <h2>診断結果｜採用後に社員が定着・成長する職場の現在地</h2>
+              <p>{fiveMinuteDiagnosticNotice}</p>
+              <p className="result-print-note">この画面は簡易診断結果です。詳細な分析レポートは30分面談＋AI詳細診断で作成します。</p>
             </div>
-            <dl className="result-print-minis">
-              <div>
-                <dt>最も高い領域</dt>
-                <dd>{summary.highest.domain} {summary.highest.score}点</dd>
+
+            <div className="result-print-main-grid">
+              <div className="result-print-card result-print-chart-card">
+                <h3>5領域レーダーチャート</h3>
+                <p className="result-print-help">100点満点。外側ほどスコアが高い状態を示します。</p>
+                <PrintableRadarSvg scores={resultScores} />
               </div>
-              <div>
-                <dt>最も低い領域</dt>
-                <dd>{summary.lowest.domain} {summary.lowest.score}点</dd>
+
+              <div className="result-print-card result-print-overview">
+                <h3>総合結果</h3>
+                <div className="result-print-scorebox">
+                  <p>総合スコア</p>
+                  <strong>{summary.overallScore}<span>点</span></strong>
+                  <em>{summary.overallJudgement.judgement}</em>
+                  <p>{summary.overallJudgement.comment}</p>
+                </div>
+                <dl className="result-print-minis">
+                  <div>
+                    <dt>最も高い領域</dt>
+                    <dd>{summary.highest.domain} {summary.highest.score}点</dd>
+                  </div>
+                  <div>
+                    <dt>最も低い領域</dt>
+                    <dd>{summary.lowest.domain} {summary.lowest.score}点</dd>
+                  </div>
+                </dl>
               </div>
-            </dl>
+            </div>
           </section>
 
-          <section className="result-print-panel">
-            <h3>5領域別結果一覧</h3>
+          <section className="result-print-block result-print-priority-block">
+            <h3>優先して確認すべき領域トップ2</h3>
+            <div className="result-print-priority-list">
+              {summary.priorities.map((item) => (
+                <article key={item.domain} className="result-print-priority-card">
+                  <div className="result-print-priority-head">
+                    <div>
+                      <h4>{item.domain}</h4>
+                      <p>{item.comment}</p>
+                    </div>
+                    <strong>{item.score}<span>点</span></strong>
+                  </div>
+                  <em>{item.judgement}</em>
+                  <p>{item.priorityComment}</p>
+                  <p className="result-print-focus"><b>30分面談で確認したい観点：</b>{item.interviewPoint}</p>
+                </article>
+              ))}
+            </div>
+
+            <h3 className="result-print-subtitle">5領域別結果一覧</h3>
             <table className="result-print-table">
               <thead>
                 <tr>
                   <th>領域</th>
                   <th>スコア</th>
                   <th>判定</th>
+                  <th>コメント</th>
                 </tr>
               </thead>
               <tbody>
@@ -241,35 +265,48 @@ function PrintableResult({
                     <td>{item.domain}</td>
                     <td>{item.score}点</td>
                     <td>{item.judgement}</td>
+                    <td>{item.comment}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            <div className="result-print-next">
-              <h3>次の確認ポイント</h3>
-              <p>詳細な分析レポートでは、優先課題トップ3、背景原因、増やす行動・減らす行動、推奨プログラム、成果確認指標を整理します。</p>
+          </section>
+
+          <section className="result-print-block result-print-compare-block">
+            <h3>この5分診断で分かること／30分面談で分かること</h3>
+            <div className="result-print-compare-grid">
+              <PrintList title="この5分診断で分かること" items={["5領域の大まかな傾向", "強みと弱い領域", "採用後の定着・育成に影響しそうなポイント", "30分面談で確認すべきテーマ"]} />
+              <PrintList title="30分面談＋AI詳細診断で分かること" items={["優先課題トップ3", "表面的な問題と背景原因", "増やす行動・減らす行動", "THINGi®︎・しあわせ360°手帳・コーチングの適合度", "推奨プログラム", "成果確認指標", "A4分析レポート"]} />
+            </div>
+          </section>
+
+          <section className="result-print-block result-print-cta-block">
+            <div>
+              <h3>診断結果をもとに、30分で優先課題と次の一手を整理しませんか？</h3>
+              <p>レーダーチャートで低く出た領域には、複数の背景要因が関係している可能性があります。30分面談＋AI詳細診断では、回答内容をもとに、御社の強み・優先課題・背景にある原因仮説・次に行う育成施策をA4分析レポートとして整理します。</p>
+              <p className="result-print-cta-meta">初回0円／面談30分／A4分析レポート付き／毎月5社まで</p>
+              <p className="result-print-url">URL：{resultUrl}</p>
+            </div>
+            <div className="result-print-cta-side">
+              <span>30分面談＋AI詳細診断を予約する</span>
+              <p>Life Design Works</p>
             </div>
           </section>
         </div>
-
-        <section className="result-print-priority-wide">
-          <h3>優先して確認すべき領域トップ2</h3>
-          <div className="result-print-priority-list">
-            {summary.priorities.map((item) => (
-              <article key={item.domain} className="result-print-priority-card">
-                <div>
-                  <h4>{item.domain}</h4>
-                  <strong>{item.score}点 / {item.judgement}</strong>
-                </div>
-                <p>{item.priorityComment}</p>
-                <p><b>確認観点：</b>{item.interviewPoint}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <p className="result-print-footer">Life Design Works 代表 瀬川一貴</p>
       </section>
+    </div>
+  );
+}
+
+function PrintList({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div className="result-print-list-card">
+      <h4>{title}</h4>
+      <ul>
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 }
