@@ -6,8 +6,8 @@ import { requireAdmin } from "@/lib/auth";
 import { formatDateJst } from "@/lib/date";
 import { prisma } from "@/lib/prisma";
 import { providerName } from "@/lib/constants";
-import { calculateDomainScores, recommendPlan } from "@/lib/scoring";
-import type { DomainScore } from "@/lib/scoring";
+import { calculateDomainScores, calculateResultDomainScores, recommendPlan } from "@/lib/scoring";
+import type { ResultDomainScore } from "@/lib/scoring";
 
 export default async function ReportPage({ params }: { params: Promise<{ id: string }> }) {
   await requireAdmin();
@@ -19,6 +19,7 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
   if (!submission) notFound();
 
   const domainScores = calculateDomainScores(submission.checkAnswers);
+  const resultScores = calculateResultDomainScores(submission.checkAnswers);
   const recommendation = recommendPlan(domainScores);
   const analysis = submission.analysisResult;
   const recommendedPlan = submission.recommendedPlan || analysis?.recommendedProgram || recommendation.plan;
@@ -72,13 +73,13 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
 
             <CompactHeading number="2" title="5領域スコア" />
             <p className="-mt-1 text-[9px] font-normal leading-tight text-slate-500">外側ほどスコアが高い状態を示します。</p>
-            <RadarChart scores={domainScores} compact />
+            <RadarChart scores={resultScores} compact />
             <div className="grid grid-cols-2 gap-1">
-              {domainScores.map((score) => (
+              {resultScores.map((score) => (
                 <div key={score.domain} className="rounded border border-slate-200 bg-slate-50 px-2 py-1">
                   <div className="flex items-center justify-between gap-2">
                     <p className="font-semibold">{score.domain}</p>
-                    <p className="font-bold">{score.average ?? "未入力"} / {score.judgement}</p>
+                    <p className="font-bold">{score.score}点 / {score.judgement}</p>
                   </div>
                 </div>
               ))}
@@ -138,22 +139,22 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
   );
 }
 
-function RadarChart({ scores, compact = false }: { scores: DomainScore[]; compact?: boolean }) {
+function RadarChart({ scores, compact = false }: { scores: ResultDomainScore[]; compact?: boolean }) {
   const center = 180;
   const radius = 90;
-  const levels = [1, 2, 3, 4, 5];
+  const levels = [20, 40, 60, 80, 100];
   const pointsForValue = (value: number) =>
     scores
       .map((_, index) => {
         const angle = -Math.PI / 2 + (Math.PI * 2 * index) / scores.length;
-        const distance = radius * (value / 5);
+        const distance = radius * (value / 100);
         return `${center + Math.cos(angle) * distance},${center + Math.sin(angle) * distance}`;
       })
       .join(" ");
   const scorePoints = scores
     .map((score, index) => {
       const angle = -Math.PI / 2 + (Math.PI * 2 * index) / scores.length;
-      const distance = radius * ((score.average ?? 0) / 5);
+      const distance = radius * (score.score / 100);
       return `${center + Math.cos(angle) * distance},${center + Math.sin(angle) * distance}`;
     })
     .join(" ");
@@ -178,7 +179,7 @@ function RadarChart({ scores, compact = false }: { scores: DomainScore[]; compac
                 {labelLines.map((line, lineIndex) => (
                   <tspan key={line} x={labelX} dy={lineIndex === 0 ? 0 : 13}>{line}</tspan>
                 ))}
-                <tspan x={labelX} dy="13" fontSize="10" fontWeight="400">{score.average ?? "未入力"}</tspan>
+                <tspan x={labelX} dy="13" fontSize="10" fontWeight="400">{score.score}点</tspan>
               </text>
             </g>
           );
@@ -186,10 +187,10 @@ function RadarChart({ scores, compact = false }: { scores: DomainScore[]; compac
         <polygon points={scorePoints} fill="rgba(214, 168, 25, 0.32)" stroke="#d6a819" strokeWidth="3" />
         {scores.map((score, index) => {
           const angle = -Math.PI / 2 + (Math.PI * 2 * index) / scores.length;
-          const distance = radius * ((score.average ?? 0) / 5);
+          const distance = radius * (score.score / 100);
           return <circle key={score.domain} cx={center + Math.cos(angle) * distance} cy={center + Math.sin(angle) * distance} r="4" fill="#102a4f" />;
         })}
-        <text x={center} y={center + 5} textAnchor="middle" fontSize="11" fontWeight="700" fill="#102a4f">5.0</text>
+        <text x={center} y={center + 5} textAnchor="middle" fontSize="11" fontWeight="700" fill="#102a4f">100</text>
       </svg>
       {compact ? null : <figcaption className="mt-2 text-center text-xs text-slate-600">外側ほどスコアが高い状態を示します。</figcaption>}
     </figure>
