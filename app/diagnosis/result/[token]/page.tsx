@@ -41,10 +41,10 @@ export default async function DiagnosisResultPage({ params }: { params: Promise<
       <Container className="result-print-container py-8 sm:py-12">
         <header className="result-screen-only flex flex-col gap-2 border-b border-slate-200 pb-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-lg font-normal text-navy-900">{appName}</p>
-            <p className="mt-2 text-sm leading-6 text-slate-600">
+            <p className="text-lg font-semibold leading-7 text-navy-900">
               {submission.companyName} / {submission.contactName} 様
             </p>
+            <p className="mt-2 text-sm font-normal leading-6 text-slate-600">{appName}</p>
           </div>
           <ResultPrintButton />
         </header>
@@ -201,8 +201,8 @@ function PrintableResult({
         <div className="result-print-quadrants">
           <section className="result-print-block result-print-main">
             <header className="result-print-simple-header">
-              <p>採用・定着・育成課題 5分診断</p>
               <p className="result-print-client-name">{companyName} / {contactName} 様</p>
+              <p className="result-print-app-name">採用・定着・育成課題 5分診断</p>
             </header>
             <div className="result-print-title-row">
               <h2>
