@@ -6,7 +6,7 @@ import { Clipboard, FileText, Save, Sparkles } from "lucide-react";
 import { Button, Card, FieldLabel, inputClass } from "@/components/ui";
 import { statusOptions } from "@/lib/constants";
 import { formatDateInputJst, formatDateTimeInputJst } from "@/lib/date";
-import type { DomainScore } from "@/lib/scoring";
+import { judgeResultScore, type DomainScore } from "@/lib/scoring";
 
 type Props = {
   submission: Submission & { checkAnswers: CheckAnswer[]; analysisResult: AnalysisResult | null };
@@ -52,6 +52,14 @@ const analysisLimits: Record<(typeof analysisFields)[number][0], number> = {
   additionalQuestions: 500
 };
 
+const resultDomainLabels: Record<string, string> = {
+  "主体性・判断力": "主体性・判断力",
+  "チーム・共創力": "報連相・チーム共創",
+  "自己理解・キャリア": "成長実感・キャリア接続",
+  "目標・行動定着": "目標設定・行動定着",
+  "上司・育成環境": "上司・育成環境"
+};
+
 const reportDisplayLimits: Partial<Record<(typeof analysisFields)[number][0], number>> = {
   overallFinding: 180,
   strengths: 135,
@@ -73,7 +81,7 @@ const reportDisplayLimits: Partial<Record<(typeof analysisFields)[number][0], nu
 type AnalysisFieldName = (typeof analysisFields)[number][0];
 type AnalysisPayload = Partial<Record<AnalysisFieldName, string>>;
 
-export default function DetailEditor({ submission, domainScores, overall, recommendation, prompt }: Props) {
+export default function DetailEditor({ submission, domainScores, recommendation, prompt }: Props) {
   const messageRef = useRef<HTMLParagraphElement>(null);
   const analysisFormRef = useRef<HTMLFormElement>(null);
   const [message, setMessage] = useState("");
@@ -81,6 +89,16 @@ export default function DetailEditor({ submission, domainScores, overall, recomm
   const [runningAi, setRunningAi] = useState(false);
   const [copiedPrompt, setCopiedPrompt] = useState(false);
   const draftKey = `thingi-analysis-draft-${submission.id}`;
+  const resultScoreRows = domainScores.map((score) => {
+    const resultScore = score.average === null ? 0 : Math.round((score.average / 5) * 100);
+    return {
+      ...score,
+      displayDomain: resultDomainLabels[score.domain] ?? score.domain,
+      resultScore,
+      resultJudgement: judgeResultScore(resultScore)
+    };
+  });
+  const overallResultScore = resultScoreRows.length ? Math.round(resultScoreRows.reduce((sum, score) => sum + score.resultScore, 0) / resultScoreRows.length) : null;
 
   function scrollToMessage() {
     window.setTimeout(() => {
@@ -235,19 +253,19 @@ export default function DetailEditor({ submission, domainScores, overall, recomm
         </Card>
 
         <Card className="p-6">
-          <h2 className="text-xl font-bold">5領域平均点・判定</h2>
-          <p className="mt-2 text-sm text-slate-600">総合平均：<span className="font-bold text-navy-900">{overall ?? "未入力"}</span></p>
+          <h2 className="text-xl font-bold">5領域スコア・判定</h2>
+          <p className="mt-2 text-sm text-slate-600">総合スコア：<span className="font-bold text-navy-900">{overallResultScore ?? "未入力"}点</span></p>
           <div className="mt-4 space-y-3">
-            {domainScores.map((score) => (
+            {resultScoreRows.map((score) => (
               <div key={score.domain}>
                 <div className="flex justify-between text-sm">
-                  <span className="font-semibold">{score.domain}</span>
-                  <span>{score.average ?? "未入力"} / {score.judgement}</span>
+                  <span className="font-semibold">{score.displayDomain}</span>
+                  <span>{score.resultScore}点 / {score.resultJudgement.judgement}</span>
                 </div>
                 <div className="mt-1 h-2 rounded-full bg-slate-100">
-                  <div className="h-2 rounded-full bg-gold-500" style={{ width: `${((score.average ?? 0) / 5) * 100}%` }} />
+                  <div className="h-2 rounded-full bg-gold-500" style={{ width: `${score.resultScore}%` }} />
                 </div>
-                <p className="mt-1 text-xs text-slate-600">{score.meaning} / {score.response}</p>
+                <p className="mt-1 text-xs text-slate-600">{score.resultJudgement.comment}</p>
               </div>
             ))}
           </div>
