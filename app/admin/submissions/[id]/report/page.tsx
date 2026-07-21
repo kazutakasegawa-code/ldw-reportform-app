@@ -29,7 +29,7 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
   const kpiRows = buildKpiRows(analysis?.kpis);
 
   return (
-    <main className="min-h-screen bg-slate-100 py-6 text-navy-900">
+    <main className="report-print-page min-h-screen bg-slate-100 py-6 text-navy-900">
       <div className="no-print mx-auto mb-4 flex w-full max-w-5xl items-center justify-between px-4">
         <Link href={`/admin/submissions/${submission.id}`} className="inline-flex items-center gap-1 text-sm font-semibold text-navy-800 underline">
           <ArrowLeft size={16} />

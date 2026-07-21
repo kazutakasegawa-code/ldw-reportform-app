@@ -72,16 +72,33 @@ button {
     margin: 5mm;
   }
 
+  @page saved-report {
+    size: A4 landscape;
+    margin: 0;
+  }
+
   body {
     background: white !important;
     line-height: 1.2;
+  }
+
+  html:has(.report-print-page),
+  body:has(.report-print-page),
+  body:has(.report-print-page) main {
+    width: 297mm !important;
+    height: 210mm !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: white !important;
   }
 
   html:has(.result-print-container),
   body:has(.result-print-container),
   body:has(.result-print-container) main {
     width: 287mm !important;
-    height: 200mm !important;
+    height: 198mm !important;
     min-height: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -93,14 +110,48 @@ button {
     display: none !important;
   }
 
+  .report-print-page {
+    page: saved-report;
+    position: static !important;
+    display: block !important;
+    width: 297mm !important;
+    height: 210mm !important;
+    max-height: 210mm !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: white !important;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .report-print-page > :not(.a4-report) {
+    display: none !important;
+  }
+
+  .report-print-page .no-print {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
   .a4-report {
-    width: auto;
+    position: fixed !important;
+    inset: 5mm auto auto 5mm;
+    display: block !important;
+    width: 287mm;
     height: 200mm;
+    max-height: 200mm;
     min-height: 0;
     margin: 0;
     padding: 0 !important;
     overflow: hidden;
     box-shadow: none !important;
+    break-after: avoid;
+    page-break-after: avoid;
   }
 
   .report-landscape header {
@@ -169,7 +220,7 @@ button {
   .result-print-container {
     width: 287mm !important;
     max-width: none !important;
-    height: 200mm !important;
+    height: 198mm !important;
     min-height: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -181,17 +232,20 @@ button {
     color: #102a4f !important;
     page: result-diagnosis;
     width: 287mm !important;
-    height: 200mm !important;
+    height: 198mm !important;
     overflow: hidden !important;
+    break-after: avoid;
+    page-break-after: avoid;
   }
 
   .result-print-sheet {
     width: 100%;
-    height: 200mm;
-    max-height: 200mm;
-    break-after: auto;
+    height: 198mm;
+    max-height: 198mm;
+    break-after: avoid;
+    page-break-after: avoid;
     background: white !important;
-    padding: 6mm 7mm 5mm;
+    padding: 5mm 7mm 4mm;
     overflow: hidden;
   }
 
