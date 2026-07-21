@@ -86,12 +86,12 @@ button {
 .report-landscape .report-middle-stack .report-compact-section-5 > section,
 .report-landscape .report-middle-stack .report-compact-section-6 > section,
 .report-landscape .report-middle-stack .report-compact-section-7 > section {
-  height: 18mm;
+  height: 22mm;
 }
 
 .report-landscape .report-middle-actions {
   flex: 1;
-  min-height: 20mm;
+  min-height: 10mm;
 }
 
 .report-landscape .report-middle-actions .report-compact-section {
@@ -109,7 +109,7 @@ button {
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 6;
 }
 
 .report-landscape .report-middle-stack .report-compact-section-8 p,
@@ -374,12 +374,12 @@ button {
   .report-landscape .report-middle-stack .report-compact-section-5 > section,
   .report-landscape .report-middle-stack .report-compact-section-6 > section,
   .report-landscape .report-middle-stack .report-compact-section-7 > section {
-    height: 18mm !important;
+    height: 22mm !important;
   }
 
   .report-landscape .report-middle-actions {
     flex: 1 !important;
-    min-height: 20mm !important;
+    min-height: 10mm !important;
   }
 
   .report-landscape .report-middle-actions .report-compact-section {
@@ -397,7 +397,7 @@ button {
     display: -webkit-box !important;
     overflow: hidden !important;
     -webkit-box-orient: vertical !important;
-    -webkit-line-clamp: 4 !important;
+    -webkit-line-clamp: 6 !important;
   }
 
   .report-landscape .report-middle-stack .report-compact-section-8 p,
