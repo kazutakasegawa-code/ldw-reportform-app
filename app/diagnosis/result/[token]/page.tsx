@@ -36,7 +36,7 @@ export default async function DiagnosisResultPage({ params }: { params: Promise<
   return (
     <PageShell>
       <style media="print">{`
-        @page { size: A4 portrait; margin: 8mm; }
+        @page { size: A4 landscape; margin: 5mm; }
       `}</style>
       <Container className="py-8 sm:py-12">
         <header className="result-screen-only flex flex-col gap-2 border-b border-slate-200 pb-5 sm:flex-row sm:items-end sm:justify-between">
@@ -193,10 +193,12 @@ function PrintableResult({
           <p>簡易診断結果</p>
         </header>
 
-        <h2>診断結果｜採用後に社員が定着・成長する職場の現在地</h2>
-        <p className="result-print-notice">{fiveMinuteDiagnosticNotice}</p>
+        <div className="result-print-title-row">
+          <h2>診断結果｜採用後に社員が定着・成長する職場の現在地</h2>
+          <p>{fiveMinuteDiagnosticNotice}</p>
+        </div>
 
-        <div className="result-print-summary-grid">
+        <div className="result-print-landscape-grid">
           <section className="result-print-panel">
             <h3>5領域レーダーチャート</h3>
             <p className="result-print-help">100点満点。外側ほどスコアが高い状態を示します。</p>
@@ -222,26 +224,8 @@ function PrintableResult({
               </div>
             </dl>
           </section>
-        </div>
 
-        <section className="result-print-lower-grid">
-          <div>
-            <h3>優先して確認すべき領域トップ2</h3>
-            <div className="result-print-priority-list">
-              {summary.priorities.map((item) => (
-                <article key={item.domain} className="result-print-priority-card">
-                  <div>
-                    <h4>{item.domain}</h4>
-                    <strong>{item.score}点 / {item.judgement}</strong>
-                  </div>
-                  <p>{item.priorityComment}</p>
-                  <p><b>確認観点：</b>{item.interviewPoint}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-
-          <div>
+          <section className="result-print-panel">
             <h3>5領域別結果一覧</h3>
             <table className="result-print-table">
               <thead>
@@ -261,12 +245,27 @@ function PrintableResult({
                 ))}
               </tbody>
             </table>
-          </div>
-        </section>
+            <div className="result-print-next">
+              <h3>次の確認ポイント</h3>
+              <p>詳細な分析レポートでは、優先課題トップ3、背景原因、増やす行動・減らす行動、推奨プログラム、成果確認指標を整理します。</p>
+            </div>
+          </section>
+        </div>
 
-        <section className="result-print-next">
-          <h3>次の確認ポイント</h3>
-          <p>この画面は簡易診断結果です。詳細な分析レポートでは、優先課題トップ3、背景原因、増やす行動・減らす行動、推奨プログラム、成果確認指標を30分面談＋AI詳細診断で整理します。</p>
+        <section className="result-print-priority-wide">
+          <h3>優先して確認すべき領域トップ2</h3>
+          <div className="result-print-priority-list">
+            {summary.priorities.map((item) => (
+              <article key={item.domain} className="result-print-priority-card">
+                <div>
+                  <h4>{item.domain}</h4>
+                  <strong>{item.score}点 / {item.judgement}</strong>
+                </div>
+                <p>{item.priorityComment}</p>
+                <p><b>確認観点：</b>{item.interviewPoint}</p>
+              </article>
+            ))}
+          </div>
         </section>
 
         <p className="result-print-footer">Life Design Works 代表 瀬川一貴</p>

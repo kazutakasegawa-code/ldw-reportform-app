@@ -46,8 +46,8 @@ button {
   }
 
   @page result-diagnosis {
-    size: A4 portrait;
-    margin: 6mm;
+    size: A4 landscape;
+    margin: 5mm;
   }
 
   body {
@@ -142,8 +142,8 @@ button {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: auto;
-    max-height: none;
+    height: 200mm;
+    max-height: 200mm;
     break-after: auto;
     background: white !important;
     gap: 3mm;
@@ -161,7 +161,7 @@ button {
   .result-print-sheet-header p {
     margin: 0;
     color: #d69e00;
-    font-size: 9pt;
+    font-size: 8.5pt;
     font-weight: 700;
   }
 
@@ -169,48 +169,55 @@ button {
   .result-print-sheet-header h2 {
     margin: 1mm 0 0;
     color: #0a2344;
-    font-size: 13pt;
+    font-size: 14pt;
     line-height: 1.15;
   }
 
-  .result-print-sheet > h2 {
-    margin: 0;
-    color: #0a2344;
-    font-size: 12.5pt;
-    line-height: 1.2;
+  .result-print-title-row {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 4mm;
+    align-items: start;
   }
 
-  .result-print-notice {
+  .result-print-title-row h2 {
+    margin: 0;
+    color: #0a2344;
+    font-size: 17pt;
+    line-height: 1.18;
+  }
+
+  .result-print-title-row p {
     margin: 0;
     border: 1px solid #d8e0ea;
     border-radius: 5px;
-    padding: 1.8mm;
-    font-size: 7.2pt;
+    padding: 2mm;
+    font-size: 7.1pt;
     line-height: 1.32;
   }
 
-  .result-print-summary-grid,
-  .result-print-lower-grid {
+  .result-print-landscape-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.08fr 0.86fr 1fr;
     gap: 3mm;
   }
 
   .result-print-panel,
+  .result-print-priority-wide,
   .result-print-priority-card,
   .result-print-next {
     break-inside: avoid;
     border: 1px solid #d8e0ea;
     border-radius: 5px;
-    padding: 2.2mm;
+    padding: 2.4mm;
   }
 
   .result-print-panel h3,
-  .result-print-lower-grid h3,
+  .result-print-priority-wide h3,
   .result-print-next h3 {
     margin: 0;
     color: #0a2344;
-    font-size: 9.6pt;
+    font-size: 10pt;
     line-height: 1.2;
   }
 
@@ -223,7 +230,7 @@ button {
   .result-print-radar-svg {
     display: block;
     width: 100%;
-    height: 58mm;
+    height: 80mm;
     margin-top: 1mm;
   }
 
@@ -232,19 +239,19 @@ button {
     border-radius: 5px;
     background: #0a2344 !important;
     color: white !important;
-    padding: 2.4mm;
+    padding: 4mm;
   }
 
   .result-print-scorebox p {
     margin: 0;
-    font-size: 7.5pt;
+    font-size: 8pt;
     line-height: 1.35;
   }
 
   .result-print-scorebox strong {
     display: block;
     margin-top: 1mm;
-    font-size: 24pt;
+    font-size: 34pt;
     line-height: 1;
   }
 
@@ -260,7 +267,7 @@ button {
     background: white !important;
     color: #0a2344 !important;
     padding: 1mm 4mm;
-    font-size: 8pt;
+    font-size: 9pt;
     font-style: normal;
     font-weight: 700;
   }
@@ -268,20 +275,20 @@ button {
   .result-print-minis {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5mm;
-    margin: 2mm 0 0;
+    gap: 2mm;
+    margin: 3mm 0 0;
   }
 
   .result-print-minis div {
     border-radius: 4px;
     background: #f3f6fa !important;
-    padding: 1.6mm;
+    padding: 2.2mm;
   }
 
   .result-print-minis dt {
     margin: 0;
     color: #64748b;
-    font-size: 8pt;
+    font-size: 8.5pt;
     font-weight: 700;
   }
 
@@ -293,32 +300,33 @@ button {
 
   .result-print-priority-card h4 {
     margin: 0;
-    font-size: 9.2pt;
+    font-size: 9.4pt;
   }
 
   .result-print-priority-card strong {
     display: block;
     margin-top: 0.6mm;
     color: #d69e00;
-    font-size: 8.4pt;
+    font-size: 8.6pt;
   }
 
   .result-print-priority-card p {
     margin: 1.2mm 0 0;
-    font-size: 6.8pt;
+    font-size: 7.1pt;
     line-height: 1.3;
   }
 
   .result-print-priority-list {
     display: grid;
-    gap: 2mm;
+    grid-template-columns: 1fr 1fr;
+    gap: 3mm;
     margin-top: 1.5mm;
   }
 
   .result-print-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 7.5pt;
+    font-size: 8pt;
   }
 
   .result-print-table th {
@@ -329,7 +337,7 @@ button {
   .result-print-table th,
   .result-print-table td {
     border: 1px solid #d8e0ea;
-    padding: 1.3mm;
+    padding: 1.6mm;
     line-height: 1.2;
     text-align: left;
   }
@@ -337,6 +345,7 @@ button {
   .result-print-next {
     background: #f8fafc !important;
     border: 1px solid #d8e0ea;
+    margin-top: 3mm;
   }
 
   .result-print-next p {
