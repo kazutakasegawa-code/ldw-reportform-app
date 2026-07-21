@@ -200,7 +200,7 @@ function PrintableResult({
           <section className="result-print-panel">
             <h3>5領域レーダーチャート</h3>
             <p className="result-print-help">100点満点。外側ほどスコアが高い状態を示します。</p>
-            <ResultRadarChart data={resultScores.map((item) => ({ domain: item.domain, score: item.score }))} />
+            <PrintableRadarSvg scores={resultScores} />
           </section>
 
           <section className="result-print-panel result-print-overview">
@@ -272,6 +272,53 @@ function PrintableResult({
         <p className="result-print-footer">Life Design Works 代表 瀬川一貴</p>
       </section>
     </div>
+  );
+}
+
+function PrintableRadarSvg({ scores }: { scores: ReturnType<typeof calculateResultDomainScores> }) {
+  const center = 110;
+  const radius = 64;
+  const labelRadius = 88;
+  const ticks = [20, 40, 60, 80, 100];
+  const points = scores.map((item, index) => {
+    const angle = -Math.PI / 2 + (index * 2 * Math.PI) / scores.length;
+    const r = radius * (item.score / 100);
+    return {
+      ...item,
+      x: center + Math.cos(angle) * r,
+      y: center + Math.sin(angle) * r,
+      axisX: center + Math.cos(angle) * radius,
+      axisY: center + Math.sin(angle) * radius,
+      labelX: center + Math.cos(angle) * labelRadius,
+      labelY: center + Math.sin(angle) * labelRadius
+    };
+  });
+  const polygonPoints = points.map((point) => `${point.x},${point.y}`).join(" ");
+
+  return (
+    <svg className="result-print-radar-svg" viewBox="0 0 220 220" role="img" aria-label="5領域レーダーチャート">
+      {ticks.map((tick) => {
+        const r = radius * (tick / 100);
+        const gridPoints = scores.map((_, index) => {
+          const angle = -Math.PI / 2 + (index * 2 * Math.PI) / scores.length;
+          return `${center + Math.cos(angle) * r},${center + Math.sin(angle) * r}`;
+        }).join(" ");
+        return <polygon key={tick} points={gridPoints} fill="none" stroke="#d8e0ea" strokeWidth="1" />;
+      })}
+      {points.map((point) => (
+        <line key={point.domain} x1={center} y1={center} x2={point.axisX} y2={point.axisY} stroke="#d8e0ea" strokeWidth="1" />
+      ))}
+      <polygon points={polygonPoints} fill="#f5c842" fillOpacity="0.42" stroke="#d69e00" strokeWidth="2" />
+      {points.map((point) => (
+        <g key={point.domain}>
+          <circle cx={point.x} cy={point.y} r="2.3" fill="#0a2344" />
+          <text x={point.labelX} y={point.labelY - 3} textAnchor="middle" fontSize="7.2" fontWeight="700" fill="#0a2344">{point.domain}</text>
+          <text x={point.labelX} y={point.labelY + 6} textAnchor="middle" fontSize="7" fill="#64748b">{point.score}点</text>
+        </g>
+      ))}
+      <text x={center + 3} y={center - 4} fontSize="7" fill="#64748b">0</text>
+      <text x={center + 3} y={center - radius - 2} fontSize="7" fill="#64748b">100</text>
+    </svg>
   );
 }
 
