@@ -71,8 +71,8 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
                 <Info label="従業員数" value={submission.employeeCount} />
               </div>
               <div className="grid gap-2">
-                <Info label="主な課題" value={limitText(submission.mainIssues, 70)} />
-                <Info label="社員に望む状態" value={limitText(submission.hearingIdealState, 70)} />
+                <Info label="主な課題" value={limitText(submission.mainIssues, 70)} compactValue />
+                <Info label="社員に望む状態" value={limitText(submission.hearingIdealState, 70)} compactValue />
               </div>
             </dl>
 
@@ -279,11 +279,11 @@ function Section({ number, title, body }: { number: string; title: string; body:
   );
 }
 
-function Info({ label, value }: { label: string; value: string }) {
+function Info({ label, value, compactValue = false }: { label: string; value: string; compactValue?: boolean }) {
   return (
     <div className="report-basic-info rounded-md border border-slate-200 bg-slate-50 p-3">
       <dt className="text-[8px] font-semibold text-slate-500">{label}</dt>
-      <dd className="mt-1 text-[12px] font-semibold leading-tight">{value}</dd>
+      <dd className={`mt-1 font-semibold leading-tight ${compactValue ? "text-[9px]" : "text-[12px]"}`}>{value}</dd>
     </div>
   );
 }
