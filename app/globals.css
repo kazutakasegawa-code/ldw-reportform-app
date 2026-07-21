@@ -118,7 +118,7 @@ button {
 
 .report-landscape .report-right-stack {
   display: grid;
-  grid-template-rows: auto 15mm 39mm 35mm auto 30mm 20mm 15mm 1fr;
+  grid-template-rows: auto 15mm 39mm 35mm auto 1fr 20mm 15mm;
   height: 100%;
   gap: 3px !important;
 }
@@ -166,6 +166,10 @@ button {
 }
 
 .report-footer-note {
+  position: absolute;
+  bottom: 1mm;
+  left: 5mm;
+  width: calc(100% - 10mm);
   display: block;
   overflow: hidden;
   text-align: left;
@@ -396,7 +400,7 @@ button {
 
   .report-landscape .report-right-stack {
     display: grid !important;
-    grid-template-rows: auto 15mm 39mm 35mm auto 30mm 20mm 15mm 1fr !important;
+    grid-template-rows: auto 15mm 39mm 35mm auto 1fr 20mm 15mm !important;
     height: 100% !important;
     gap: 3px !important;
   }
@@ -431,6 +435,10 @@ button {
   }
 
   .report-footer-note {
+    position: absolute !important;
+    bottom: 1mm !important;
+    left: 0 !important;
+    width: 100% !important;
     display: block !important;
     overflow: hidden !important;
     text-align: left !important;

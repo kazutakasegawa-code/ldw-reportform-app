@@ -42,7 +42,7 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
         </PrintButton>
       </div>
 
-      <article className="a4-report report-landscape shadow-soft">
+      <article className="a4-report report-landscape relative shadow-soft">
         <header className="relative border-b-4 border-gold-500 pb-2">
           <div>
             <div>
@@ -138,11 +138,11 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
             </table>
             <CompactSection number="12" title="経営者・管理職に求める支援" body={analysis?.managementSupport || "日常業務での声かけ、振り返り機会、実践確認の場を設計します。"} maxLength={120} className="report-right-support" />
             <CompactSection number="13" title="30分面談での追加確認事項" body={analysis?.additionalQuestions || submission.hearingQuestion || "優先課題、対象階層、実施時期、フォロー体制を確認します。"} maxLength={110} className="report-right-questions" />
-            <p className="report-footer-note px-1 text-left text-[6px] leading-none text-slate-600">
-              本レポートは事前回答等をもとにAIで情報整理した仮説を含む資料であり、社員個人の能力・適性・人事評価を判定するものではありません。
-            </p>
           </div>
         </section>
+        <p className="report-footer-note text-left text-[6px] leading-none text-slate-600">
+          本レポートは事前回答等をもとにAIで情報整理した仮説を含む資料であり、社員個人の能力・適性・人事評価を判定するものではありません。
+        </p>
       </article>
     </main>
   );
