@@ -109,6 +109,55 @@ button {
   -webkit-line-clamp: 9;
 }
 
+.report-landscape .report-right-stack {
+  display: grid;
+  grid-template-rows: auto 15mm 39mm 35mm auto 30mm 20mm 15mm 1fr;
+  height: 100%;
+  gap: 3px !important;
+}
+
+.report-landscape .report-right-stack section,
+.report-landscape .report-right-stack table {
+  min-height: 0;
+}
+
+.report-landscape .report-right-recommendations,
+.report-landscape .report-right-fits {
+  min-height: 0;
+}
+
+.report-landscape .report-right-recommendations section,
+.report-landscape .report-right-fits section,
+.report-landscape .report-right-plan,
+.report-landscape .report-right-support > section,
+.report-landscape .report-right-questions > section {
+  height: 100%;
+  overflow: hidden;
+}
+
+.report-landscape .report-right-stack p {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+.report-landscape .report-right-plan p {
+  -webkit-line-clamp: 2;
+}
+
+.report-landscape .report-right-recommendations p {
+  -webkit-line-clamp: 7;
+}
+
+.report-landscape .report-right-fits p {
+  -webkit-line-clamp: 7;
+}
+
+.report-landscape .report-right-support p,
+.report-landscape .report-right-questions p {
+  -webkit-line-clamp: 4;
+}
+
 .report-footer-note {
   display: block;
   overflow: hidden;
@@ -329,6 +378,42 @@ button {
   .report-landscape .report-middle-stack .report-compact-section-8 p,
   .report-landscape .report-middle-stack .report-compact-section-9 p {
     -webkit-line-clamp: 9 !important;
+  }
+
+  .report-landscape .report-right-stack {
+    display: grid !important;
+    grid-template-rows: auto 15mm 39mm 35mm auto 30mm 20mm 15mm 1fr !important;
+    height: 100% !important;
+    gap: 3px !important;
+  }
+
+  .report-landscape .report-right-recommendations section,
+  .report-landscape .report-right-fits section,
+  .report-landscape .report-right-plan,
+  .report-landscape .report-right-support > section,
+  .report-landscape .report-right-questions > section {
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .report-landscape .report-right-stack p {
+    display: -webkit-box !important;
+    overflow: hidden !important;
+    -webkit-box-orient: vertical !important;
+  }
+
+  .report-landscape .report-right-plan p {
+    -webkit-line-clamp: 2 !important;
+  }
+
+  .report-landscape .report-right-recommendations p,
+  .report-landscape .report-right-fits p {
+    -webkit-line-clamp: 7 !important;
+  }
+
+  .report-landscape .report-right-support p,
+  .report-landscape .report-right-questions p {
+    -webkit-line-clamp: 4 !important;
   }
 
   .report-footer-note {

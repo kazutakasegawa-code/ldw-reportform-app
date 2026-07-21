@@ -108,14 +108,14 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
             {analysis?.domainComments ? <MiniBlock title="5領域コメント" body={analysis.domainComments} maxLength={140} /> : null}
           </div>
 
-          <div className="report-stack space-y-2">
+          <div className="report-stack report-right-stack space-y-2">
             <CompactHeading number="10" title="推奨施策" />
-            <MiniBlock title="レポート表示用 推奨プラン" body={recommendedPlan} maxLength={90} strong />
-            <div className="grid grid-cols-2 gap-2">
+            <MiniBlock title="レポート表示用 推奨プラン" body={recommendedPlan} maxLength={90} strong className="report-right-plan" />
+            <div className="report-right-recommendations grid grid-cols-2 gap-2">
               <MiniBlock title="5領域スコアからの一次推奨" body={primaryRecommendation} maxLength={145} />
               <MiniBlock title="AI分析による推奨プログラム" body={aiRecommendedProgram} maxLength={145} />
             </div>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="report-right-fits grid grid-cols-3 gap-2">
               <MiniBlock title="THINGi®︎" body={analysis?.thingiFit || "判断・協力・共創を体験的に扱うテーマとして適合する可能性があります。"} maxLength={80} />
               <MiniBlock title="しあわせ360°手帳" body={analysis?.notebookFit || "気づきを目標と日々の行動に落とし込む支援として適合する可能性があります。"} maxLength={80} />
               <MiniBlock title="コーチング" body={analysis?.coachingFit || "対話と行動継続を支える手法として適合する可能性があります。"} maxLength={80} />
@@ -136,8 +136,8 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
                 ))}
               </tbody>
             </table>
-            <CompactSection number="12" title="経営者・管理職に求める支援" body={analysis?.managementSupport || "日常業務での声かけ、振り返り機会、実践確認の場を設計します。"} maxLength={120} />
-            <CompactSection number="13" title="30分面談での追加確認事項" body={analysis?.additionalQuestions || submission.hearingQuestion || "優先課題、対象階層、実施時期、フォロー体制を確認します。"} maxLength={110} />
+            <CompactSection number="12" title="経営者・管理職に求める支援" body={analysis?.managementSupport || "日常業務での声かけ、振り返り機会、実践確認の場を設計します。"} maxLength={120} className="report-right-support" />
+            <CompactSection number="13" title="30分面談での追加確認事項" body={analysis?.additionalQuestions || submission.hearingQuestion || "優先課題、対象階層、実施時期、フォロー体制を確認します。"} maxLength={110} className="report-right-questions" />
             <p className="report-footer-note px-1 text-left text-[6px] leading-none text-slate-600">
               本レポートは事前回答等をもとにAIで情報整理した仮説を含む資料であり、社員個人の能力・適性・人事評価を判定するものではありません。
             </p>
@@ -216,9 +216,9 @@ function CompactHeading({ number, title, note }: { number: string; title: string
   );
 }
 
-function CompactSection({ number, title, body, maxLength }: { number: string; title: string; body: string; maxLength: number }) {
+function CompactSection({ number, title, body, maxLength, className = "" }: { number: string; title: string; body: string; maxLength: number; className?: string }) {
   return (
-    <div className={`report-compact-section report-compact-section-${number}`}>
+    <div className={`report-compact-section report-compact-section-${number} ${className}`}>
       <CompactHeading number={number} title={title} />
       <section className="mt-0.5 rounded-md border border-slate-200 bg-white p-2">
         <p className="whitespace-pre-wrap text-slate-800">{limitText(body, maxLength)}</p>
@@ -227,9 +227,9 @@ function CompactSection({ number, title, body, maxLength }: { number: string; ti
   );
 }
 
-function MiniBlock({ title, body, maxLength, strong = false }: { title: string; body: string; maxLength: number; strong?: boolean }) {
+function MiniBlock({ title, body, maxLength, strong = false, className = "" }: { title: string; body: string; maxLength: number; strong?: boolean; className?: string }) {
   return (
-    <section className="rounded-md border border-slate-200 bg-slate-50 p-2">
+    <section className={`rounded-md border border-slate-200 bg-slate-50 p-2 ${className}`}>
       <h3 className="text-[9.5px] font-bold text-slate-500">{title}</h3>
       <p className={`mt-0.5 whitespace-pre-wrap text-slate-800 ${strong ? "font-bold text-navy-900" : ""}`}>{limitText(body, maxLength)}</p>
     </section>
