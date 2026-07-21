@@ -84,13 +84,14 @@ button {
 .report-landscape .report-middle-stack .report-compact-section-3 > section,
 .report-landscape .report-middle-stack .report-compact-section-4 > section,
 .report-landscape .report-middle-stack .report-compact-section-5 > section,
-.report-landscape .report-middle-stack .report-compact-section-6 > section {
-  height: 17mm;
+.report-landscape .report-middle-stack .report-compact-section-6 > section,
+.report-landscape .report-middle-stack .report-compact-section-7 > section {
+  height: 18mm;
 }
 
 .report-landscape .report-middle-actions {
   flex: 1;
-  min-height: 28mm;
+  min-height: 20mm;
 }
 
 .report-landscape .report-middle-actions .report-compact-section {
@@ -371,13 +372,14 @@ button {
   .report-landscape .report-middle-stack .report-compact-section-3 > section,
   .report-landscape .report-middle-stack .report-compact-section-4 > section,
   .report-landscape .report-middle-stack .report-compact-section-5 > section,
-  .report-landscape .report-middle-stack .report-compact-section-6 > section {
-    height: 17mm !important;
+  .report-landscape .report-middle-stack .report-compact-section-6 > section,
+  .report-landscape .report-middle-stack .report-compact-section-7 > section {
+    height: 18mm !important;
   }
 
   .report-landscape .report-middle-actions {
     flex: 1 !important;
-    min-height: 28mm !important;
+    min-height: 20mm !important;
   }
 
   .report-landscape .report-middle-actions .report-compact-section {
