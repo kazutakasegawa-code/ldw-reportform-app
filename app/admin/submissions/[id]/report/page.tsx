@@ -49,10 +49,10 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
               <p className="text-xs font-semibold text-gold-500">{providerName}</p>
               <h1 className="mt-1 pr-40 text-3xl font-bold leading-tight">人材育成・組織開発 分析レポート</h1>
             </div>
-            <p className="absolute right-0 top-0 text-right text-xs font-semibold leading-5 text-slate-600">
+            <p className="report-created-date absolute right-0 top-0 text-right text-[7px] font-normal leading-4 text-slate-600">
               作成年月日
               <br />
-              <span className="text-sm text-navy-900">{reportDate}</span>
+              <span className="text-[9px] font-normal text-navy-900">{reportDate}</span>
             </p>
           </div>
         </header>

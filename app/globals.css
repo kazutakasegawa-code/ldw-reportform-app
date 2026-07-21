@@ -205,14 +205,14 @@ button {
 .report-landscape h2 {
   margin-bottom: 1px !important;
   gap: 4px !important;
-  font-size: 9px !important;
+  font-size: 12px !important;
   line-height: 1.1 !important;
 }
 
 .report-landscape h2 span {
-  width: 14px !important;
-  height: 14px !important;
-  font-size: 7.5px !important;
+  width: 17px !important;
+  height: 17px !important;
+  font-size: 10px !important;
 }
 
 .report-landscape section,
@@ -455,14 +455,14 @@ button {
   .report-landscape h2 {
     margin-bottom: 1px !important;
     gap: 4px !important;
-    font-size: 9px !important;
+    font-size: 12px !important;
     line-height: 1.1 !important;
   }
 
   .report-landscape h2 span {
-    width: 14px !important;
-    height: 14px !important;
-    font-size: 7.5px !important;
+    width: 17px !important;
+    height: 17px !important;
+    font-size: 10px !important;
   }
 
   .report-landscape section,
