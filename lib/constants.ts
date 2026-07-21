@@ -25,7 +25,26 @@ export const targetLayers = [
 
 export const targetCountOptions = ["5名以下", "6〜10名", "11〜20名", "20名以上"];
 export const desiredTimingOptions = ["3ヶ月以内", "6ヶ月以内", "1年以内", "1年以上", "未定"];
-export const industryOptions = ["IT・通信", "製造業", "サービス業", "小売・流通", "金融・保険", "医療・福祉", "教育", "建設・不動産", "その他"];
+export const industryOptions = [
+  "IT・通信",
+  "製造業",
+  "建設・不動産",
+  "卸売・小売",
+  "飲食・宿泊",
+  "運輸・物流",
+  "金融・保険",
+  "医療・福祉",
+  "教育・学習支援",
+  "人材・採用支援",
+  "士業・専門サービス",
+  "コンサルティング",
+  "広告・デザイン・制作",
+  "美容・健康",
+  "農林水産",
+  "公共・自治体・団体",
+  "その他サービス",
+  "その他"
+];
 export const employeeCountOptions = ["1〜10名", "11〜50名", "51〜100名", "101〜300名", "301〜1000名", "1001名以上"];
 
 export const mainIssueOptions = [

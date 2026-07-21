@@ -200,10 +200,6 @@ export default function DiagnosisForm() {
           <SelectField label="社員に望む状態" options={hearingOptions.idealState} registration={register("hearingIdealState")} error={errors.hearingIdealState?.message} />
           <SelectField label="研修後の社内フォロー体制" options={hearingOptions.followSystem} registration={register("hearingFollowSystem")} error={errors.hearingFollowSystem?.message} />
         </div>
-        <div className="mt-5">
-          <FieldLabel>30分面談で特に確認したいこと</FieldLabel>
-          <textarea className={inputClass} rows={4} {...register("hearingQuestion")} />
-        </div>
       </Card>
 
       <Card className="p-6">
@@ -211,7 +207,7 @@ export default function DiagnosisForm() {
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
           <SelectField label="研修対象階層" options={targetLayers} registration={register("targetLayer")} error={errors.targetLayer?.message} />
           <SelectField label="研修対象人数" options={targetCountOptions} registration={register("targetCount")} error={errors.targetCount?.message} />
-          <SelectField label="希望時期" options={desiredTimingOptions} registration={register("desiredTiming")} error={errors.desiredTiming?.message} />
+          <SelectField label="研修希望時期" options={desiredTimingOptions} registration={register("desiredTiming")} error={errors.desiredTiming?.message} />
           <SelectField label="過去の研修実施" options={pastTrainingOptions} registration={register("pastTraining")} error={errors.pastTraining?.message} />
           <SelectField label="想定する研修期間" options={expectedPeriods} registration={register("expectedPeriod")} error={errors.expectedPeriod?.message} />
           <SelectField label="予算感" options={budgetRanges} registration={register("budgetRange")} error={errors.budgetRange?.message} />

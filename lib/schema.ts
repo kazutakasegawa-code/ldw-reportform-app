@@ -11,7 +11,7 @@ export const diagnosisSchema = z.object({
   phone: z.string().min(1, "電話番号を入力してください"),
   targetLayer: z.string().min(1, "研修対象階層を選択してください"),
   targetCount: z.string().min(1, "研修対象人数を選択してください"),
-  desiredTiming: z.string().min(1, "希望時期を入力してください"),
+  desiredTiming: z.string().min(1, "研修希望時期を選択してください"),
   pastTraining: z.string().min(1, "過去の研修実施を選択してください"),
   mainIssues: z.array(z.string()).min(1, "主な課題を1つ以上選択してください"),
   mainIssueOther: z.string().optional(),
