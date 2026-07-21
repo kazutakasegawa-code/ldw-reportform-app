@@ -57,6 +57,10 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
           </div>
         </header>
 
+        <p className="report-disclaimer text-left text-slate-600">
+          本レポートは事前回答等をもとにAIで情報整理した仮説を含む資料であり、社員個人の能力・適性・人事評価を判定するものではありません。
+        </p>
+
         <section className="report-grid mt-4 grid grid-cols-[0.9fr_1.15fr_1.05fr] gap-4 text-[10.5px] leading-5">
           <div className="report-stack space-y-3">
             <CompactHeading number="1" title="基本情報" />
@@ -140,9 +144,6 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
             <CompactSection number="13" title="30分面談での追加確認事項" body={analysis?.additionalQuestions || submission.hearingQuestion || "優先課題、対象階層、実施時期、フォロー体制を確認します。"} maxLength={110} className="report-right-questions" />
           </div>
         </section>
-        <p className="report-footer-note text-left text-[6px] leading-none text-slate-600">
-          本レポートは事前回答等をもとにAIで情報整理した仮説を含む資料であり、社員個人の能力・適性・人事評価を判定するものではありません。
-        </p>
       </article>
     </main>
   );
@@ -281,8 +282,8 @@ function Section({ number, title, body }: { number: string; title: string; body:
 function Info({ label, value }: { label: string; value: string }) {
   return (
     <div className="report-basic-info rounded-md border border-slate-200 bg-slate-50 p-3">
-      <dt className="text-xs font-semibold text-slate-500">{label}</dt>
-      <dd className="mt-1 font-semibold">{value}</dd>
+      <dt className="text-[8px] font-semibold text-slate-500">{label}</dt>
+      <dd className="mt-1 text-[12px] font-semibold leading-tight">{value}</dd>
     </div>
   );
 }
