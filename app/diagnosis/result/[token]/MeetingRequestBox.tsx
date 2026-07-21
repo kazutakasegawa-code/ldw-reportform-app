@@ -31,12 +31,13 @@ export default function MeetingRequestBox({ token }: { token: string }) {
     setMessage("");
 
     const formData = new FormData(event.currentTarget);
+    const preferredDates = [1, 2, 3].map((index) => {
+      const date = String(formData.get(`preferredDate${index}Date`) || "");
+      const time = String(formData.get(`preferredDate${index}Time`) || "");
+      return `${date} ${time}`.trim();
+    });
     const payload = {
-      preferredDates: [
-        String(formData.get("preferredDate1") || ""),
-        String(formData.get("preferredDate2") || ""),
-        String(formData.get("preferredDate3") || "")
-      ],
+      preferredDates,
       meetingMethod: String(formData.get("meetingMethod") || ""),
       memo: String(formData.get("memo") || ""),
       consentAi: formData.get("consentAi") === "on",
@@ -71,7 +72,7 @@ export default function MeetingRequestBox({ token }: { token: string }) {
             レーダーチャートで低く出た領域には、複数の背景要因が関係している可能性があります。30分面談＋AI詳細診断では、回答内容をもとに、御社の強み・優先課題・背景にある原因仮説・次に行う育成施策をA4分析レポートとして整理します。
           </p>
           <p className="mt-3 text-sm font-semibold text-navy-900">面談30分／A4分析レポート付き／毎月5社まで</p>
-          <p className="mt-2 text-xs leading-6 text-slate-600">AI分析は補助であり、最終的な確認・判断はLife Design Works代表 瀬川一貴が行います。</p>
+          <p className="mt-2 text-xs leading-6 text-slate-600">AI分析は補助であり、最終的な確認・判断はLife Design Worksが行います。</p>
         </div>
         <Button type="button" onClick={handleCtaClick}>
           <CalendarCheck size={18} />
@@ -84,15 +85,15 @@ export default function MeetingRequestBox({ token }: { token: string }) {
 
       {open ? (
         <form onSubmit={handleSubmit} className="mt-6 grid gap-4 rounded-lg border border-gold-200 bg-white p-5 sm:grid-cols-2">
-          <Input name="preferredDate1" label="希望日時 第1希望" type="datetime-local" />
-          <Input name="preferredDate2" label="希望日時 第2希望" type="datetime-local" />
-          <Input name="preferredDate3" label="希望日時 第3希望" type="datetime-local" />
+          <PreferredDateInput index={1} />
+          <PreferredDateInput index={2} />
+          <PreferredDateInput index={3} />
           <div>
             <FieldLabel required>面談方法</FieldLabel>
             <select name="meetingMethod" className={inputClass} defaultValue="" required>
               <option value="">選択してください</option>
               <option value="オンライン">オンライン</option>
-              <option value="対面希望">対面希望</option>
+              <option value="直接対面希望">直接対面希望</option>
               <option value="相談したい">相談したい</option>
             </select>
           </div>
@@ -119,11 +120,14 @@ export default function MeetingRequestBox({ token }: { token: string }) {
   );
 }
 
-function Input({ name, label, type }: { name: string; label: string; type: string }) {
+function PreferredDateInput({ index }: { index: number }) {
   return (
     <div>
-      <FieldLabel required>{label}</FieldLabel>
-      <input name={name} type={type} className={inputClass} required />
+      <FieldLabel required>希望日時 第{index}希望</FieldLabel>
+      <div className="grid gap-2 sm:grid-cols-[1fr_0.8fr]">
+        <input name={`preferredDate${index}Date`} type="date" className={inputClass} required />
+        <input name={`preferredDate${index}Time`} type="text" className={inputClass} placeholder="例：10:00〜11:00" required />
+      </div>
     </div>
   );
 }

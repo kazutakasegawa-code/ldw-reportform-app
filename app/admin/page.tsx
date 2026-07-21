@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Eye } from "lucide-react";
+import DeleteSelectedSubmissionsButton from "./DeleteSelectedSubmissionsButton";
 import DeleteSubmissionButton from "./DeleteSubmissionButton";
 import LogoutButton from "./LogoutButton";
 import { Container, PageShell } from "@/components/ui";
@@ -33,13 +34,17 @@ export default async function AdminPage() {
             <p className="text-sm font-semibold text-gold-500">管理画面</p>
             <h1 className="text-3xl font-bold">診断申込み一覧</h1>
           </div>
-          <LogoutButton />
+          <div className="flex flex-wrap gap-2">
+            <DeleteSelectedSubmissionsButton />
+            <LogoutButton />
+          </div>
         </div>
         <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-soft">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[1180px] text-left text-sm">
+            <table className="w-full min-w-[1230px] text-left text-sm">
               <thead className="bg-navy-800 text-white">
                 <tr>
+                  <th className="px-4 py-3">選択</th>
                   <th className="px-4 py-3">会社名</th>
                   <th className="px-4 py-3">担当者名</th>
                   <th className="px-4 py-3">送信日時</th>
@@ -59,6 +64,15 @@ export default async function AdminPage() {
                   const summary = summarizeResultScores(resultScores);
                   return (
                     <tr key={submission.id} className="hover:bg-slate-50">
+                      <td className="px-4 py-3">
+                        <input
+                          type="checkbox"
+                          name="submissionIds"
+                          value={submission.id}
+                          aria-label={`${submission.companyName}を選択`}
+                          className="h-4 w-4"
+                        />
+                      </td>
                       <td className="px-4 py-3 font-semibold">{submission.companyName}</td>
                       <td className="px-4 py-3">{submission.contactName}</td>
                       <td className="px-4 py-3">{formatDateTimeJst(submission.createdAt)}</td>
@@ -82,7 +96,7 @@ export default async function AdminPage() {
                 })}
                 {!submissions.length ? (
                   <tr>
-                    <td colSpan={11} className="px-4 py-10 text-center text-slate-500">まだ申込みはありません。</td>
+                    <td colSpan={12} className="px-4 py-10 text-center text-slate-500">まだ申込みはありません。</td>
                   </tr>
                 ) : null}
               </tbody>
