@@ -11,16 +11,17 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
-  const { meetingDate, meetingTime, reportDate, ...data } = parsed.data;
+  const { status, meetingDate, meetingTime, reportDate, ...data } = parsed.data;
   await prisma.submission.update({
     where: { id },
     data: {
       ...data,
+      status,
       meetingDate: meetingDate ? parseDateTimeInputAsJst(`${meetingDate}T${meetingTime || "00:00"}`) : null,
       reportDate: parseDateInputAsJst(reportDate)
     }
   });
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({ ok: true, status });
 }
 
 export async function DELETE(_: Request, { params }: { params: Promise<{ id: string }> }) {

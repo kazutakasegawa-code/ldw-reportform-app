@@ -34,6 +34,7 @@ export default function DetailEditor({ submission, domainScores, recommendation,
   const [aiResult, setAiResult] = useState("");
   const [runningAi, setRunningAi] = useState(false);
   const [copiedPrompt, setCopiedPrompt] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState(submission.status);
   const draftKey = `thingi-analysis-draft-${submission.id}`;
   const resultScoreRows = domainScores.map((score) => {
     const resultScore = score.average === null ? 0 : Math.round((score.average / 5) * 100);
@@ -73,13 +74,16 @@ export default function DetailEditor({ submission, domainScores, recommendation,
     event.preventDefault();
     const formElement = event.currentTarget;
     const form = new FormData(formElement);
-    const payload = Object.fromEntries(form.entries());
+    const payload = {
+      ...Object.fromEntries(form.entries()),
+      status: selectedStatus
+    };
     const response = await fetch(`/api/admin/submissions/${submission.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
-    setMessage(response.ok ? "管理項目を保存しました。" : "保存に失敗しました。");
+    setMessage(response.ok ? `管理項目を保存しました。ステータス：${selectedStatus}` : "保存に失敗しました。");
     scrollToMessage();
   }
 
@@ -238,7 +242,7 @@ export default function DetailEditor({ submission, domainScores, recommendation,
         <form onSubmit={saveSubmission} className="mt-5 grid gap-4 sm:grid-cols-2">
           <div>
             <FieldLabel>ステータス</FieldLabel>
-            <select name="status" className={inputClass} defaultValue={submission.status}>
+            <select name="status" className={inputClass} value={selectedStatus} onChange={(event) => setSelectedStatus(event.currentTarget.value)}>
               {statusOptions.map((status) => <option key={status}>{status}</option>)}
             </select>
           </div>
