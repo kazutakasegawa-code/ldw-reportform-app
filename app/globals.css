@@ -198,10 +198,10 @@ button {
 
   .result-print-priority-block {
     position: absolute;
-    top: 7mm;
+    top: 14mm;
     left: 147mm;
     width: 126mm;
-    height: 86mm;
+    height: 92mm;
   }
 
   .result-print-compare-block {
@@ -214,15 +214,15 @@ button {
 
   .result-print-cta-block {
     position: absolute;
-    top: 103mm;
-    left: 144mm;
-    width: 129mm;
-    height: 62mm;
+    top: 116mm;
+    left: 147mm;
+    width: 126mm;
+    height: 49mm;
   }
 
   .result-print-brand {
     position: absolute;
-    right: 20mm;
+    right: 10mm;
     bottom: 3mm;
     margin: 0;
     color: #0a2344;
@@ -465,13 +465,13 @@ button {
   }
 
   .result-print-subtitle {
-    margin-top: 5mm;
+    margin-top: 13mm;
   }
 
   .result-print-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1.6mm;
+    margin-top: 2.2mm;
     overflow: hidden;
     border-radius: 4px;
     font-size: 5.45pt;
@@ -552,7 +552,7 @@ button {
 
   .result-print-cta-block > div:first-child {
     position: absolute;
-    top: 14mm;
+    top: 11mm;
     left: 6mm;
     width: 78mm;
   }
@@ -562,18 +562,11 @@ button {
     line-height: 1.25;
   }
 
-  .result-print-cta-meta {
-    margin-top: 3mm !important;
-    color: #0a2344 !important;
-    font-size: 7.4pt !important;
-    font-weight: 800;
-  }
-
   .result-print-qr {
     position: absolute;
-    right: 10mm;
-    top: 13mm;
-    width: 30mm;
+    right: 9mm;
+    top: 8mm;
+    width: 31mm;
     text-align: center;
   }
 
@@ -588,9 +581,10 @@ button {
   .result-print-qr p {
     margin: 0;
     padding-top: 1mm;
-    color: #64748b;
-    font-size: 5.6pt;
-    font-weight: 700;
+    color: #0a2344;
+    font-size: 5.8pt;
+    line-height: 1.25;
+    font-weight: 800;
   }
 
 }

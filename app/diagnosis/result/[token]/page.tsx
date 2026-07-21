@@ -285,11 +285,10 @@ function PrintableResult({
             <div>
               <h3>診断結果をもとに、30分で優先課題と次の一手を整理しませんか？</h3>
               <p>レーダーチャートで低く出た領域には、複数の背景要因が関係している可能性があります。30分面談＋AI詳細診断では、回答内容をもとに、御社の強み・優先課題・背景にある原因仮説・次に行う育成施策をA4分析レポートとして整理します。</p>
-              <p className="result-print-cta-meta">30分面談＋AI詳細診断を予約する</p>
             </div>
             <div className="result-print-qr">
               <img src={resultQrUrl} alt="診断結果ページのQRコード" />
-              <p>診断結果ページ</p>
+              <p>30分面談＋AI詳細診断を予約する</p>
             </div>
           </section>
           <p className="result-print-brand">Life Design Works</p>
