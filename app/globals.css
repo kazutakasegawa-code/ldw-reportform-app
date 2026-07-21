@@ -86,7 +86,11 @@ button {
 .report-landscape .report-middle-stack .report-compact-section-5 > section,
 .report-landscape .report-middle-stack .report-compact-section-6 > section,
 .report-landscape .report-middle-stack .report-compact-section-7 > section {
-  height: 22mm;
+  height: 21.5mm;
+}
+
+.report-landscape .report-middle-stack .report-compact-section-3 > section {
+  margin-top: 3mm;
 }
 
 .report-landscape .report-middle-actions {
@@ -402,7 +406,11 @@ button {
   .report-landscape .report-middle-stack .report-compact-section-5 > section,
   .report-landscape .report-middle-stack .report-compact-section-6 > section,
   .report-landscape .report-middle-stack .report-compact-section-7 > section {
-    height: 22mm !important;
+    height: 21.5mm !important;
+  }
+
+  .report-landscape .report-middle-stack .report-compact-section-3 > section {
+    margin-top: 3mm !important;
   }
 
   .report-landscape .report-middle-actions {
