@@ -119,7 +119,7 @@ button {
 
 .report-landscape .report-right-stack {
   display: grid;
-  grid-template-rows: auto 15mm 39mm 35mm auto 1fr 20mm 15mm;
+  grid-template-rows: auto 13mm 34mm 30mm auto 1fr 24mm 22mm;
   height: 100%;
   gap: 3px !important;
 }
@@ -154,11 +154,11 @@ button {
 }
 
 .report-landscape .report-right-recommendations p {
-  -webkit-line-clamp: 7;
+  -webkit-line-clamp: 6;
 }
 
 .report-landscape .report-right-fits p {
-  -webkit-line-clamp: 7;
+  -webkit-line-clamp: 5;
 }
 
 .report-landscape .report-right-support p,
@@ -416,7 +416,7 @@ button {
 
   .report-landscape .report-right-stack {
     display: grid !important;
-    grid-template-rows: auto 15mm 39mm 35mm auto 1fr 20mm 15mm !important;
+    grid-template-rows: auto 13mm 34mm 30mm auto 1fr 24mm 22mm !important;
     height: 100% !important;
     gap: 3px !important;
   }
@@ -442,7 +442,11 @@ button {
 
   .report-landscape .report-right-recommendations p,
   .report-landscape .report-right-fits p {
-    -webkit-line-clamp: 7 !important;
+    -webkit-line-clamp: 6 !important;
+  }
+
+  .report-landscape .report-right-fits p {
+    -webkit-line-clamp: 5 !important;
   }
 
   .report-landscape .report-right-support p,
