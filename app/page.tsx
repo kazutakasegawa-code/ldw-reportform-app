@@ -16,7 +16,9 @@ export default function HomePage() {
           <div>
             <p className="mb-4 inline-flex rounded-full bg-gold-100 px-4 py-2 text-sm font-semibold text-navy-800">毎月5社まで / 無料診断</p>
             <h1 className="text-3xl font-bold leading-tight tracking-normal text-navy-900 sm:text-5xl">
-              採用しても定着しない。若手がなかなか育たない。その原因、育成の仕組みにあるかもしれません。
+              <span className="block">採用しても定着しない。</span>
+              <span className="block">若手がなかなか育たない。</span>
+              <span className="block">その原因、育成の仕組みにあるかもしれません。</span>
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-8 text-slate-700">
               15項目・約5分で、採用後に社員が定着し、成長し、チームで成果を出すための職場環境・育成課題を見える化します。
