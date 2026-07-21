@@ -347,7 +347,9 @@ export default function DetailEditor({ submission, domainScores, recommendation,
           {submission.checkAnswers.map((answer) => (
             <div key={answer.id} className="rounded-md border border-slate-200 p-4 text-sm">
               <p className="font-semibold">{answer.questionNo}. {answer.question}</p>
-              <p className="mt-1 text-slate-600">{answer.domain} / 評点：{answer.score} / 観点：{answer.viewpoint}</p>
+              <p className="mt-1 text-slate-600">
+                {resultDomainLabels[answer.domain] ?? answer.domain} / 評価：{answer.score}（{answer.score * 20}点換算） / 観点：{answer.viewpoint}
+              </p>
               <p className="mt-2 whitespace-pre-wrap">{answer.comment || "コメントなし"}</p>
             </div>
           ))}
