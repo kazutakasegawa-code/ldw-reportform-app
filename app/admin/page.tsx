@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Eye } from "lucide-react";
 import DeleteSelectedSubmissionsButton from "./DeleteSelectedSubmissionsButton";
-import DeleteSubmissionButton from "./DeleteSubmissionButton";
 import LogoutButton from "./LogoutButton";
 import { Container, PageShell } from "@/components/ui";
 import { requireAdmin } from "@/lib/auth";
@@ -20,7 +19,6 @@ export default async function AdminPage() {
       status: true,
       createdAt: true,
       ctaClickedAt: true,
-      meetingRequestedAt: true,
       preferredMeetingDates: true,
       checkAnswers: { select: { domain: true, score: true } }
     }
@@ -50,12 +48,10 @@ export default async function AdminPage() {
                   <th className="px-4 py-3">送信日時</th>
                   <th className="px-4 py-3">総合スコア</th>
                   <th className="px-4 py-3">最低スコア領域</th>
-                  <th className="px-4 py-3">30分面談希望</th>
-                  <th className="px-4 py-3">CTAクリック日時</th>
+                  <th className="px-4 py-3">面談希望クリック日時</th>
                   <th className="px-4 py-3">面談希望日時</th>
                   <th className="px-4 py-3">ステータス</th>
                   <th className="px-4 py-3">詳細</th>
-                  <th className="px-4 py-3">削除</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200">
@@ -78,7 +74,6 @@ export default async function AdminPage() {
                       <td className="px-4 py-3">{formatDateTimeJst(submission.createdAt)}</td>
                       <td className="px-4 py-3 font-semibold">{summary.overallScore}点</td>
                       <td className="px-4 py-3">{summary.lowest.domain}（{summary.lowest.score}点）</td>
-                      <td className="px-4 py-3">{submission.meetingRequestedAt ? "あり" : "なし"}</td>
                       <td className="px-4 py-3">{submission.ctaClickedAt ? formatDateTimeJst(submission.ctaClickedAt) : "-"}</td>
                       <td className="max-w-[220px] whitespace-pre-line px-4 py-3 text-xs leading-6">{submission.preferredMeetingDates || "-"}</td>
                       <td className="px-4 py-3"><span className="rounded-full bg-gold-100 px-3 py-1 text-xs font-semibold">{submission.status}</span></td>
@@ -88,15 +83,12 @@ export default async function AdminPage() {
                           詳細
                         </Link>
                       </td>
-                      <td className="px-4 py-3">
-                        <DeleteSubmissionButton id={submission.id} companyName={submission.companyName} />
-                      </td>
                     </tr>
                   );
                 })}
                 {!submissions.length ? (
                   <tr>
-                    <td colSpan={12} className="px-4 py-10 text-center text-slate-500">まだ申込みはありません。</td>
+                    <td colSpan={10} className="px-4 py-10 text-center text-slate-500">まだ申込みはありません。</td>
                   </tr>
                 ) : null}
               </tbody>
