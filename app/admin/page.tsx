@@ -39,7 +39,7 @@ export default async function AdminPage() {
         </div>
         <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-soft">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[1130px] text-left text-sm">
+            <table className="w-full min-w-[1000px] text-left text-sm">
               <thead className="bg-navy-800 text-white">
                 <tr>
                   <th className="px-4 py-3">選択</th>
@@ -52,10 +52,6 @@ export default async function AdminPage() {
                   <th className="px-4 py-3">
                     <span className="block">総合</span>
                     <span className="block">スコア</span>
-                  </th>
-                  <th className="px-4 py-3">
-                    <span className="block">最低スコア</span>
-                    <span className="block">領域</span>
                   </th>
                   <th className="px-4 py-3">面談希望クリック日時</th>
                   <th className="px-4 py-3">面談希望日時</th>
@@ -89,7 +85,6 @@ export default async function AdminPage() {
                         </Link>
                       </td>
                       <td className="px-4 py-3 font-semibold">{summary.overallScore}点</td>
-                      <td className="px-4 py-3">{summary.lowest.domain}（{summary.lowest.score}点）</td>
                       <td className="px-4 py-3">{submission.ctaClickedAt ? formatDateTimeJst(submission.ctaClickedAt) : "-"}</td>
                       <td className="max-w-[220px] whitespace-pre-line px-4 py-3 text-xs leading-6">{submission.preferredMeetingDates || "-"}</td>
                       <td className="px-4 py-3"><span className="rounded-full bg-gold-100 px-3 py-1 text-xs font-semibold">{submission.status}</span></td>
@@ -98,7 +93,7 @@ export default async function AdminPage() {
                 })}
                 {!submissions.length ? (
                   <tr>
-                    <td colSpan={9} className="px-4 py-10 text-center text-slate-500">まだ申込みはありません。</td>
+                    <td colSpan={8} className="px-4 py-10 text-center text-slate-500">まだ申込みはありません。</td>
                   </tr>
                 ) : null}
               </tbody>
