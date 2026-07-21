@@ -289,6 +289,10 @@ button {
     padding: 3.2mm;
   }
 
+  .result-print-overview {
+    padding: 4mm;
+  }
+
   .result-print-chart-card,
   .result-print-overview {
     height: 70mm;
@@ -306,6 +310,19 @@ button {
     font-weight: 900 !important;
   }
 
+  .result-print-overview-title {
+    display: flex;
+    align-items: center;
+    gap: 1.8mm;
+    font-size: 10.2pt !important;
+  }
+
+  .result-print-overview-icon {
+    flex: 0 0 auto;
+    color: #d69e00;
+    stroke-width: 2.4;
+  }
+
   .result-print-help {
     margin: 1mm 0 0;
     color: #64748b;
@@ -321,47 +338,49 @@ button {
 
   .result-print-scorebox {
     margin-top: 5mm;
-    border-radius: 5px;
+    min-height: 35mm;
+    border-radius: 4px;
     background: #0a2344 !important;
     color: white !important;
-    padding: 5mm 4.5mm;
+    padding: 5mm 5mm 4mm;
   }
 
   .result-print-scorebox p {
     margin: 0;
-    color: #f6d36b !important;
-    font-size: 8pt;
+    color: white !important;
+    font-size: 7.8pt;
     font-weight: 800;
     line-height: 1.35;
   }
 
   .result-print-scorebox p:last-child {
     color: #f8fafc !important;
-    font-size: 7pt;
+    font-size: 7.2pt;
     line-height: 1.45;
+    font-weight: 800;
   }
 
   .result-print-scorebox strong {
     display: block;
     margin-top: 1mm;
     color: white !important;
-    font-size: 34pt;
+    font-size: 30pt;
     line-height: 1;
   }
 
   .result-print-scorebox strong span {
-    margin-left: 2mm;
-    font-size: 10pt;
+    margin-left: 1.5mm;
+    font-size: 9pt;
   }
 
   .result-print-scorebox em {
     display: inline-block;
-    margin: 1.8mm 0;
+    margin: 2mm 0 3.5mm;
     border-radius: 999px;
     background: white !important;
     color: #0a2344 !important;
-    padding: 0.8mm 2.8mm;
-    font-size: 8.2pt;
+    padding: 0.7mm 3mm;
+    font-size: 7.4pt;
     font-style: normal;
     font-weight: 800;
   }
@@ -369,28 +388,29 @@ button {
   .result-print-minis {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2mm;
-    margin: 8mm 0 0;
+    gap: 3mm;
+    margin: 4mm 0 0;
   }
 
   .result-print-minis div {
     border-radius: 4px;
-    background: white !important;
-    padding: 0;
+    background: #f8fafc !important;
+    padding: 2.6mm 2.8mm;
   }
 
   .result-print-minis dt {
     margin: 0;
-    color: #0a2344;
-    font-size: 7.3pt;
-    font-weight: 700;
+    color: #64748b;
+    font-size: 6.6pt;
+    font-weight: 900;
   }
 
   .result-print-minis dd {
     margin: 1mm 0 0;
     color: #0a2344;
-    font-size: 7.8pt;
-    font-weight: 800;
+    font-size: 7.2pt;
+    font-weight: 900;
+    line-height: 1.2;
   }
 
   .result-print-priority-card h4 {

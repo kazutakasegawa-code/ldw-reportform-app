@@ -212,7 +212,10 @@ function PrintableResult({
               </div>
 
               <div className="result-print-card result-print-overview">
-                <h3>総合結果</h3>
+                <h3 className="result-print-overview-title">
+                  <Award className="result-print-overview-icon" size={12} />
+                  総合結果
+                </h3>
                 <div className="result-print-scorebox">
                   <p>総合スコア</p>
                   <strong>{summary.overallScore}<span>点</span></strong>
