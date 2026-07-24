@@ -48,7 +48,7 @@ const defaultValues: DiagnosisInput = {
   hearingFollowSystem: "",
   hearingQuestion: "",
   consentPrivacy: false as true,
-  consentAi: false as true,
+  consentAi: false,
   checkAnswers: checkQuestions.map((item) => ({
     questionNo: item.no,
     domain: item.domain,
@@ -72,7 +72,6 @@ export default function DiagnosisForm() {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors }
   } = useForm<DiagnosisInput>({
     resolver: zodResolver(diagnosisSchema),
@@ -129,9 +128,13 @@ export default function DiagnosisForm() {
       </div>
 
       <MutedNotice>
-        {fiveMinuteDiagnosticNotice}
-        <br />
-        {privacyNotice}
+        <span className="block">{fiveMinuteDiagnosticNotice}</span>
+        <span className="mt-2 block">{privacyNotice}</span>
+        <label className="mt-3 flex gap-3 border-t border-gold-300 pt-3 font-semibold">
+          <input type="checkbox" {...register("consentPrivacy")} />
+          <span><span className="text-red-600">*</span> {diagnosisConsentNotice}</span>
+        </label>
+        <ErrorText message={errors.consentPrivacy?.message} />
       </MutedNotice>
       <p className="text-sm font-semibold text-slate-600">
         <span className="text-red-600">*</span> は必須項目です。
@@ -242,31 +245,6 @@ export default function DiagnosisForm() {
         <div className="mt-5">
           <FieldLabel>補足</FieldLabel>
           <textarea className={inputClass} rows={4} {...register("notes")} />
-        </div>
-      </Card>
-
-      <Card className="p-6">
-        <h2 className="text-xl font-bold">同意事項</h2>
-        <div className="mt-4 space-y-3">
-          <label className="flex gap-3 text-sm leading-7">
-            <input
-              type="checkbox"
-              {...register("consentPrivacy", {
-                onChange: (event) => {
-                  setValue("consentAi", event.target.checked, { shouldValidate: true });
-                }
-              })}
-            />
-            <input type="checkbox" hidden {...register("consentAi")} />
-            <span><span className="font-semibold text-red-600">*</span> {diagnosisConsentNotice}</span>
-          </label>
-          <ErrorText
-            message={
-              errors.consentPrivacy || errors.consentAi
-                ? "入力情報の取り扱いおよびAI利用に同意してください"
-                : undefined
-            }
-          />
         </div>
       </Card>
 

@@ -149,6 +149,11 @@ export default function DetailEditor({ submission, domainScores, recommendation,
   }
 
   async function runAi() {
+    if (!submission.consentAi) {
+      setMessage("30分面談申込み時のAI利用同意が確認できないため、AI分析は実行できません。");
+      scrollToMessage();
+      return;
+    }
     setRunningAi(true);
     setMessage("");
     const response = await fetch(`/api/admin/submissions/${submission.id}/ai`, { method: "POST" });
@@ -184,6 +189,11 @@ export default function DetailEditor({ submission, domainScores, recommendation,
   }
 
   async function copyPrompt() {
+    if (!submission.consentAi) {
+      setMessage("30分面談申込み時のAI利用同意が確認できないため、プロンプトはコピーできません。");
+      scrollToMessage();
+      return;
+    }
     try {
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(prompt);
@@ -383,14 +393,22 @@ export default function DetailEditor({ submission, domainScores, recommendation,
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-xl font-bold">AI分析用プロンプト</h2>
           <div className="flex flex-wrap gap-2">
-            <Button type="button" onClick={copyPrompt} className="bg-white !text-navy-800 ring-1 ring-navy-800 hover:bg-slate-50"><Clipboard size={18} />{copiedPrompt ? "コピー済み" : "コピー"}</Button>
-            <Button type="button" onClick={runAi} disabled={runningAi}><Sparkles size={18} />{runningAi ? "実行中..." : "AI分析実行"}</Button>
+            <Button type="button" onClick={copyPrompt} disabled={!submission.consentAi} className="bg-white !text-navy-800 ring-1 ring-navy-800 hover:bg-slate-50"><Clipboard size={18} />{copiedPrompt ? "コピー済み" : "コピー"}</Button>
+            <Button type="button" onClick={runAi} disabled={runningAi || !submission.consentAi}><Sparkles size={18} />{runningAi ? "実行中..." : "AI分析実行"}</Button>
           </div>
         </div>
-        <p className="mt-3 rounded-md bg-slate-50 px-3 py-2 text-xs leading-5 text-slate-600">
-          {aiDataUsageNotice} プロンプトには、研修検討条件、5領域スコア、各設問の評点・コメント、管理者メモを含めています。コピー後はChatGPT等に貼り付けて分析できます。
-        </p>
-        <textarea readOnly className={`${inputClass} mt-4 min-h-80 font-mono text-xs leading-6`} value={prompt} />
+        {submission.consentAi ? (
+          <>
+            <p className="mt-3 rounded-md bg-slate-50 px-3 py-2 text-xs leading-5 text-slate-600">
+              {aiDataUsageNotice} プロンプトには、研修検討条件、5領域スコア、各設問の評点・コメント、管理者メモを含めています。コピー後はChatGPT等に貼り付けて分析できます。
+            </p>
+            <textarea readOnly className={`${inputClass} mt-4 min-h-80 font-mono text-xs leading-6`} value={prompt} />
+          </>
+        ) : (
+          <p className="mt-3 rounded-md border border-amber-300 bg-amber-50 px-3 py-3 text-sm font-semibold leading-6 text-amber-900">
+            AI利用同意は未取得です。30分面談の申込みとAI利用への同意が完了すると、プロンプトの表示・コピー・AI分析実行が可能になります。
+          </p>
+        )}
         {aiResult ? (
           <div className="mt-4">
             <FieldLabel>AI分析実行結果（確認後、下の編集欄へ反映してください）</FieldLabel>

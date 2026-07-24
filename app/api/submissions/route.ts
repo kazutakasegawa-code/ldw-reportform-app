@@ -40,6 +40,7 @@ export async function POST(request: Request) {
     data: {
       resultToken: createResultToken(),
       ...data,
+      consentAi: false,
       mainIssues: normalizedMainIssues.join("、"),
       status: "5分診断完了",
       recommendedPlan: recommendation.plan,

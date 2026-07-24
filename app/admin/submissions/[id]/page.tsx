@@ -35,7 +35,7 @@ export default async function SubmissionDetailPage({ params }: { params: Promise
   const domainScores = calculateDomainScores(submission.checkAnswers);
   const overall = calculateOverallAverage(domainScores);
   const recommendation = recommendPlan(domainScores);
-  const prompt = buildAnalysisPrompt(submission);
+  const prompt = submission.consentAi ? buildAnalysisPrompt(submission) : "";
 
   return (
     <PageShell>

@@ -24,7 +24,7 @@ export const diagnosisSchema = z.object({
   hearingFollowSystem: z.string().min(1, "研修後の社内フォロー体制を選択してください"),
   hearingQuestion: z.string().optional(),
   consentPrivacy: z.literal(true, { errorMap: () => ({ message: "入力情報の取り扱いに同意してください" }) }),
-  consentAi: z.literal(true, { errorMap: () => ({ message: "AI利用に関する説明に同意してください" }) }),
+  consentAi: z.boolean(),
   checkAnswers: z.array(
     z.object({
       questionNo: z.number(),
@@ -81,6 +81,5 @@ export const meetingRequestSchema = z.object({
   preferredDates: z.array(z.string().trim().min(1, "希望日時を入力してください")).length(3),
   meetingMethod: z.string().min(1, "面談方法を選択してください"),
   memo: z.string().optional(),
-  consentAi: z.literal(true, { errorMap: () => ({ message: "AI利用に同意してください" }) }),
-  consentPrivacy: z.literal(true, { errorMap: () => ({ message: "入力情報の利用に同意してください" }) })
+  consentAi: z.literal(true, { errorMap: () => ({ message: "AI利用に同意してください" }) })
 });

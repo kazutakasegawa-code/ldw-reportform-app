@@ -33,6 +33,12 @@ export async function POST(_: Request, { params }: { params: Promise<{ id: strin
   if (!submission) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
+  if (!submission.consentAi) {
+    return NextResponse.json(
+      { message: "30分面談申込み時のAI利用同意が確認できないため、AI分析は実行できません。" },
+      { status: 403 }
+    );
+  }
   const prompt = buildAnalysisPrompt(submission);
   if (!process.env.OPENAI_API_KEY) {
     return NextResponse.json({ prompt, message: "OPENAI_API_KEYが未設定です。" });

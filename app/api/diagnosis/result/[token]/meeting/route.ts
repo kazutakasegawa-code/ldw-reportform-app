@@ -60,6 +60,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ tok
       meetingRequestedAt: new Date(),
       preferredMeetingDates,
       meetingRequestMemo: memo,
+      consentAi: parsed.data.consentAi,
       status: "面談希望あり"
     }
   });

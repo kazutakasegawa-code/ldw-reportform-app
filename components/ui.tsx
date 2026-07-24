@@ -48,5 +48,5 @@ export const inputClass =
   "w-full rounded-md border border-slate-300 bg-white px-3 py-2.5 text-sm text-navy-900 outline-none transition placeholder:text-slate-400 focus:border-navy-700 focus:ring-2 focus:ring-navy-100";
 
 export function MutedNotice({ children }: { children: ReactNode }) {
-  return <p className="rounded-md border border-gold-300 bg-gold-100 px-4 py-3 text-sm leading-7 text-navy-900">{children}</p>;
+  return <div className="rounded-md border border-gold-300 bg-gold-100 px-4 py-3 text-sm leading-7 text-navy-900">{children}</div>;
 }
