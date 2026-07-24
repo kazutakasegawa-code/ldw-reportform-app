@@ -2,11 +2,20 @@
 
 import { useRef, useState } from "react";
 import type { FormEvent } from "react";
-import { CalendarCheck } from "lucide-react";
+import { CalendarCheck, CircleCheckBig } from "lucide-react";
 import { Button, Card, FieldLabel, inputClass } from "@/components/ui";
 
 const completionMessage =
-  "30分面談＋AI詳細診断のお申込みありがとうございます。入力内容と診断結果をもとに事前分析を行い、日程についてLife Design Worksよりご連絡いたします。";
+  "入力内容と診断結果をもとに事前分析を行い、日程について弊社よりご連絡いたします。";
+
+function getTodayInJapan() {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Tokyo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(new Date());
+}
 
 const meetingTimeOptions = Array.from({ length: 18 }, (_, index) => {
   const totalMinutes = 9 * 60 + index * 30;
@@ -70,6 +79,18 @@ export default function MeetingRequestBox({
       const time = String(formData.get(`preferredDate${index}Time`) || "");
       return `${date} ${time}`.trim();
     });
+    const today = getTodayInJapan();
+    const hasPastDate = preferredDates.some((preferredDate) => {
+      const [date] = preferredDate.split(" ");
+      return date !== "" && date < today;
+    });
+
+    if (hasPastDate) {
+      setError("過去の日付は選択できません。今日以降の日付を入力してください。");
+      setSubmitting(false);
+      return;
+    }
+
     const payload = {
       preferredDates,
       meetingMethod: String(formData.get("meetingMethod") || ""),
@@ -85,7 +106,12 @@ export default function MeetingRequestBox({
         body: JSON.stringify(payload)
       });
       if (!response.ok) {
-        setError("入力内容をご確認ください。希望日時、面談方法、同意チェックは必須です。");
+        const responseBody = await response.json().catch(() => null);
+        setError(
+          typeof responseBody?.error === "string"
+            ? responseBody.error
+            : "入力内容をご確認ください。希望日時、面談方法、同意チェックは必須です。"
+        );
         return;
       }
       setMessage(completionMessage);
@@ -181,7 +207,18 @@ export default function MeetingRequestBox({
         </div>
       </div>
 
-      {message ? <p className="mt-5 rounded-md bg-white p-4 text-sm font-semibold text-navy-800">{message}</p> : null}
+      {message ? (
+        <div
+          role="status"
+          className="mt-6 flex items-start gap-4 rounded-md border-2 border-gold-400 bg-navy-900 p-5 text-white shadow-sm"
+        >
+          <CircleCheckBig className="mt-0.5 shrink-0 text-gold-400" size={28} aria-hidden="true" />
+          <div>
+            <p className="text-lg font-bold text-white">30分面談＋AI詳細診断のお申込みありがとうございます。</p>
+            <p className="mt-2 text-sm font-semibold leading-7 text-white">{message}</p>
+          </div>
+        </div>
+      ) : null}
       {error ? <p className="mt-5 rounded-md bg-red-50 p-4 text-sm font-semibold text-red-700">{error}</p> : null}
 
       {open ? (
@@ -227,11 +264,13 @@ export default function MeetingRequestBox({
 }
 
 function PreferredDateInput({ index }: { index: number }) {
+  const today = getTodayInJapan();
+
   return (
     <div>
       <FieldLabel required>希望日時 第{index}希望</FieldLabel>
       <div className="grid gap-2 sm:grid-cols-[1fr_0.8fr]">
-        <input name={`preferredDate${index}Date`} type="date" className={inputClass} required />
+        <input name={`preferredDate${index}Date`} type="date" min={today} className={inputClass} required />
         <select name={`preferredDate${index}Time`} className={inputClass} defaultValue="" required>
           <option value="">時間を選択</option>
           {meetingTimeOptions.map((time) => (

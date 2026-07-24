@@ -11,6 +11,24 @@ export async function POST(request: Request, { params }: { params: Promise<{ tok
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
 
+  const todayInJapan = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Tokyo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(new Date());
+  const hasPastDate = parsed.data.preferredDates.some((preferredDate) => {
+    const [date] = preferredDate.split(" ");
+    return date !== "" && date < todayInJapan;
+  });
+
+  if (hasPastDate) {
+    return NextResponse.json(
+      { error: "過去の日付は選択できません。今日以降の日付を入力してください。" },
+      { status: 400 }
+    );
+  }
+
   const submission = await prisma.submission.findUnique({
     where: { resultToken: token },
     select: { id: true }
