@@ -6,15 +6,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Send } from "lucide-react";
 import { Button, Card, FieldLabel, MutedNotice, inputClass } from "@/components/ui";
 import {
-  aiConsentNotice,
   checkQuestions,
+  diagnosisConsentNotice,
   desiredTimingOptions,
   employeeCountOptions,
   expectedPeriods,
   fiveMinuteDiagnosticNotice,
   hearingOptions,
   industryOptions,
-  informationConsentNotice,
   mainIssueOptions,
   pastTrainingOptions,
   privacyNotice,
@@ -73,6 +72,7 @@ export default function DiagnosisForm() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors }
   } = useForm<DiagnosisInput>({
     resolver: zodResolver(diagnosisSchema),
@@ -249,15 +249,24 @@ export default function DiagnosisForm() {
         <h2 className="text-xl font-bold">同意事項</h2>
         <div className="mt-4 space-y-3">
           <label className="flex gap-3 text-sm leading-7">
-            <input type="checkbox" {...register("consentPrivacy")} />
-            <span><span className="font-semibold text-red-600">*</span> {informationConsentNotice}</span>
+            <input
+              type="checkbox"
+              {...register("consentPrivacy", {
+                onChange: (event) => {
+                  setValue("consentAi", event.target.checked, { shouldValidate: true });
+                }
+              })}
+            />
+            <input type="checkbox" hidden {...register("consentAi")} />
+            <span><span className="font-semibold text-red-600">*</span> {diagnosisConsentNotice}</span>
           </label>
-          <ErrorText message={errors.consentPrivacy?.message} />
-          <label className="flex gap-3 text-sm leading-7">
-            <input type="checkbox" {...register("consentAi")} />
-            <span><span className="font-semibold text-red-600">*</span> {aiConsentNotice}</span>
-          </label>
-          <ErrorText message={errors.consentAi?.message} />
+          <ErrorText
+            message={
+              errors.consentPrivacy || errors.consentAi
+                ? "入力情報の取り扱いおよびAI利用に同意してください"
+                : undefined
+            }
+          />
         </div>
       </Card>
 
