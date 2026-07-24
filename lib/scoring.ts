@@ -150,7 +150,7 @@ export function getResultRecommendation(resultScores: Pick<ResultDomainScore, "d
   const recommendations: Record<string, Omit<ResultRecommendation, "isTied">> = {
     "採用魅力・学生接点": {
       cta: "学生との接点づくり・マッチングイベントについて相談する",
-      product: "THINGi®︎を活用した企業×大学生マッチングイベント"
+      product: "THINGi®︎を活用した企業×学生マッチングイベント"
     },
     "入社後ギャップ・定着": {
       cta: "若手定着・成長支援について相談する",
