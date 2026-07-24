@@ -14,6 +14,7 @@ import {
   fiveMinuteDiagnosticNotice,
   hearingOptions,
   industryOptions,
+  informationConsentNotice,
   mainIssueOptions,
   pastTrainingOptions,
   privacyNotice,
@@ -249,7 +250,7 @@ export default function DiagnosisForm() {
         <div className="mt-4 space-y-3">
           <label className="flex gap-3 text-sm leading-7">
             <input type="checkbox" {...register("consentPrivacy")} />
-            <span><span className="font-semibold text-red-600">*</span> 入力情報の取り扱いに同意します。{privacyNotice}</span>
+            <span><span className="font-semibold text-red-600">*</span> {informationConsentNotice}</span>
           </label>
           <ErrorText message={errors.consentPrivacy?.message} />
           <label className="flex gap-3 text-sm leading-7">
