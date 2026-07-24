@@ -167,7 +167,7 @@ export default function MeetingRequestBox({
             レーダーチャートで低く出た領域には、複数の背景要因が関係している可能性があります。30分面談＋AI詳細診断では、診断結果をもとに、御社の採用・定着・育成の優先課題、背景要因、具体的な次の一手を整理します。
           </p>
           <p className="mt-3 text-sm font-semibold text-navy-900">初回0円／面談30分／A4分析レポート付き／毎月5社まで</p>
-          <p className="mt-2 text-xs leading-6 text-slate-600">AI分析は補助であり、最終的な確認・判断はLife Design Works代表 瀬川一貴が行います。</p>
+          <p className="mt-2 text-xs leading-6 text-slate-600">AI分析は補助であり、最終的な確認・判断は弊社が行います。</p>
         </div>
         <div className="mt-5">
           <Button

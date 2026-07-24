@@ -51,7 +51,7 @@ export function buildAnalysisPrompt(submission: SubmissionWithRelations) {
     })
     .join("\n");
 
-  return `あなたは採用・定着・人材育成・組織開発の分析補助者です。Life Design Worksが最終確認・判断する前提で、企業担当者の事前回答を整理してください。
+  return `あなたは採用・定着・人材育成・組織開発の分析補助者です。最終的な確認・判断は弊社が行う前提で、企業担当者の事前回答を整理してください。
 
 重要注意:
 ${diagnosticNotice}
