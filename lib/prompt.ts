@@ -1,7 +1,7 @@
 import type { AnalysisResult, CheckAnswer, Submission } from "@prisma/client";
 import { aiCaution, diagnosticNotice } from "./constants";
 import { formatDateTimeJst } from "./date";
-import { calculateDomainScores, calculateResultDomainScores, calculateOverallResultScore, recommendPlan } from "./scoring";
+import { calculateResultDomainScores, calculateOverallResultScore, summarizeResultScores } from "./scoring";
 import { analysisFieldDefinitions } from "./analysis";
 
 type SubmissionWithRelations = Submission & {
@@ -10,10 +10,22 @@ type SubmissionWithRelations = Submission & {
 };
 
 export function buildAnalysisPrompt(submission: SubmissionWithRelations) {
-  const domainScores = calculateDomainScores(submission.checkAnswers);
   const resultScores = calculateResultDomainScores(submission.checkAnswers);
   const overallResultScore = calculateOverallResultScore(resultScores);
-  const recommendation = recommendPlan(domainScores);
+  const resultSummary = summarizeResultScores(resultScores);
+  const focusAreaLines = resultSummary.focusAreas
+    .map((area) => `- ${area.domain}: ${area.score}点 / ${area.judgement}
+  状況仮説: ${area.priorityComment}
+  おすすめの次の一手: ${area.product}
+  相談CTA: ${area.cta}`)
+    .join("\n");
+  const comprehensiveRecommendation = resultSummary.showComprehensiveConsultation
+    ? `
+- 総合相談CTAを表示
+  採用・定着・育成をまとめて整理する必要がある可能性があります。
+  複数の領域が50点以下のため、30分面談＋AI詳細診断で優先順位と具体的な次の一手を整理します。
+  相談CTA: 採用から定着・育成までまとめて相談する`
+    : "";
   const sortedAnswers = [...submission.checkAnswers].sort((a, b) => a.questionNo - b.questionNo);
   const answerLines = sortedAnswers
     .sort((a, b) => a.questionNo - b.questionNo)
@@ -117,8 +129,9 @@ ${resultScores.map((score) => `${score.domain}: ${score.score}点 / ${score.judg
 ${domainDetailLines}
 
 5領域スコアからの一次推奨（自動判定）:
-${recommendation.plan}
-狙い: ${recommendation.aim}
+表示区分: ${resultSummary.isImprovementCandidate ? "今後の改善候補" : "重点確認領域"}
+50点以下の領域数: ${resultSummary.priorityAreas.length}
+${focusAreaLines}${comprehensiveRecommendation}
 
 事前チェック回答:
 ${answerLines}
