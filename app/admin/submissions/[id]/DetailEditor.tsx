@@ -1,16 +1,20 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { AnalysisResult, CheckAnswer, Submission } from "@prisma/client";
+import type { AnalysisResult, CheckAnswer, CtaClickLog, Submission } from "@prisma/client";
 import { Clipboard, FileText, Save, Sparkles } from "lucide-react";
 import { Button, Card, FieldLabel, inputClass } from "@/components/ui";
 import { analysisFieldDefinitions, type AnalysisFieldName } from "@/lib/analysis";
 import { statusOptions } from "@/lib/constants";
-import { formatDateInputJst, formatTimeInputJst } from "@/lib/date";
-import { judgeResultScore, type DomainScore } from "@/lib/scoring";
+import { formatDateInputJst, formatDateTimeJst, formatTimeInputJst } from "@/lib/date";
+import { getDomainRecommendation, judgeResultScore, type DomainScore } from "@/lib/scoring";
 
 type Props = {
-  submission: Submission & { checkAnswers: CheckAnswer[]; analysisResult: AnalysisResult | null };
+  submission: Submission & {
+    checkAnswers: CheckAnswer[];
+    analysisResult: AnalysisResult | null;
+    ctaClickLogs: CtaClickLog[];
+  };
   domainScores: DomainScore[];
   overall: number | null;
   recommendation: { plan: string; aim: string };
@@ -46,6 +50,11 @@ export default function DetailEditor({ submission, domainScores, recommendation,
     };
   });
   const overallResultScore = resultScoreRows.length ? Math.round(resultScoreRows.reduce((sum, score) => sum + score.resultScore, 0) / resultScoreRows.length) : null;
+  const sortedResultRows = [...resultScoreRows].sort((a, b) => a.resultScore - b.resultScore);
+  const priorityResultRows = sortedResultRows.filter((row) => row.resultScore <= 50);
+  const isImprovementCandidate = priorityResultRows.length === 0;
+  const displayedCtaRows = isImprovementCandidate ? sortedResultRows.slice(0, 1) : priorityResultRows;
+  const showComprehensiveConsultation = priorityResultRows.length >= 3;
 
   function scrollToMessage() {
     window.setTimeout(() => {
@@ -238,6 +247,59 @@ export default function DetailEditor({ submission, domainScores, recommendation,
       </div>
 
       <Card className="p-6">
+        <h2 className="text-xl font-bold">重点確認領域・CTA表示</h2>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Info label="50点以下の領域数" value={`${priorityResultRows.length}領域`} />
+          <Info
+            label="50点以下の領域一覧"
+            value={priorityResultRows.length ? priorityResultRows.map((row) => `${row.displayDomain}（${row.resultScore}点）`).join("\n") : "なし"}
+          />
+          <Info label="表示区分" value={isImprovementCandidate ? "今後の改善候補" : "重点確認領域"} />
+          <Info label="総合相談CTA" value={showComprehensiveConsultation ? "表示あり" : "表示なし"} />
+        </div>
+        <div className="mt-5 grid gap-3 lg:grid-cols-2">
+          {displayedCtaRows.map((row) => {
+            const cta = getDomainRecommendation(row.displayDomain);
+            return (
+              <div key={row.domain} className="rounded-md border border-slate-200 p-4 text-sm">
+                <p className="font-bold text-navy-900">{row.displayDomain}（{row.resultScore}点）</p>
+                <p className="mt-2 text-xs font-semibold text-slate-500">表示された誘導カード</p>
+                <p className="mt-1">{cta.product}</p>
+                <p className="mt-2 font-semibold text-navy-800">{cta.cta}</p>
+              </div>
+            );
+          })}
+        </div>
+        <div className="mt-6">
+          <h3 className="font-bold text-navy-900">CTAクリック履歴</h3>
+          {submission.ctaClickLogs.length ? (
+            <div className="mt-3 overflow-hidden rounded-md border border-slate-200">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-slate-50">
+                  <tr>
+                    <th className="px-4 py-3">クリック日時</th>
+                    <th className="px-4 py-3">CTA種別</th>
+                    <th className="px-4 py-3">クリックされたCTA</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200">
+                  {submission.ctaClickLogs.map((log) => (
+                    <tr key={log.id}>
+                      <td className="px-4 py-3 whitespace-nowrap">{formatDateTimeJst(log.createdAt)}</td>
+                      <td className="px-4 py-3">{displayCtaType(log.ctaType)}</td>
+                      <td className="px-4 py-3 font-medium">{log.ctaLabel}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="mt-2 text-sm text-slate-500">まだCTAはクリックされていません。</p>
+          )}
+        </div>
+      </Card>
+
+      <Card className="p-6">
         <h2 className="text-xl font-bold">管理項目</h2>
         <form onSubmit={saveSubmission} className="mt-5 grid gap-4 sm:grid-cols-2">
           <div>
@@ -338,6 +400,13 @@ function Info({ label, value }: { label: string; value: string }) {
       <dd className="mt-1 whitespace-pre-wrap font-medium">{value}</dd>
     </div>
   );
+}
+
+function displayCtaType(type: string) {
+  if (type === "common") return "共通CTA";
+  if (type === "comprehensive") return "総合相談CTA";
+  if (type.startsWith("domain:")) return type.replace("domain:", "領域別：");
+  return type;
 }
 
 function TextArea({ name, label, defaultValue, reportLimit }: { name: string; label: string; defaultValue?: string | null; reportLimit?: number }) {

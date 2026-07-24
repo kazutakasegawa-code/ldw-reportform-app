@@ -25,6 +25,29 @@ export type ResultRecommendation = {
   isTied: boolean;
 };
 
+const recommendationsByDomain: Record<string, Omit<ResultRecommendation, "isTied">> = {
+  "採用魅力・学生接点": {
+    cta: "学生との接点づくり・マッチングイベントについて相談する",
+    product: "THINGi®︎を活用した企業×学生マッチングイベント"
+  },
+  "入社後ギャップ・定着": {
+    cta: "若手定着・成長支援について相談する",
+    product: "しあわせ360°手帳／若手定着研修／コーチング"
+  },
+  "主体性・行動力": {
+    cta: "主体性を高めるTHINGi®︎研修について相談する",
+    product: "THINGi®︎共創版研修"
+  },
+  "チーム共創・報連相": {
+    cta: "チーム共創研修について相談する",
+    product: "THINGi®︎共創版研修／チームビルディング研修"
+  },
+  "目標設定・育成環境": {
+    cta: "360°手帳・コーチング研修について相談する",
+    product: "しあわせ360°手帳／コーチング／管理職フォロー"
+  }
+};
+
 export const diagnosticDomains = [
   "採用魅力・学生接点",
   "入社後ギャップ・定着",
@@ -126,13 +149,30 @@ export function summarizeResultScores(resultScores: ResultDomainScore[]) {
   const sortedHigh = [...resultScores].sort((a, b) => b.score - a.score);
   const sortedLow = [...resultScores].sort((a, b) => a.score - b.score);
   const overallScore = calculateOverallResultScore(resultScores);
+  const priorityAreas = sortedLow.filter((item) => item.score <= 50);
+  const isImprovementCandidate = priorityAreas.length === 0;
+  const focusAreas = isImprovementCandidate ? sortedLow.slice(0, 1) : priorityAreas;
   return {
     overallScore,
     overallJudgement: judgeResultScore(overallScore),
     highest: sortedHigh[0],
     lowest: sortedLow[0],
     priorities: sortedLow.slice(0, 2),
-    recommendation: getResultRecommendation(resultScores)
+    recommendation: getResultRecommendation(resultScores),
+    priorityAreas,
+    focusAreas: focusAreas.map((item) => ({
+      ...item,
+      ...getDomainRecommendation(item.domain)
+    })),
+    isImprovementCandidate,
+    showComprehensiveConsultation: priorityAreas.length >= 3
+  };
+}
+
+export function getDomainRecommendation(domain: string) {
+  return recommendationsByDomain[domain] ?? {
+    cta: "採用から定着・育成までまとめて相談する",
+    product: "30分面談＋AI詳細診断"
   };
 }
 
@@ -147,30 +187,7 @@ export function getResultRecommendation(resultScores: Pick<ResultDomainScore, "d
     };
   }
 
-  const recommendations: Record<string, Omit<ResultRecommendation, "isTied">> = {
-    "採用魅力・学生接点": {
-      cta: "学生との接点づくり・マッチングイベントについて相談する",
-      product: "THINGi®︎を活用した企業×学生マッチングイベント"
-    },
-    "入社後ギャップ・定着": {
-      cta: "若手定着・成長支援について相談する",
-      product: "しあわせ360°手帳／若手定着研修／コーチング"
-    },
-    "主体性・行動力": {
-      cta: "主体性を高めるTHINGi®︎研修について相談する",
-      product: "THINGi®︎共創版研修"
-    },
-    "チーム共創・報連相": {
-      cta: "チーム共創研修について相談する",
-      product: "THINGi®︎共創版研修／チームビルディング研修"
-    },
-    "目標設定・育成環境": {
-      cta: "360°手帳・コーチング研修について相談する",
-      product: "しあわせ360°手帳／コーチング／管理職フォロー"
-    }
-  };
-
-  return { ...recommendations[lowest[0].domain], isTied: false };
+  return { ...getDomainRecommendation(lowest[0].domain), isTied: false };
 }
 
 export function recommendPlan(domainScores: DomainScore[]) {

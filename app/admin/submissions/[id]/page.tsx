@@ -14,7 +14,11 @@ export default async function SubmissionDetailPage({ params }: { params: Promise
   const { id } = await params;
   const submission = await prisma.submission.findUnique({
     where: { id },
-    include: { checkAnswers: { orderBy: { questionNo: "asc" } }, analysisResult: true }
+    include: {
+      checkAnswers: { orderBy: { questionNo: "asc" } },
+      analysisResult: true,
+      ctaClickLogs: { orderBy: { createdAt: "desc" } }
+    }
   });
   if (!submission) notFound();
 

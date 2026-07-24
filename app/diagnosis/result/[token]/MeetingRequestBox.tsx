@@ -10,23 +10,36 @@ const completionMessage =
 
 export default function MeetingRequestBox({
   token,
-  recommendedCta,
-  recommendedProduct
+  focusAreas,
+  isImprovementCandidate,
+  showComprehensiveConsultation
 }: {
   token: string;
-  recommendedCta: string;
-  recommendedProduct: string;
+  focusAreas: {
+    domain: string;
+    score: number;
+    judgement: string;
+    priorityComment: string;
+    cta: string;
+    product: string;
+  }[];
+  isImprovementCandidate: boolean;
+  showComprehensiveConsultation: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  async function handleCtaClick() {
+  async function handleCtaClick(ctaType: string, ctaLabel: string) {
     setOpen(true);
     setError("");
     try {
-      await fetch(`/api/diagnosis/result/${token}/cta`, { method: "POST" });
+      await fetch(`/api/diagnosis/result/${token}/cta`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ctaType, ctaLabel })
+      });
     } catch {
       // CTA表示は止めず、面談申込み保存時に再度記録します。
     }
@@ -73,18 +86,65 @@ export default function MeetingRequestBox({
 
   return (
     <div className="space-y-5">
-      <Card className="border-navy-200 bg-white p-6">
-        <p className="text-xs font-bold text-gold-600">診断結果からのご案内</p>
-        <h2 className="mt-2 text-xl font-bold text-navy-900">{recommendedCta}</h2>
-        <div className="mt-4 rounded-md bg-slate-50 p-4">
-          <p className="text-xs font-semibold text-slate-500">おすすめの支援</p>
-          <p className="mt-1 font-bold text-navy-900">{recommendedProduct}</p>
+      <section>
+        <h2 className="text-xl font-bold text-navy-900">
+          {isImprovementCandidate ? "今後の改善候補" : "重点確認領域"}
+        </h2>
+        <p className="mt-2 text-sm leading-7 text-slate-600">
+          {isImprovementCandidate
+            ? "50点以下の領域はありませんでした。全体的に大きな弱点は見られませんが、最もスコアが低かった領域を今後の改善候補として表示しています。"
+            : "50点以下の領域は、採用・定着・育成の仕組みとして優先的に確認したい項目です。複数ある場合は、それぞれの課題が関連している可能性があります。"}
+        </p>
+        <div className="mt-4 grid gap-4 lg:grid-cols-2">
+          {focusAreas.map((area) => (
+            <Card key={area.domain} className="border-navy-200 bg-white p-6">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-xs font-bold text-gold-600">
+                    {isImprovementCandidate ? "今後の改善候補" : "重点確認領域"}
+                  </p>
+                  <h3 className="mt-1 text-xl font-bold text-navy-900">{area.domain}</h3>
+                </div>
+                <div className="shrink-0 rounded-md bg-gold-100 px-4 py-2 text-center text-navy-900">
+                  <strong className="text-2xl">{area.score}</strong>
+                  <span className="ml-1 text-xs font-bold">点</span>
+                  <p className="text-xs font-semibold">{area.judgement}</p>
+                </div>
+              </div>
+              <p className="mt-4 text-sm leading-7 text-slate-700">{area.priorityComment}</p>
+              <div className="mt-4 rounded-md bg-slate-50 p-4">
+                <p className="text-xs font-semibold text-slate-500">おすすめの次の一手</p>
+                <p className="mt-1 font-bold text-navy-900">{area.product}</p>
+              </div>
+              <Button
+                type="button"
+                onClick={() => handleCtaClick(`domain:${area.domain}`, area.cta)}
+                className="mt-5 w-full justify-center px-5 py-4 text-sm"
+              >
+                <CalendarCheck size={20} />
+                {area.cta}
+              </Button>
+            </Card>
+          ))}
         </div>
-        <Button type="button" onClick={handleCtaClick} className="mt-5 w-full justify-center px-6 py-4 text-base sm:w-auto">
-          <CalendarCheck size={20} />
-          {recommendedCta}
-        </Button>
-      </Card>
+      </section>
+
+      {showComprehensiveConsultation ? (
+        <Card className="border-gold-400 bg-navy-900 p-6 text-white">
+          <h2 className="text-xl font-bold">採用・定着・育成をまとめて整理する必要がある可能性があります</h2>
+          <p className="mt-3 text-sm leading-7 text-slate-100">
+            複数の領域が50点以下の場合、原因は一つではなく、採用時の魅力づけ、入社後の関わり、育成の仕組みがつながっている可能性があります。30分面談＋AI詳細診断で、優先順位と具体的な次の一手を整理します。
+          </p>
+          <Button
+            type="button"
+            onClick={() => handleCtaClick("comprehensive", "採用から定着・育成までまとめて相談する")}
+            className="mt-5 w-full justify-center bg-gold-500 px-6 py-4 text-base !text-navy-900 hover:bg-gold-300 sm:w-auto"
+          >
+            <CalendarCheck size={20} />
+            採用から定着・育成までまとめて相談する
+          </Button>
+        </Card>
+      ) : null}
 
       <Card className="border-gold-300 bg-gold-50 p-6">
       <div>
@@ -97,7 +157,11 @@ export default function MeetingRequestBox({
           <p className="mt-2 text-xs leading-6 text-slate-600">AI分析は補助であり、最終的な確認・判断はLife Design Works代表 瀬川一貴が行います。</p>
         </div>
         <div className="mt-5">
-          <Button type="button" onClick={handleCtaClick} className="w-full justify-center px-6 py-4 text-base sm:w-auto sm:min-w-[360px]">
+          <Button
+            type="button"
+            onClick={() => handleCtaClick("common", "30分面談＋AI詳細診断を予約する")}
+            className="w-full justify-center px-6 py-4 text-base sm:w-auto sm:min-w-[360px]"
+          >
             <CalendarCheck size={20} />
             30分面談＋AI詳細診断を予約する
           </Button>
