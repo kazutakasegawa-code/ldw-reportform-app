@@ -343,7 +343,14 @@ export default function DetailEditor({ submission, domainScores, recommendation,
             </div>
             <div className="grid grid-cols-[minmax(0,1fr)_120px] gap-2">
               <input name="meetingDate" type="date" aria-label="面談予定日" className={inputClass} defaultValue={formatDateInputJst(submission.meetingDate)} />
-              <input name="meetingTime" type="time" aria-label="面談予定時刻" className={inputClass} defaultValue={formatTimeInputJst(submission.meetingDate)} />
+              <input
+                name="meetingTime"
+                type="time"
+                step={300}
+                aria-label="面談予定時刻"
+                className={inputClass}
+                defaultValue={formatTimeInputJst(submission.meetingDate)}
+              />
             </div>
           </div>
           <div>
