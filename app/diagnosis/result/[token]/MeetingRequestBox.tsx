@@ -4,17 +4,22 @@ import { useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { CalendarCheck, CircleCheckBig } from "lucide-react";
 import { Button, Card, FieldLabel, inputClass } from "@/components/ui";
+import { aiDataUsageNotice } from "@/lib/constants";
 
 const completionMessage =
   "入力内容と診断結果をもとに事前分析を行い、日程について弊社よりご連絡いたします。";
 
-function getTodayInJapan() {
-  return new Intl.DateTimeFormat("en-CA", {
+function getJapanDateWithOffset(dayOffset: number) {
+  const parts = new Intl.DateTimeFormat("en-US", {
     timeZone: "Asia/Tokyo",
     year: "numeric",
     month: "2-digit",
     day: "2-digit"
-  }).format(new Date());
+  }).formatToParts(new Date());
+  const year = Number(parts.find((part) => part.type === "year")?.value);
+  const month = Number(parts.find((part) => part.type === "month")?.value);
+  const day = Number(parts.find((part) => part.type === "day")?.value);
+  return new Date(Date.UTC(year, month - 1, day + dayOffset)).toISOString().slice(0, 10);
 }
 
 const meetingTimeOptions = Array.from({ length: 18 }, (_, index) => {
@@ -79,14 +84,14 @@ export default function MeetingRequestBox({
       const time = String(formData.get(`preferredDate${index}Time`) || "");
       return `${date} ${time}`.trim();
     });
-    const today = getTodayInJapan();
-    const hasPastDate = preferredDates.some((preferredDate) => {
+    const earliestMeetingDate = getJapanDateWithOffset(1);
+    const hasUnavailableDate = preferredDates.some((preferredDate) => {
       const [date] = preferredDate.split(" ");
-      return date !== "" && date < today;
+      return date !== "" && date < earliestMeetingDate;
     });
 
-    if (hasPastDate) {
-      setError("過去の日付は選択できません。今日以降の日付を入力してください。");
+    if (hasUnavailableDate) {
+      setError("本日以前の日付は選択できません。明日以降の日付を入力してください。");
       setSubmitting(false);
       return;
     }
@@ -219,12 +224,17 @@ export default function MeetingRequestBox({
           </div>
         </div>
       ) : null}
-      {error ? <p className="mt-5 rounded-md bg-red-50 p-4 text-sm font-semibold text-red-700">{error}</p> : null}
-
       {open ? (
         <form
           ref={bookingFormRef}
           onSubmit={handleSubmit}
+          onInvalid={(event) => {
+            const target = event.target as HTMLInputElement;
+            if (target.type === "date" && target.validity.rangeUnderflow) {
+              event.preventDefault();
+              setError("本日以前の日付は選択できません。明日以降の日付を入力してください。");
+            }
+          }}
           className="scroll-mt-6 mt-6 grid gap-4 rounded-lg border border-gold-200 bg-white p-5 sm:grid-cols-2"
         >
           <PreferredDateInput index={1} />
@@ -245,13 +255,18 @@ export default function MeetingRequestBox({
           </div>
           <label className="flex gap-3 text-sm leading-7 sm:col-span-2">
             <input type="checkbox" name="consentAi" required />
-            <span>AI利用への同意</span>
+            <span>AI利用への同意。{aiDataUsageNotice}</span>
           </label>
           <label className="flex gap-3 text-sm leading-7 sm:col-span-2">
             <input type="checkbox" name="consentPrivacy" required />
             <span>個人情報利用への同意</span>
           </label>
-          <div className="flex justify-end sm:col-span-2">
+          <div className="flex flex-col gap-3 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+            {error ? (
+              <p role="alert" className="rounded-md border border-red-300 bg-red-50 px-4 py-3 text-sm font-bold text-red-700">
+                {error}
+              </p>
+            ) : <span />}
             <Button type="submit" disabled={submitting}>
               {submitting ? "送信中..." : "面談希望を送信する"}
             </Button>
@@ -264,13 +279,13 @@ export default function MeetingRequestBox({
 }
 
 function PreferredDateInput({ index }: { index: number }) {
-  const today = getTodayInJapan();
+  const earliestMeetingDate = getJapanDateWithOffset(1);
 
   return (
     <div>
       <FieldLabel required>希望日時 第{index}希望</FieldLabel>
       <div className="grid gap-2 sm:grid-cols-[1fr_0.8fr]">
-        <input name={`preferredDate${index}Date`} type="date" min={today} className={inputClass} required />
+        <input name={`preferredDate${index}Date`} type="date" min={earliestMeetingDate} className={inputClass} required />
         <select name={`preferredDate${index}Time`} className={inputClass} defaultValue="" required>
           <option value="">時間を選択</option>
           {meetingTimeOptions.map((time) => (

@@ -2,6 +2,19 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { meetingRequestSchema } from "@/lib/schema";
 
+function getJapanDateWithOffset(dayOffset: number) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Tokyo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).formatToParts(new Date());
+  const year = Number(parts.find((part) => part.type === "year")?.value);
+  const month = Number(parts.find((part) => part.type === "month")?.value);
+  const day = Number(parts.find((part) => part.type === "day")?.value);
+  return new Date(Date.UTC(year, month - 1, day + dayOffset)).toISOString().slice(0, 10);
+}
+
 export async function POST(request: Request, { params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
   const json = await request.json();
@@ -11,20 +24,15 @@ export async function POST(request: Request, { params }: { params: Promise<{ tok
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
 
-  const todayInJapan = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Asia/Tokyo",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit"
-  }).format(new Date());
-  const hasPastDate = parsed.data.preferredDates.some((preferredDate) => {
+  const earliestMeetingDate = getJapanDateWithOffset(1);
+  const hasUnavailableDate = parsed.data.preferredDates.some((preferredDate) => {
     const [date] = preferredDate.split(" ");
-    return date !== "" && date < todayInJapan;
+    return date !== "" && date < earliestMeetingDate;
   });
 
-  if (hasPastDate) {
+  if (hasUnavailableDate) {
     return NextResponse.json(
-      { error: "過去の日付は選択できません。今日以降の日付を入力してください。" },
+      { error: "本日以前の日付は選択できません。明日以降の日付を入力してください。" },
       { status: 400 }
     );
   }

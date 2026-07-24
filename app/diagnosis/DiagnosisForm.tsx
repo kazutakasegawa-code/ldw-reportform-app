@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Send } from "lucide-react";
 import { Button, Card, FieldLabel, MutedNotice, inputClass } from "@/components/ui";
 import {
+  aiDataUsageNotice,
   checkQuestions,
   desiredTimingOptions,
   employeeCountOptions,
@@ -253,7 +254,7 @@ export default function DiagnosisForm() {
           <ErrorText message={errors.consentPrivacy?.message} />
           <label className="flex gap-3 text-sm leading-7">
             <input type="checkbox" {...register("consentAi")} />
-            <span><span className="font-semibold text-red-600">*</span> AI利用に関する説明に同意します。AI分析は補助であり、最終判断は弊社が行います。</span>
+            <span><span className="font-semibold text-red-600">*</span> AI利用に関する説明に同意します。{aiDataUsageNotice} AI分析は補助であり、最終判断は弊社が行います。</span>
           </label>
           <ErrorText message={errors.consentAi?.message} />
         </div>

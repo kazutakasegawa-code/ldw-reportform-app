@@ -9,6 +9,20 @@ type SubmissionWithRelations = Submission & {
   analysisResult?: AnalysisResult | null;
 };
 
+function redactSensitiveValues(prompt: string, submission: Submission) {
+  const sensitiveValues = [
+    submission.companyName,
+    submission.contactName,
+    submission.email,
+    submission.phone
+  ].filter((value) => value.trim().length > 0);
+
+  return sensitiveValues.reduce(
+    (redactedPrompt, value) => redactedPrompt.split(value).join("［AI利用対象外］"),
+    prompt
+  );
+}
+
 export function buildAnalysisPrompt(submission: SubmissionWithRelations) {
   const resultScores = calculateResultDomainScores(submission.checkAnswers);
   const overallResultScore = calculateOverallResultScore(resultScores);
@@ -51,11 +65,12 @@ export function buildAnalysisPrompt(submission: SubmissionWithRelations) {
     })
     .join("\n");
 
-  return `あなたは採用・定着・人材育成・組織開発の分析補助者です。最終的な確認・判断は弊社が行う前提で、企業担当者の事前回答を整理してください。
+  const prompt = `あなたは採用・定着・人材育成・組織開発の分析補助者です。最終的な確認・判断は弊社が行う前提で、企業担当者の事前回答を整理してください。
 
 重要注意:
 ${diagnosticNotice}
 ${aiCaution}
+会社名・担当者名・メールアドレス・電話番号はAI分析に使用していません。これらを推測・生成しないでください。
 
 出力項目:
 - 総合所見
@@ -87,14 +102,10 @@ ${aiCaution}
 レポート表示文字数上限:
 ${analysisFieldDefinitions.map(({ label, limit }) => `- ${label}: ${limit}文字以内`).join("\n")}
 
-会社情報:
-会社名: ${submission.companyName}
+匿名化した組織情報:
 業種: ${submission.industry}
 従業員数: ${submission.employeeCount}
 拠点数: ${submission.officeCount}
-担当者: ${submission.contactName} / ${submission.contactRole}
-メール: ${submission.email}
-電話: ${submission.phone}
 
 研修検討条件:
 対象階層: ${submission.targetLayer}
@@ -137,4 +148,6 @@ ${focusAreaLines}${comprehensiveRecommendation}
 ${answerLines}
 
 表現は経営者・人事担当者に伝わる日本語で、断定を避け、事実と仮説を分けてください。`;
+
+  return redactSensitiveValues(prompt, submission);
 }

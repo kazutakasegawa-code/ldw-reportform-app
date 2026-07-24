@@ -5,7 +5,7 @@ import type { AnalysisResult, CheckAnswer, CtaClickLog, Submission } from "@pris
 import { Clipboard, FileText, Save, Sparkles } from "lucide-react";
 import { Button, Card, FieldLabel, inputClass } from "@/components/ui";
 import { analysisFieldDefinitions, type AnalysisFieldName } from "@/lib/analysis";
-import { statusOptions } from "@/lib/constants";
+import { aiDataUsageNotice, statusOptions } from "@/lib/constants";
 import { formatDateInputJst, formatDateTimeJst, formatTimeInputJst } from "@/lib/date";
 import { getDomainRecommendation, judgeResultScore, type DomainScore } from "@/lib/scoring";
 
@@ -388,7 +388,7 @@ export default function DetailEditor({ submission, domainScores, recommendation,
           </div>
         </div>
         <p className="mt-3 rounded-md bg-slate-50 px-3 py-2 text-xs leading-5 text-slate-600">
-          プロンプトには、会社情報、研修検討条件、5領域スコア、各設問の評点・コメント、管理者メモを含めています。コピー後はChatGPT等に貼り付けて分析できます。
+          {aiDataUsageNotice} プロンプトには、研修検討条件、5領域スコア、各設問の評点・コメント、管理者メモを含めています。コピー後はChatGPT等に貼り付けて分析できます。
         </p>
         <textarea readOnly className={`${inputClass} mt-4 min-h-80 font-mono text-xs leading-6`} value={prompt} />
         {aiResult ? (
