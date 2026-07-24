@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { CalendarCheck, CircleCheckBig } from "lucide-react";
 import { Button, Card, FieldLabel, inputClass } from "@/components/ui";
-import { aiDataUsageNotice } from "@/lib/constants";
+import { aiConsentNotice, informationConsentNotice } from "@/lib/constants";
 
 const completionMessage =
   "入力内容と診断結果をもとに事前分析を行い、日程について弊社よりご連絡いたします。";
@@ -255,11 +255,11 @@ export default function MeetingRequestBox({
           </div>
           <label className="flex gap-3 text-sm leading-7 sm:col-span-2">
             <input type="checkbox" name="consentAi" required />
-            <span>AI利用への同意。{aiDataUsageNotice}</span>
+            <span>{aiConsentNotice}</span>
           </label>
           <label className="flex gap-3 text-sm leading-7 sm:col-span-2">
             <input type="checkbox" name="consentPrivacy" required />
-            <span>個人情報利用への同意</span>
+            <span>{informationConsentNotice}</span>
           </label>
           <div className="flex flex-col gap-3 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
             {error ? (
