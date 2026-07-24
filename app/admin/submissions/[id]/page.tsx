@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { CtaClickLog } from "@prisma/client";
 import { ArrowLeft, BarChart3 } from "lucide-react";
 import DetailEditor from "./DetailEditor";
 import { Container, PageShell } from "@/components/ui";
@@ -16,11 +17,20 @@ export default async function SubmissionDetailPage({ params }: { params: Promise
     where: { id },
     include: {
       checkAnswers: { orderBy: { questionNo: "asc" } },
-      analysisResult: true,
-      ctaClickLogs: { orderBy: { createdAt: "desc" } }
+      analysisResult: true
     }
   });
   if (!submission) notFound();
+
+  let ctaClickLogs: CtaClickLog[] = [];
+  try {
+    ctaClickLogs = await prisma.ctaClickLog.findMany({
+      where: { submissionId: submission.id },
+      orderBy: { createdAt: "desc" }
+    });
+  } catch (error) {
+    console.error("CTAクリック履歴を取得できませんでした。", error);
+  }
 
   const domainScores = calculateDomainScores(submission.checkAnswers);
   const overall = calculateOverallAverage(domainScores);
@@ -50,7 +60,13 @@ export default async function SubmissionDetailPage({ params }: { params: Promise
           </div>
         </div>
 
-        <DetailEditor submission={submission} domainScores={domainScores} overall={overall} recommendation={recommendation} prompt={prompt} />
+        <DetailEditor
+          submission={{ ...submission, ctaClickLogs }}
+          domainScores={domainScores}
+          overall={overall}
+          recommendation={recommendation}
+          prompt={prompt}
+        />
       </Container>
     </PageShell>
   );

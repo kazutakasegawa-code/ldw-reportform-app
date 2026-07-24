@@ -23,20 +23,28 @@ export async function POST(request: Request, { params }: { params: Promise<{ tok
   }
 
   const clickedAt = new Date();
-  await prisma.$transaction([
-    prisma.submission.update({
+  try {
+    await prisma.$transaction([
+      prisma.submission.update({
+        where: { id: submission.id },
+        data: { ctaClickedAt: clickedAt }
+      }),
+      prisma.ctaClickLog.create({
+        data: {
+          submissionId: submission.id,
+          ctaType: parsed.data.ctaType,
+          ctaLabel: parsed.data.ctaLabel,
+          createdAt: clickedAt
+        }
+      })
+    ]);
+  } catch (error) {
+    console.error("CTAクリック履歴を保存できませんでした。クリック日時のみ保存します。", error);
+    await prisma.submission.update({
       where: { id: submission.id },
       data: { ctaClickedAt: clickedAt }
-    }),
-    prisma.ctaClickLog.create({
-      data: {
-        submissionId: submission.id,
-        ctaType: parsed.data.ctaType,
-        ctaLabel: parsed.data.ctaLabel,
-        createdAt: clickedAt
-      }
-    })
-  ]);
+    });
+  }
 
   return NextResponse.json({ ok: true });
 }
