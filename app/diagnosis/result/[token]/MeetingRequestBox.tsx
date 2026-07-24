@@ -8,7 +8,7 @@ import { Button, Card, FieldLabel, inputClass } from "@/components/ui";
 const completionMessage =
   "30分面談＋AI詳細診断のお申込みありがとうございます。入力内容と診断結果をもとに事前分析を行い、日程についてLife Design Worksよりご連絡いたします。";
 
-const meetingTimeOptions = Array.from({ length: 19 }, (_, index) => {
+const meetingTimeOptions = Array.from({ length: 18 }, (_, index) => {
   const totalMinutes = 9 * 60 + index * 30;
   const endMinutes = totalMinutes + 30;
   const formatTime = (minutes: number) =>
@@ -151,7 +151,7 @@ export default function MeetingRequestBox({
           <Button
             type="button"
             onClick={() => handleCtaClick("comprehensive", "採用から定着・育成までまとめて相談する")}
-            className="mt-5 w-full justify-center bg-gold-500 px-6 py-4 text-base !text-navy-900 hover:bg-gold-300 sm:w-auto"
+            className="mt-5 w-full justify-center bg-gold-500 px-6 py-4 text-base !text-white hover:bg-gold-300 sm:w-auto"
           >
             <CalendarCheck size={20} />
             採用から定着・育成までまとめて相談する
@@ -237,6 +237,7 @@ function PreferredDateInput({ index }: { index: number }) {
           {meetingTimeOptions.map((time) => (
             <option key={time} value={time}>{time}</option>
           ))}
+          <option value="その他">その他</option>
         </select>
       </div>
     </div>
