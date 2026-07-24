@@ -151,7 +151,7 @@ export default function MeetingRequestBox({
           <Button
             type="button"
             onClick={() => handleCtaClick("comprehensive", "採用から定着・育成までまとめて相談する")}
-            className="mt-5 w-full justify-center bg-gold-500 px-6 py-4 text-base !text-white hover:bg-gold-300 sm:w-auto"
+            className="mt-5 w-full justify-center border border-white !bg-white px-6 py-4 text-base !text-navy-900 hover:!bg-slate-100 sm:w-auto"
           >
             <CalendarCheck size={20} />
             採用から定着・育成までまとめて相談する
