@@ -31,7 +31,6 @@ export async function POST(request: Request, { params }: { params: Promise<{ tok
   await prisma.submission.update({
     where: { id: submission.id },
     data: {
-      ctaClickedAt: new Date(),
       meetingRequestedAt: new Date(),
       preferredMeetingDates,
       meetingRequestMemo: memo,

@@ -8,7 +8,15 @@ import { Button, Card, FieldLabel, inputClass } from "@/components/ui";
 const completionMessage =
   "30分面談＋AI詳細診断のお申込みありがとうございます。入力内容と診断結果をもとに事前分析を行い、日程についてLife Design Worksよりご連絡いたします。";
 
-export default function MeetingRequestBox({ token }: { token: string }) {
+export default function MeetingRequestBox({
+  token,
+  recommendedCta,
+  recommendedProduct
+}: {
+  token: string;
+  recommendedCta: string;
+  recommendedProduct: string;
+}) {
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState("");
@@ -64,15 +72,29 @@ export default function MeetingRequestBox({ token }: { token: string }) {
   }
 
   return (
-    <Card className="border-gold-300 bg-gold-50 p-6">
+    <div className="space-y-5">
+      <Card className="border-navy-200 bg-white p-6">
+        <p className="text-xs font-bold text-gold-600">診断結果からのご案内</p>
+        <h2 className="mt-2 text-xl font-bold text-navy-900">{recommendedCta}</h2>
+        <div className="mt-4 rounded-md bg-slate-50 p-4">
+          <p className="text-xs font-semibold text-slate-500">おすすめの支援</p>
+          <p className="mt-1 font-bold text-navy-900">{recommendedProduct}</p>
+        </div>
+        <Button type="button" onClick={handleCtaClick} className="mt-5 w-full justify-center px-6 py-4 text-base sm:w-auto">
+          <CalendarCheck size={20} />
+          {recommendedCta}
+        </Button>
+      </Card>
+
+      <Card className="border-gold-300 bg-gold-50 p-6">
       <div>
         <div>
           <h2 className="text-xl font-bold text-navy-900">診断結果をもとに、30分で優先課題と次の一手を整理しませんか？</h2>
           <p className="mt-3 text-sm leading-7 text-slate-700">
-            レーダーチャートで低く出た領域には、複数の背景要因が関係している可能性があります。30分面談＋AI詳細診断では、回答内容をもとに、御社の強み・優先課題・背景にある原因仮説・次に行う育成施策をA4分析レポートとして整理します。
+            レーダーチャートで低く出た領域には、複数の背景要因が関係している可能性があります。30分面談＋AI詳細診断では、診断結果をもとに、御社の採用・定着・育成の優先課題、背景要因、具体的な次の一手を整理します。
           </p>
-          <p className="mt-3 text-sm font-semibold text-navy-900">面談30分／A4分析レポート付き／毎月5社まで</p>
-          <p className="mt-2 text-xs leading-6 text-slate-600">AI分析は補助であり、最終的な確認・判断はLife Design Worksが行います。</p>
+          <p className="mt-3 text-sm font-semibold text-navy-900">初回0円／面談30分／A4分析レポート付き／毎月5社まで</p>
+          <p className="mt-2 text-xs leading-6 text-slate-600">AI分析は補助であり、最終的な確認・判断はLife Design Works代表 瀬川一貴が行います。</p>
         </div>
         <div className="mt-5">
           <Button type="button" onClick={handleCtaClick} className="w-full justify-center px-6 py-4 text-base sm:w-auto sm:min-w-[360px]">
@@ -118,7 +140,8 @@ export default function MeetingRequestBox({ token }: { token: string }) {
           </div>
         </form>
       ) : null}
-    </Card>
+      </Card>
+    </div>
   );
 }
 

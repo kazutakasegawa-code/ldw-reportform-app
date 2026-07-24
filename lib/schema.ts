@@ -18,7 +18,7 @@ export const diagnosisSchema = z.object({
   expectedPeriod: z.string().min(1, "想定する研修期間を選択してください"),
   budgetRange: z.string().min(1, "予算感を選択してください"),
   notes: z.string().optional(),
-  hearingMostImportantIssue: z.string().min(1, "現在もっとも困っている人材育成課題を選択してください"),
+  hearingMostImportantIssue: z.string().min(1, "現在もっとも困っている採用・定着・育成課題を選択してください"),
   hearingTargetLayer: z.string().min(1, "課題が強く出ている階層を選択してください"),
   hearingIdealState: z.string().min(1, "社員に望む状態を選択してください"),
   hearingFollowSystem: z.string().min(1, "研修後の社内フォロー体制を選択してください"),

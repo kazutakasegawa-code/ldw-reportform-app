@@ -39,7 +39,7 @@ export function buildAnalysisPrompt(submission: SubmissionWithRelations) {
     })
     .join("\n");
 
-  return `あなたは人材育成・組織開発の分析補助者です。Life Design Worksが最終確認・判断する前提で、企業担当者の事前回答を整理してください。
+  return `あなたは採用・定着・人材育成・組織開発の分析補助者です。Life Design Worksが最終確認・判断する前提で、企業担当者の事前回答を整理してください。
 
 重要注意:
 ${diagnosticNotice}
@@ -94,7 +94,7 @@ ${analysisFieldDefinitions.map(({ label, limit }) => `- ${label}: ${limit}文字
 予算感: ${submission.budgetRange}
 補足: ${submission.notes || "なし"}
 
-人材育成・組織開発課題の確認:
+採用・定着・育成課題の確認:
 現在もっとも困っている課題: ${submission.hearingMostImportantIssue}
 課題が強く出ている階層: ${submission.hearingTargetLayer}
 社員に望む状態: ${submission.hearingIdealState}

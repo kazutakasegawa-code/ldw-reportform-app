@@ -193,9 +193,9 @@ export default function DiagnosisForm() {
       </Card>
 
       <Card className="p-6">
-        <h2 className="text-xl font-bold">人材育成・組織開発課題の確認</h2>
+        <h2 className="text-xl font-bold">採用・定着・育成課題の確認</h2>
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
-          <SelectField label="現在もっとも困っている人材育成課題" options={hearingOptions.mostImportantIssue} registration={register("hearingMostImportantIssue")} error={errors.hearingMostImportantIssue?.message} />
+          <SelectField label="現在もっとも困っている採用・定着・育成課題" options={hearingOptions.mostImportantIssue} registration={register("hearingMostImportantIssue")} error={errors.hearingMostImportantIssue?.message} />
           <SelectField label="課題が強く出ている階層" options={hearingOptions.targetLayer} registration={register("hearingTargetLayer")} error={errors.hearingTargetLayer?.message} />
           <SelectField label="社員に望む状態" options={hearingOptions.idealState} registration={register("hearingIdealState")} error={errors.hearingIdealState?.message} />
           <SelectField label="研修後の社内フォロー体制" options={hearingOptions.followSystem} registration={register("hearingFollowSystem")} error={errors.hearingFollowSystem?.message} />

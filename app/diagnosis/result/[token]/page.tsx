@@ -5,7 +5,7 @@ import MeetingRequestBox from "./MeetingRequestBox";
 import ResultRadarChart from "./ResultRadarChart";
 import ResultPrintButton from "./ResultPrintButton";
 import { Card, Container, PageShell } from "@/components/ui";
-import { appName, fiveMinuteDiagnosticNotice } from "@/lib/constants";
+import { appName, resultDiagnosticNotice } from "@/lib/constants";
 import { prisma } from "@/lib/prisma";
 import { calculateResultDomainScores, summarizeResultScores } from "@/lib/scoring";
 
@@ -50,8 +50,8 @@ export default async function DiagnosisResultPage({ params }: { params: Promise<
 
         <main className="result-screen-only space-y-6 py-8">
           <section>
-            <h1 className="text-2xl font-bold leading-snug text-navy-900 sm:text-4xl">診断結果｜採用後に社員が定着・成長する職場の現在地</h1>
-            <p className="mt-4 rounded-lg border border-gold-200 bg-gold-50 p-4 text-sm leading-7 text-slate-700">{fiveMinuteDiagnosticNotice}</p>
+            <h1 className="text-2xl font-bold leading-snug text-navy-900 sm:text-4xl">診断結果｜採用・定着・育成課題の現在地</h1>
+            <p className="mt-4 rounded-lg border border-gold-200 bg-gold-50 p-4 text-sm leading-7 text-slate-700">{resultDiagnosticNotice}</p>
             <p className="mt-3 text-sm font-semibold text-slate-600">この画面は簡易診断結果です。詳細な分析レポートは30分面談＋AI詳細診断で作成します。</p>
           </section>
 
@@ -136,14 +136,18 @@ export default async function DiagnosisResultPage({ params }: { params: Promise<
             </div>
           </section>
 
-          <MeetingRequestBox token={token} />
+          <MeetingRequestBox
+            token={token}
+            recommendedCta={summary.recommendation.cta}
+            recommendedProduct={summary.recommendation.product}
+          />
 
           <section>
             <h2 className="text-xl font-bold">この5分診断で分かること／30分面談で分かること</h2>
             <div className="mt-4 grid gap-4 lg:grid-cols-2">
               <CompareCard
                 title="この5分診断で分かること"
-                items={["5領域の大まかな傾向", "強みと弱い領域", "採用後の定着・育成に影響しそうなポイント", "30分面談で確認すべきテーマ"]}
+                items={["5領域の大まかな傾向", "強みと弱い領域", "採用・定着・育成に影響しそうなポイント", "30分面談で確認すべきテーマ"]}
               />
               <CompareCard
                 title="30分面談＋AI詳細診断で分かること"
@@ -201,14 +205,14 @@ function PrintableResult({
           <section className="result-print-block result-print-main">
             <header className="result-print-simple-header">
               <p className="result-print-client-name">{companyName} / {contactName} 様</p>
-              <p className="result-print-app-name">採用・定着・育成課題 5分診断</p>
+              <p className="result-print-app-name">{appName}</p>
             </header>
             <div className="result-print-title-row">
               <h2>
                 診断結果<br />
-                採用後に社員が定着・成長する職場の現在地
+                採用・定着・育成課題の現在地
               </h2>
-              <p>{fiveMinuteDiagnosticNotice}</p>
+              <p>{resultDiagnosticNotice}</p>
               <p className="result-print-note">この画面は簡易診断結果です。詳細な分析レポートは30分面談＋AI詳細診断で作成します。</p>
             </div>
 
@@ -291,7 +295,7 @@ function PrintableResult({
           <section className="result-print-block result-print-compare-block">
             <h3>この5分診断で分かること／30分面談で分かること</h3>
             <div className="result-print-compare-grid">
-              <PrintList title="この5分診断で分かること" items={["5領域の大まかな傾向", "強みと弱い領域", "採用後の定着・育成に影響しそうなポイント", "30分面談で確認すべきテーマ"]} />
+              <PrintList title="この5分診断で分かること" items={["5領域の大まかな傾向", "強みと弱い領域", "採用・定着・育成に影響しそうなポイント", "30分面談で確認すべきテーマ"]} />
               <PrintList title="30分面談＋AI詳細診断で分かること" items={["優先課題トップ3", "表面的な問題と背景原因", "増やす行動・減らす行動", "THINGi®︎・しあわせ360°手帳・コーチングの適合度", "推奨プログラム", "成果確認指標", "A4分析レポート"]} />
             </div>
           </section>
@@ -303,7 +307,7 @@ function PrintableResult({
                 30分で優先課題と次の一手を<br />
                 整理しませんか？
               </h3>
-              <p>レーダーチャートで低く出た領域には、複数の背景要因が関係している可能性があります。30分面談＋AI詳細診断では、回答内容をもとに、御社の強み・優先課題・背景にある原因仮説・次に行う育成施策をA4分析レポートとして整理します。</p>
+              <p>レーダーチャートで低く出た領域には、複数の背景要因が関係している可能性があります。30分面談＋AI詳細診断では、診断結果をもとに、御社の採用・定着・育成の優先課題、背景要因、具体的な次の一手を整理します。</p>
             </div>
             <div className="result-print-qr">
               <img src={resultQrUrl} alt="診断結果ページのQRコード" />

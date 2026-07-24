@@ -18,7 +18,7 @@ export default async function AdminPage() {
       contactName: true,
       status: true,
       createdAt: true,
-      ctaClickedAt: true,
+      meetingRequestedAt: true,
       preferredMeetingDates: true,
       checkAnswers: { select: { domain: true, score: true } }
     }
@@ -53,7 +53,7 @@ export default async function AdminPage() {
                     <span className="block">総合</span>
                     <span className="block">スコア</span>
                   </th>
-                  <th className="px-4 py-3">面談希望クリック日時</th>
+                  <th className="px-4 py-3">面談希望送信日時</th>
                   <th className="px-4 py-3">面談希望日時</th>
                   <th className="px-4 py-3">ステータス</th>
                 </tr>
@@ -85,7 +85,7 @@ export default async function AdminPage() {
                         </Link>
                       </td>
                       <td className="px-4 py-3 font-semibold">{summary.overallScore}点</td>
-                      <td className="px-4 py-3">{submission.ctaClickedAt ? formatDateTimeJst(submission.ctaClickedAt) : "-"}</td>
+                      <td className="px-4 py-3">{submission.meetingRequestedAt ? formatDateTimeJst(submission.meetingRequestedAt) : "-"}</td>
                       <td className="max-w-[220px] whitespace-pre-line px-4 py-3 text-xs leading-6">{submission.preferredMeetingDates || "-"}</td>
                       <td className="px-4 py-3"><span className="rounded-full bg-gold-100 px-3 py-1 text-xs font-semibold">{submission.status}</span></td>
                     </tr>

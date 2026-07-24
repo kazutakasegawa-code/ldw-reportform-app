@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "採用・定着・育成課題 5分診断",
-  description: "採用後に社員が定着し、成長し、チームで成果を出す職場環境・育成課題を整理する5分診断"
+  title: "『採用・定着・育成』の「課題見える化」5分診断",
+  description: "企業の採用・定着・育成課題を5つの観点から見える化する簡易診断"
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

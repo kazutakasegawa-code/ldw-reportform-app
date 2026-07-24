@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { randomBytes } from "crypto";
+import { checkQuestions } from "@/lib/constants";
 import { prisma } from "@/lib/prisma";
 import { diagnosisSchema } from "@/lib/schema";
 import { calculateDomainScores, recommendPlan } from "@/lib/scoring";
@@ -16,7 +17,22 @@ export async function POST(request: Request) {
   }
 
   const { checkAnswers, mainIssues, mainIssueOther, ...data } = parsed.data;
-  const domainScores = calculateDomainScores(checkAnswers.map((answer) => ({ domain: answer.domain, score: answer.score })));
+  const answerByQuestionNo = new Map(checkAnswers.map((answer) => [answer.questionNo, answer]));
+  if (answerByQuestionNo.size !== checkQuestions.length || checkQuestions.some((question) => !answerByQuestionNo.has(question.no))) {
+    return NextResponse.json({ error: "事前チェック15項目をすべて選択してください" }, { status: 400 });
+  }
+  const normalizedCheckAnswers = checkQuestions.map((question) => {
+    const answer = answerByQuestionNo.get(question.no)!;
+    return {
+      questionNo: question.no,
+      domain: question.domain,
+      question: question.question,
+      viewpoint: question.viewpoint,
+      score: answer.score,
+      comment: answer.comment || ""
+    };
+  });
+  const domainScores = calculateDomainScores(normalizedCheckAnswers);
   const recommendation = recommendPlan(domainScores);
   const normalizedMainIssues = mainIssueOther?.trim() ? [...mainIssues, `その他：${mainIssueOther.trim()}`] : mainIssues;
 
@@ -28,7 +44,7 @@ export async function POST(request: Request) {
       status: "5分診断完了",
       recommendedPlan: recommendation.plan,
       checkAnswers: {
-        create: checkAnswers
+        create: normalizedCheckAnswers
       },
       analysisResult: {
         create: {
