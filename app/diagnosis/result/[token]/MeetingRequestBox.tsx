@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { CalendarCheck } from "lucide-react";
 import { Button, Card, FieldLabel, inputClass } from "@/components/ui";
@@ -30,10 +30,15 @@ export default function MeetingRequestBox({
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const bookingFormRef = useRef<HTMLFormElement>(null);
 
   async function handleCtaClick(ctaType: string, ctaLabel: string) {
     setOpen(true);
     setError("");
+    window.setTimeout(() => {
+      bookingFormRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      bookingFormRef.current?.querySelector<HTMLInputElement>('input[type="date"]')?.focus({ preventScroll: true });
+    }, 80);
     try {
       await fetch(`/api/diagnosis/result/${token}/cta`, {
         method: "POST",
@@ -172,7 +177,11 @@ export default function MeetingRequestBox({
       {error ? <p className="mt-5 rounded-md bg-red-50 p-4 text-sm font-semibold text-red-700">{error}</p> : null}
 
       {open ? (
-        <form onSubmit={handleSubmit} className="mt-6 grid gap-4 rounded-lg border border-gold-200 bg-white p-5 sm:grid-cols-2">
+        <form
+          ref={bookingFormRef}
+          onSubmit={handleSubmit}
+          className="scroll-mt-6 mt-6 grid gap-4 rounded-lg border border-gold-200 bg-white p-5 sm:grid-cols-2"
+        >
           <PreferredDateInput index={1} />
           <PreferredDateInput index={2} />
           <PreferredDateInput index={3} />

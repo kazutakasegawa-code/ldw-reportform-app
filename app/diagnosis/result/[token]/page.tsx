@@ -223,21 +223,19 @@ function PrintableResult({
             </div>
           </section>
 
-          <section className="result-print-block result-print-priority-block">
-            <h3>優先して確認すべき領域トップ2</h3>
+          <section className={`result-print-block result-print-priority-block result-print-priority-count-${summary.focusAreas.length}`}>
+            <h3>{summary.isImprovementCandidate ? "今後の改善候補" : "重点確認領域"}</h3>
             <div className="result-print-priority-list">
-              {summary.priorities.map((item) => (
+              {summary.focusAreas.map((item) => (
                 <article key={item.domain} className="result-print-priority-card">
                   <div className="result-print-priority-head">
                     <div>
                       <h4>{item.domain}</h4>
-                      <p>{item.comment}</p>
                     </div>
                     <strong>{item.score}<span>点</span></strong>
                   </div>
                   <em>{item.judgement}</em>
                   <p>{item.priorityComment}</p>
-                  <p className="result-print-focus"><b>30分面談で確認したい観点：</b>{item.interviewPoint}</p>
                 </article>
               ))}
             </div>
