@@ -8,6 +8,14 @@ import { Button, Card, FieldLabel, inputClass } from "@/components/ui";
 const completionMessage =
   "30分面談＋AI詳細診断のお申込みありがとうございます。入力内容と診断結果をもとに事前分析を行い、日程についてLife Design Worksよりご連絡いたします。";
 
+const meetingTimeOptions = Array.from({ length: 19 }, (_, index) => {
+  const totalMinutes = 9 * 60 + index * 30;
+  const endMinutes = totalMinutes + 30;
+  const formatTime = (minutes: number) =>
+    `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")}`;
+  return `${formatTime(totalMinutes)}〜${formatTime(endMinutes)}`;
+});
+
 export default function MeetingRequestBox({
   token,
   focusAreas,
@@ -135,9 +143,9 @@ export default function MeetingRequestBox({
       </section>
 
       {showComprehensiveConsultation ? (
-        <Card className="border-gold-400 bg-navy-900 p-6 text-white">
-          <h2 className="text-xl font-bold">採用・定着・育成をまとめて整理する必要がある可能性があります</h2>
-          <p className="mt-3 text-sm leading-7 text-slate-100">
+        <Card className="border-gold-400 !bg-navy-900 p-6 !text-white">
+          <h2 className="text-xl font-bold !text-white">採用・定着・育成をまとめて整理する必要がある可能性があります</h2>
+          <p className="mt-3 text-sm leading-7 !text-slate-100">
             複数の領域が50点以下の場合、原因は一つではなく、採用時の魅力づけ、入社後の関わり、育成の仕組みがつながっている可能性があります。30分面談＋AI詳細診断で、優先順位と具体的な次の一手を整理します。
           </p>
           <Button
@@ -224,7 +232,12 @@ function PreferredDateInput({ index }: { index: number }) {
       <FieldLabel required>希望日時 第{index}希望</FieldLabel>
       <div className="grid gap-2 sm:grid-cols-[1fr_0.8fr]">
         <input name={`preferredDate${index}Date`} type="date" className={inputClass} required />
-        <input name={`preferredDate${index}Time`} type="text" className={inputClass} placeholder="例：10:00〜11:00" required />
+        <select name={`preferredDate${index}Time`} className={inputClass} defaultValue="" required>
+          <option value="">時間を選択</option>
+          {meetingTimeOptions.map((time) => (
+            <option key={time} value={time}>{time}</option>
+          ))}
+        </select>
       </div>
     </div>
   );
