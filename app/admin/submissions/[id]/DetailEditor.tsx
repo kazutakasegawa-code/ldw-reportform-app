@@ -31,6 +31,9 @@ const resultDomainLabels: Record<string, string> = {
 
 type AnalysisPayload = Partial<Record<AnalysisFieldName, string>>;
 
+const meetingHourOptions = Array.from({ length: 24 }, (_, index) => String(index).padStart(2, "0"));
+const meetingMinuteOptions = Array.from({ length: 12 }, (_, index) => String(index * 5).padStart(2, "0"));
+
 export default function DetailEditor({ submission, domainScores, recommendation, prompt }: Props) {
   const messageRef = useRef<HTMLParagraphElement>(null);
   const analysisFormRef = useRef<HTMLFormElement>(null);
@@ -55,6 +58,8 @@ export default function DetailEditor({ submission, domainScores, recommendation,
   const isImprovementCandidate = priorityResultRows.length === 0;
   const displayedCtaRows = isImprovementCandidate ? sortedResultRows.slice(0, 1) : priorityResultRows;
   const showComprehensiveConsultation = priorityResultRows.length >= 3;
+  const savedMeetingTime = formatTimeInputJst(submission.meetingDate);
+  const [savedMeetingHour = "", savedMeetingMinute = ""] = savedMeetingTime.split(":");
 
   function scrollToMessage() {
     window.setTimeout(() => {
@@ -83,8 +88,11 @@ export default function DetailEditor({ submission, domainScores, recommendation,
     event.preventDefault();
     const formElement = event.currentTarget;
     const form = new FormData(formElement);
+    const meetingHour = String(form.get("meetingHour") || "");
+    const meetingMinute = String(form.get("meetingMinute") || "");
     const payload = {
       ...Object.fromEntries(form.entries()),
+      meetingTime: meetingHour && meetingMinute ? `${meetingHour}:${meetingMinute}` : "",
       status: selectedStatus
     };
     const response = await fetch(`/api/admin/submissions/${submission.id}`, {
@@ -341,16 +349,20 @@ export default function DetailEditor({ submission, domainScores, recommendation,
                 面談済み
               </label>
             </div>
-            <div className="grid grid-cols-[minmax(0,1fr)_120px] gap-2">
+            <div className="grid grid-cols-[minmax(0,1fr)_180px] gap-2">
               <input name="meetingDate" type="date" aria-label="面談予定日" className={inputClass} defaultValue={formatDateInputJst(submission.meetingDate)} />
-              <input
-                name="meetingTime"
-                type="time"
-                step={300}
-                aria-label="面談予定時刻"
-                className={inputClass}
-                defaultValue={formatTimeInputJst(submission.meetingDate)}
-              />
+              <div className="grid grid-cols-[1fr_auto_1fr_auto] items-center gap-1">
+                <select name="meetingHour" aria-label="面談予定時刻の時" className={inputClass} defaultValue={savedMeetingHour}>
+                  <option value="">--</option>
+                  {meetingHourOptions.map((hour) => <option key={hour} value={hour}>{hour}</option>)}
+                </select>
+                <span className="text-sm font-semibold">時</span>
+                <select name="meetingMinute" aria-label="面談予定時刻の分" className={inputClass} defaultValue={savedMeetingMinute}>
+                  <option value="">--</option>
+                  {meetingMinuteOptions.map((minute) => <option key={minute} value={minute}>{minute}</option>)}
+                </select>
+                <span className="text-sm font-semibold">分</span>
+              </div>
             </div>
           </div>
           <div>
