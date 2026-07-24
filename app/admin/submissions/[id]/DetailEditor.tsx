@@ -300,6 +300,28 @@ export default function DetailEditor({ submission, domainScores, recommendation,
       </Card>
 
       <Card className="p-6">
+        <h2 className="text-xl font-bold">30分面談希望内容</h2>
+        <dl className="mt-4 grid gap-4 text-sm sm:grid-cols-2">
+          <Info
+            label="面談希望送信日時"
+            value={submission.meetingRequestedAt ? formatDateTimeJst(submission.meetingRequestedAt) : "未送信"}
+          />
+          <Info
+            label="直近でクリックしたCTA"
+            value={submission.ctaClickLogs[0]?.ctaLabel || "クリック履歴なし"}
+          />
+          <Info
+            label="希望日時・面談方法"
+            value={submission.preferredMeetingDates || "未入力"}
+          />
+          <Info
+            label="30分面談で特に確認したいこと"
+            value={submission.meetingRequestMemo || "未入力"}
+          />
+        </dl>
+      </Card>
+
+      <Card className="p-6">
         <h2 className="text-xl font-bold">管理項目</h2>
         <form onSubmit={saveSubmission} className="mt-5 grid gap-4 sm:grid-cols-2">
           <div>
